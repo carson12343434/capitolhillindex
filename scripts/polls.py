@@ -220,8 +220,13 @@ def adjust(p: dict, he: dict, kind: str = "ballot") -> float:
     return m
 
 
-def average(polls: list[dict], he: dict, today: date, days: int, field_a="d", field_b="r", kind="ballot") -> dict | None:
-    recent = [p for p in polls if pdate(p["end"]) and 0 <= (today - pdate(p["end"])).days <= days]
+def average(polls: list[dict], he: dict, today: date, days: int, field_a="d", field_b="r", kind="ballot", min_n: int = 0) -> dict | None:
+    """Weighted average of polls ending in the last `days` days. With min_n, the window stretches back
+    far enough to include at least that many polls (recency weighting still favors new ones)."""
+    dated = sorted((p for p in polls if pdate(p["end"]) and pdate(p["end"]) <= today), key=lambda p: p["end"], reverse=True)
+    recent = [p for p in dated if (today - pdate(p["end"])).days <= days]
+    if len(recent) < min_n:
+        recent = dated[:min_n]
     if not recent:
         return None
     counts = defaultdict(int)
@@ -243,7 +248,7 @@ def series(polls: list[dict], he: dict, today: date, start: date, days: int = 30
     out = []
     d = start
     while d <= today:
-        avg = average([p for p in polls if pdate(p["end"]) <= d], he, d, days, fields[0], fields[1], kind)
+        avg = average([p for p in polls if pdate(p["end"]) <= d], he, d, days, fields[0], fields[1], kind, min_n=12)
         if avg:
             out.append([d.isoformat(), avg["margin"], avg["a"], avg["b"]])
         d += timedelta(days=3)
@@ -260,8 +265,8 @@ def lean_groups(polls: list[dict], he: dict, today: date) -> dict:
     out = {}
     for g, label in (("R", "Right-leaning pollsters"), ("D", "Left-leaning pollsters"), ("N", "Nonpartisan pollsters")):
         sub = [p for p in polls if lean_of(p) == g]
-        raw = average(sub, {}, today, 45)
-        adj = average(sub, he, today, 45)
+        raw = average(sub, {}, today, 45, min_n=5)
+        adj = average(sub, he, today, 45, min_n=5)
         if raw:
             out[g] = {"label": label, "raw": raw["margin"], "adjusted": adj["margin"], "n": raw["n"]}
     return out
@@ -492,9 +497,9 @@ def main() -> None:
 
     gen, appr = national_polls(raw)
     he = house_effects(gen, appr)
-    g_avg = average(gen, he, today, 45)
+    g_avg = average(gen, he, today, 45, min_n=12)
     G = g_avg["margin"] if g_avg else 0.0
-    a_avg = average(appr, he, today, 30, "a", "d", "approval")
+    a_avg = average(appr, he, today, 30, "a", "d", "approval", min_n=12)
     log.info("generic ballot D%+.1f from %d polls; %d pollsters with house effects", G, g_avg["n"] if g_avg else 0, len(he))
 
     rp = race_polls(raw, races_by_id)
