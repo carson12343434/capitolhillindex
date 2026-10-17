@@ -17,17 +17,19 @@ import time
 from collections import defaultdict
 from datetime import date, datetime, timezone
 
-from common import CACHE, SOURCES, get, load_json, log, now_iso, save_json
+from common import CACHE, SOURCES, http, load_json, log, now_iso, save_json
 
 PRICE_DIR = CACHE / "prices"
 PRICE_DIR.mkdir(parents=True, exist_ok=True)
 MAX_AGE_DAYS = 6
+BUDGET_MIN = 35  # later runs pick up where the price cache left off
 
 
 def _yahoo(t: str) -> list[tuple[str, float]]:
     sym = t.replace(".", "-")
-    r = get(f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}", params={"range": "15y", "interval": "1wk"},
-            headers={"User-Agent": "Mozilla/5.0"}, tries=2, timeout=30)
+    r = http.get(f"https://query1.finance.yahoo.com/v8/finance/chart/{sym}", params={"range": "15y", "interval": "1wk"},
+                 headers={"User-Agent": "Mozilla/5.0"}, timeout=15)
+    r.raise_for_status()
     res = r.json()["chart"]["result"][0]
     closes = res["indicators"]["adjclose"][0]["adjclose"] if res["indicators"].get("adjclose") else res["indicators"]["quote"][0]["close"]
     out = []
@@ -38,27 +40,39 @@ def _yahoo(t: str) -> list[tuple[str, float]]:
 
 
 def _stooq(t: str) -> list[tuple[str, float]]:
-    r = get(f"https://stooq.com/q/d/l/", params={"s": f"{t.lower()}.us", "i": "w"}, tries=2, timeout=30)
+    r = http.get("https://stooq.com/q/d/l/", params={"s": f"{t.lower()}.us", "i": "w"}, timeout=15)
+    r.raise_for_status()
     rows = list(csv.DictReader(io.StringIO(r.text)))
     return [(x["Date"], float(x["Close"])) for x in rows if x.get("Close") not in (None, "", "null")]
 
 
+SOURCES_LIVE = {"yahoo": _yahoo, "stooq": _stooq}
+STRIKES = {"yahoo": 0, "stooq": 0}
+
+
 def prices(ticker: str) -> list[tuple[str, float]] | None:
+    """Cached weekly closes. A source that fails 15 tickers in a row is dropped for the rest of the run."""
     f = PRICE_DIR / f"{ticker.replace('/', '_')}.csv"
     if f.exists() and (time.time() - f.stat().st_mtime) < MAX_AGE_DAYS * 86400:
         rows = [(a, float(b)) for a, b in csv.reader(f.open())]
         return rows or None
     data = []
-    for src in (_yahoo, _stooq):
+    for name in list(SOURCES_LIVE):
         try:
-            data = src(ticker)
-            if data:
-                break
+            data = SOURCES_LIVE[name](ticker)
         except Exception:
-            continue
-    with f.open("w", newline="") as fh:
-        csv.writer(fh).writerows(data)
-    time.sleep(0.4)
+            data = []
+        if data:
+            STRIKES[name] = 0
+            break
+        STRIKES[name] += 1
+        if STRIKES[name] >= 15:
+            log.info("  %s keeps failing; dropping it for this run", name)
+            SOURCES_LIVE.pop(name, None)
+    if data or SOURCES_LIVE:
+        with f.open("w", newline="") as fh:
+            csv.writer(fh).writerows(data)
+    time.sleep(0.3)
     return data or None
 
 
@@ -115,13 +129,17 @@ def main() -> None:
     log.info("gains: fetching prices for %d tickers", len(tickers))
     cache: dict[str, list | None] = {}
     ok = 0
+    deadline = time.time() + BUDGET_MIN * 60
     for i, t in enumerate(tickers, 1):
+        if not SOURCES_LIVE or time.time() > deadline:
+            log.info("  stopping price lookups at %d/%d (%s)", i, len(tickers), "time budget" if SOURCES_LIVE else "no source responding")
+            break
         cache[t] = prices(t)
         ok += bool(cache[t])
         if i % 200 == 0:
             log.info("  %d/%d tickers (%d with prices)", i, len(tickers), ok)
-    if ok < len(tickers) * 0.3:
-        log.info("gains: only %d/%d tickers priced; keeping previous estimates", ok, len(tickers))
+    if ok < 50:
+        log.info("gains: only %d tickers priced; keeping previous estimates", ok)
         return
     est = estimate(rows, lambda t: cache.get(t))
     save_json(SOURCES / "gains.json", {"updated": now_iso(), "tickersPriced": ok, "tickers": len(tickers), "members": est})
