@@ -1,0 +1,25 @@
+<main class="wrap">
+  <span class="kicker">Congress</span>
+  <h1>How Congress voted</h1>
+  <p class="lede">Every recorded vote in the House and Senate this Congress: who sponsored the bill, how each party split, and how every member voted.</p>
+  <p class="small muted" id="summary"></p>
+
+  <div class="filters">
+    <label for="q">Search<input type="search" id="q" placeholder="Bill, title or sponsor"></label>
+    <label for="chamber">Chamber<select id="chamber"><option value="">Both</option><option value="H">House</option><option value="S">Senate</option></select></label>
+    <label for="kind">Type<select id="kind"><option value="">All votes</option><option value="passage">Passing a bill or resolution</option><option value="amend">Amendments</option><option value="nom">Nominations</option><option value="proc">Procedural</option></select></label>
+    <label for="result">Result<select id="result"><option value="">Any</option><option value="pass">Passed or agreed to</option><option value="fail">Failed or rejected</option></select></label>
+    <label for="party">Party split<select id="party"><option value="">Any</option><option value="bi">Bipartisan (both parties mostly yes)</option><option value="line">Party-line</option></select></label>
+    <label for="member">How did this member vote?<select id="member"><option value="">Pick a member</option></select></label>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="tablewrap"><table class="data"><thead id="thead"></thead><tbody id="rows"></tbody></table></div>
+  <p><button class="btn ghost" id="more" hidden>Show more</button></p>
+  <p class="small muted section">Votes: Voteview (UCLA), from House Clerk and Senate records. Bill titles and sponsors: GovInfo (Congress.gov). Party split counts members who voted yes or no.</p>
+</main>
+
+<div class="shade" id="shade" hidden></div>
+<aside class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dname"></aside>
+
+<script src="{{root}}data/votes.js"></script>
+<script src="{{root}}assets/js/votes.js"></script>

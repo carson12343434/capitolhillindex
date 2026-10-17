@@ -1,0 +1,27 @@
+<main class="wrap">
+  <span class="kicker">Quiz</span>
+  <h1>Can you name every member of Congress?</h1>
+  <p class="lede">Type names as fast as you can. Try all 100 senators, the whole House, or just one state's delegation.</p>
+
+  <div class="filters" id="setup">
+    <label for="scope">Who<select id="scope"><option value="Senate">All 100 senators</option><option value="House">All House members</option><option value="Both">Everyone in Congress</option></select></label>
+    <label for="state">State<select id="state"></select></label>
+    <label for="timer">Time limit<select id="timer"><option value="0">No limit</option><option value="300">5 minutes</option><option value="600">10 minutes</option><option value="900">15 minutes</option><option value="1800">30 minutes</option></select></label>
+    <button class="btn" id="go">Start</button>
+    <span class="count" id="best"></span>
+  </div>
+
+  <div id="play" hidden>
+    <div class="row" style="margin:18px 0 10px;justify-content:space-between">
+      <label for="guess" style="flex:1;min-width:220px"><span class="small muted">Type a name and press Enter</span>
+        <input class="input" id="guess" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="e.g. Ted Cruz or Cruz" style="width:100%;font-size:18px;padding:10px 12px"></label>
+      <div class="row" style="gap:18px"><div class="stat"><b id="score">0</b><span>named</span></div><div class="stat"><b id="clock">0:00</b><span id="clocklabel">elapsed</span></div>
+        <button class="btn ghost" id="giveup">Give up</button></div>
+    </div>
+    <p class="small" id="msg" role="status" aria-live="polite" style="min-height:1.5em"></p>
+    <div id="board" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px 20px"></div>
+  </div>
+</main>
+<script src="{{root}}data/members.js"></script>
+<script src="{{root}}data/photos.js"></script>
+<script src="{{root}}assets/js/name-congress.js"></script>

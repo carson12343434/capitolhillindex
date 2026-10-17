@@ -1,0 +1,507 @@
+race_id,office,state,district,special,incumbent,inc_party,inc_running,main_left,main_left_party,main_right,main_right_party,other,other_party,lean,status
+AK-SEN,SEN,AK,,0,Dan Sullivan,R,1,Mary Peltola,D,Dan S. Sullivan,R,,,-12.0,Incumbent advanced to general
+AL-SEN,SEN,AL,,0,Tommy Tuberville,R,0,Everett Wess,D,Barry Moore,R,,,-30.0,Incumbent retiring to run for governor
+AR-SEN,SEN,AR,,0,Tom Cotton,R,1,Hallie Shoffner,D,Tom Cotton,R,,,-30.0,Incumbent renominated
+CO-SEN,SEN,CO,,0,John Hickenlooper,D,1,John Hickenlooper,D,Mark Baisley,R,,,12.0,Incumbent renominated
+DE-SEN,SEN,DE,,0,Chris Coons,D,1,Chris Coons,D,Michael Katz,R,,,16.0,Incumbent renominated
+FL-SEN-SP,SEN,FL,,1,Ashley Moody,R,1,Angie Nixon,D,Ashley Moody,R,,,-10.0,Interim appointee nominated
+GA-SEN,SEN,GA,,0,Jon Ossoff,D,1,Jon Ossoff,D,Mike Collins,R,,,-2.0,Incumbent renominated
+IA-SEN,SEN,IA,,0,Joni Ernst,R,0,Josh Turek,D,Ashley Hinson,R,,,-12.0,Incumbent retiring
+ID-SEN,SEN,ID,,0,Jim Risch,R,1,Todd Achilles,I,Jim Risch,R,,,-36.0,Incumbent renominated
+IL-SEN,SEN,IL,,0,Dick Durbin,D,0,Juliana Stratton,D,Don Tracy,R,,,12.0,Incumbent retiring
+KS-SEN,SEN,KS,,0,Roger Marshall,R,1,Adam Hamilton,D,Roger Marshall,R,,,-16.0,Incumbent renominated
+KY-SEN,SEN,KY,,0,Mitch McConnell,R,0,Charles Booker,D,Andy Barr,R,,,-30.0,Incumbent retiring
+LA-SEN,SEN,LA,,0,Bill Cassidy,R,0,Jamie Davis,D,Julia Letlow,R,,,-22.0,Incumbent lost renomination
+MA-SEN,SEN,MA,,0,Ed Markey,D,1,Ed Markey,D,John Deaton,R,,,28.0,Incumbent renominated
+ME-SEN,SEN,ME,,0,Susan Collins,R,1,Troy Jackson,D,Susan Collins,R,,,8.0,Incumbent renominated
+MI-SEN,SEN,MI,,0,Gary Peters,D,0,Abdul El-Sayed,D,Mike Rogers,R,,,0,Incumbent retiring
+MN-SEN,SEN,MN,,0,Tina Smith,D,0,Peggy Flanagan,D,Michele Tafoya,R,,,6.0,Incumbent retiring
+MS-SEN,SEN,MS,,0,Cindy Hyde-Smith,R,1,Scott Colom,D,Cindy Hyde-Smith,R,,,-22.0,Incumbent renominated
+MT-SEN,SEN,MT,,0,Steve Daines,R,0,Seth Bodnar,I,Kurt Alme,R,Alani Bankhead,D,-20.0,Incumbent retiring
+NC-SEN,SEN,NC,,0,Thom Tillis,R,0,Roy Cooper,D,Michael Whatley,R,,,-2.0,Incumbent retiring
+NE-SEN,SEN,NE,,0,Pete Ricketts,R,1,Dan Osborn,I,Pete Ricketts,R,,,-20.0,Incumbent renominated
+NH-SEN,SEN,NH,,0,Jeanne Shaheen,D,0,Chris Pappas,D,John E. Sununu,R,,,4.0,Incumbent retiring
+NJ-SEN,SEN,NJ,,0,Cory Booker,D,1,Cory Booker,D,Justin Murphy,R,,,8.0,Incumbent renominated
+NM-SEN,SEN,NM,,0,Ben Ray Luján,D,1,Ben Ray Luján,D,Larry Marker,R,,,8.0,Incumbent renominated
+OH-SEN-SP,SEN,OH,,1,Jon Husted,R,1,Sherrod Brown,D,Jon Husted,R,,,-10.0,Interim appointee nominated
+OK-SEN,SEN,OK,,0,Alan Armstrong,R,0,N'Kiyla Jasmine Thomas,D,Kevin Hern,R,,,-34.0,Interim appointee ineligible to run
+OR-SEN,SEN,OR,,0,Jeff Merkley,D,1,Jeff Merkley,D,David Brock Smith,R,,,16.0,Incumbent renominated
+RI-SEN,SEN,RI,,0,Jack Reed,D,1,Jack Reed,D,Raymond McKay,R,,,16.0,Incumbent renominated
+SC-SEN,SEN,SC,,0,Darline Graham,R,1,Annie Andrews,D,Darline Graham,R,,,-16.0,Interim appointee nominated in runoff
+SD-SEN,SEN,SD,,0,Mike Rounds,R,1,Brian Bengs,I,Mike Rounds,R,,,-30.0,Incumbent renominated
+TN-SEN,SEN,TN,,0,Bill Hagerty,R,1,Marquita Bradshaw,D,Bill Hagerty,R,,,-28.0,Incumbent renominated
+TX-SEN,SEN,TX,,0,John Cornyn,R,0,James Talarico,D,Ken Paxton,R,,,-12.0,Incumbent lost renomination in runoff
+VA-SEN,SEN,VA,,0,Mark Warner,D,1,Mark Warner,D,Bert Mizusawa,R,,,6.0,Incumbent renominated
+WV-SEN,SEN,WV,,0,Shelley Moore Capito,R,1,Rachel Fetty Anderson,D,Shelley Moore Capito,R,,,-42.0,Incumbent renominated
+WY-SEN,SEN,WY,,0,Cynthia Lummis,R,0,James W. Byrd,D,Harriet Hageman,R,,,-46.0,Incumbent retiring
+AK-GOV,GOV,AK,,0,Mike Dunleavy,R,0,Jonathan Kreiss-Tomkins,D,Bernadette Wilson,R,,,-12.0,Term-limited
+AL-GOV,GOV,AL,,0,Kay Ivey,R,0,Doug Jones,D,Tommy Tuberville,R,,,-30.0,Term-limited
+AR-GOV,GOV,AR,,0,Sarah Huckabee Sanders,R,1,Fredrick Love,D,Sarah Huckabee Sanders,R,,,-30.0,Incumbent renominated
+AZ-GOV,GOV,AZ,,0,Katie Hobbs,D,1,Katie Hobbs,D,Andy Biggs,R,,,-4.0,Incumbent renominated
+CA-GOV,GOV,CA,,0,Gavin Newsom,D,0,Xavier Becerra,D,Steve Hilton,R,,,24.0,Term-limited
+CO-GOV,GOV,CO,,0,Jared Polis,D,0,Phil Weiser,D,Victor Marx,R,Greg Lopez,Unaffiliated,12.0,Term-limited
+CT-GOV,GOV,CT,,0,Ned Lamont,D,1,Ned Lamont,D,Ryan Fazio,R,,,16.0,Incumbent renominated
+FL-GOV,GOV,FL,,0,Ron DeSantis,R,0,David Jolly,D,Byron Donalds,R,,,-10.0,Term-limited
+GA-GOV,GOV,GA,,0,Brian Kemp,R,0,Keisha Lance Bottoms,D,Rick Jackson,R,,,-2.0,Term-limited
+HI-GOV,GOV,HI,,0,Josh Green,D,1,Josh Green,D,Gary Cordery,R,,,26.0,Incumbent renominated
+IA-GOV,GOV,IA,,0,Kim Reynolds,R,0,Rob Sand,D,Zach Lahn,R,,,-12.0,Incumbent retiring
+ID-GOV,GOV,ID,,0,Brad Little,R,1,Terri Pickens,D,Brad Little,R,,,-36.0,Incumbent renominated
+IL-GOV,GOV,IL,,0,JB Pritzker,D,1,JB Pritzker,D,Darren Bailey,R,Collin Corbett,Independent,12.0,Incumbent renominated
+KS-GOV,GOV,KS,,0,Laura Kelly,D,0,Cindy Holscher,D,Ty Masterson,R,,,-16.0,Term-limited
+MA-GOV,GOV,MA,,0,Maura Healey,D,1,Maura Healey,D,Mike Minogue,R,,,28.0,Incumbent renominated
+MD-GOV,GOV,MD,,0,Wes Moore,D,1,Wes Moore,D,Dan Cox,R,,,30.0,Incumbent renominated
+ME-GOV,GOV,ME,,0,Janet Mills,D,0,Hannah Pingree,D,Robert B. Charles,R,,,8.0,Term-limited
+MI-GOV,GOV,MI,,0,Gretchen Whitmer,D,0,Jocelyn Benson,D,John James,R,,,0,Term-limited
+MN-GOV,GOV,MN,,0,Tim Walz,D,0,Amy Klobuchar,D,Lisa Demuth,R,,,6.0,Incumbent retiring
+NE-GOV,GOV,NE,,0,Jim Pillen,R,1,Lynne Walz,D,Jim Pillen,R,Brett Lindstrom,America First Party (new Nebraska party),-20.0,Incumbent renominated
+NH-GOV,GOV,NH,,0,Kelly Ayotte,R,1,Cinde Warmington,D,Kelly Ayotte,R,,,4.0,Incumbent renominated
+NM-GOV,GOV,NM,,0,Michelle Lujan Grisham,D,0,Deb Haaland,D,Gregg Hull,R,,,8.0,Term-limited
+NV-GOV,GOV,NV,,0,Joe Lombardo,R,1,Aaron Ford,D,Joe Lombardo,R,,,-2.0,Incumbent renominated
+NY-GOV,GOV,NY,,0,Kathy Hochul,D,1,Kathy Hochul,D,Bruce Blakeman,R,,,16.0,Incumbent renominated
+OH-GOV,GOV,OH,,0,Mike DeWine,R,0,Amy Acton,D,Vivek Ramaswamy,R,,,-10.0,Term-limited
+OK-GOV,GOV,OK,,0,Kevin Stitt,R,0,Cyndi Munson,D,Mike Mazzei,R,,,-34.0,Term-limited
+OR-GOV,GOV,OR,,0,Tina Kotek,D,1,Tina Kotek,D,Christine Drazan,R,,,16.0,Incumbent renominated
+PA-GOV,GOV,PA,,0,Josh Shapiro,D,1,Josh Shapiro,D,Stacy Garrity,R,,,-2.0,Incumbent renominated
+RI-GOV,GOV,RI,,0,Dan McKee,D,0,Helena Foulkes,D,Aaron Guckian,R,,,16.0,Incumbent lost renomination
+SC-GOV,GOV,SC,,0,Henry McMaster,R,0,Jermaine Johnson,D,Alan Wilson,R,,,-16.0,Term-limited
+SD-GOV,GOV,SD,,0,Larry Rhoden,R,1,Dan Ahlers,D,Larry Rhoden,R,,,-30.0,Incumbent nominated to full term
+TN-GOV,GOV,TN,,0,Bill Lee,R,0,Jerri Green,D,Marsha Blackburn,R,David Hatley,Independent,-28.0,Term-limited
+TX-GOV,GOV,TX,,0,Greg Abbott,R,1,Gina Hinojosa,D,Greg Abbott,R,,,-12.0,Incumbent renominated
+VT-GOV,GOV,VT,,0,Phil Scott,R,1,Amanda Janoo,D,Phil Scott,R,,,34.0,Incumbent renominated
+WI-GOV,GOV,WI,,0,Tony Evers,D,0,David Crowley,D,Tom Tiffany,R,,,0,Incumbent retiring
+WY-GOV,GOV,WY,,0,Mark Gordon,R,0,Kenneth Casner,D,Eric Barlow,R,,,-46.0,Term-limited
+AL-01,HOUSE,AL,01,0,,,0,Clyde Jones Jr.,D,Jerry Carl,R,,,-34.0,New representative to be elected
+AL-02,HOUSE,AL,02,0,Shomari Figures,D,1,Shomari Figures,D,Rhett Marques,R,,,-14.0,Incumbent renominated
+AL-03,HOUSE,AL,03,0,Mike Rogers,R,1,Lee McInnis,D,Mike Rogers,R,,,-46.0,Incumbent renominated
+AL-04,HOUSE,AL,04,0,Robert Aderholt,R,1,Amanda Pusczek,D,Robert Aderholt,R,,,-66.0,Incumbent renominated
+AL-05,HOUSE,AL,05,0,Dale Strong,R,1,Andrew Sneed,D,Dale Strong,R,,,-30.0,Incumbent renominated
+AL-06,HOUSE,AL,06,0,Gary Palmer,R,1,Maurice Mercer,D,Gary Palmer,R,,,-34.0,Incumbent renominated
+AL-07,HOUSE,AL,07,0,Terri Sewell,D,1,Terri Sewell,D,Ammie Akin,R,,,20.0,Incumbent renominated
+AK-AL,HOUSE,AK,AL,0,Nick Begich III,R,1,Eric Hafner,D,Nick Begich III,R,,,-12.0,Incumbent advanced to general
+AZ-01,HOUSE,AZ,01,0,David Schweikert,R,0,Amish Shah,D,Jay Feely,R,,,-2.0,Incumbent retiring to run for governor
+AZ-02,HOUSE,AZ,02,0,Eli Crane,R,1,Jonathan Nez,D,Eli Crane,R,,,-14.0,Incumbent renominated
+AZ-03,HOUSE,AZ,03,0,Yassamin Ansari,D,1,Yassamin Ansari,D,,,,,44.0,Incumbent renominated
+AZ-04,HOUSE,AZ,04,0,Greg Stanton,D,1,Greg Stanton,D,Zuhdi Jasser,R,,,8.0,Incumbent renominated
+AZ-05,HOUSE,AZ,05,0,Andy Biggs,R,0,Elizabeth Lee,D,Mark Lamb,R,,,-20.0,Incumbent retiring to run for governor
+AZ-06,HOUSE,AZ,06,0,Juan Ciscomani,R,1,JoAnna Mendoza,D,Juan Ciscomani,R,,,0,Incumbent renominated
+AZ-07,HOUSE,AZ,07,0,Adelita Grijalva,D,1,Adelita Grijalva,D,Daniel Butierez,R,,,26.0,Incumbent renominated
+AZ-08,HOUSE,AZ,08,0,Abraham Hamadeh,R,1,Bernadette Greene-Placentia,D,Abraham Hamadeh,R,,,-16.0,Incumbent renominated
+AZ-09,HOUSE,AZ,09,0,Paul Gosar,R,1,Dani Sterbinsky,D,Paul Gosar,R,,,-30.0,Incumbent renominated
+AR-01,HOUSE,AR,01,0,Rick Crawford,R,1,Terri Green,D,Rick Crawford,R,,,-46.0,Incumbent renominated
+AR-02,HOUSE,AR,02,0,French Hill,R,1,Chris Jones,D,French Hill,R,,,-16.0,Incumbent renominated
+AR-03,HOUSE,AR,03,0,Steve Womack,R,1,Robb Ryerse,D,Steve Womack,R,,,-26.0,Incumbent renominated
+AR-04,HOUSE,AR,04,0,Bruce Westerman,R,1,James Russell,D,Bruce Westerman,R,,,-40.0,Incumbent renominated
+CA-01,HOUSE,CA,01,0,James Gallagher,R,1,Mike McGuire,D,James Gallagher,R,,,14.0,Incumbent advanced to general
+CA-02,HOUSE,CA,02,0,Jared Huffman,D,1,Jared Huffman,D,Robin Littau,R,,,26.0,Incumbent advanced to general
+CA-03,HOUSE,CA,03,0,Ami Bera,D,1,Ami Bera,D,Robb Tucker,R,,,12.0,Incumbent advanced to general
+CA-04,HOUSE,CA,04,0,Mike Thompson,D,1,Mike Thompson,D,,,,,16.0,Incumbent advanced to general. Democratic hold.
+CA-05,HOUSE,CA,05,0,Tom McClintock,R,1,Michael Masuda,D,Tom McClintock,R,,,-20.0,Incumbent advanced to general
+CA-06,HOUSE,CA,06,0,Kevin Kiley,I,1,Richard Pan,D,Kevin Kiley,I,,,10.0,Incumbent advanced to general
+CA-07,HOUSE,CA,07,0,Doris Matsui,D,1,Doris Matsui,D,,,,,14.0,Incumbent advanced to general. Democratic hold.
+CA-08,HOUSE,CA,08,0,John Garamendi,D,1,John Garamendi,D,Rudy Recile,R,,,38.0,Incumbent advanced to general
+CA-09,HOUSE,CA,09,0,Josh Harder,D,1,Josh Harder,D,John McBride,R,,,16.0,Incumbent advanced to general
+CA-10,HOUSE,CA,10,0,Mark DeSaulnier,D,1,Mark DeSaulnier,D,Jeff Frese,R,,,36.0,Incumbent advanced to general
+CA-11,HOUSE,CA,11,0,Nancy Pelosi,D,0,Connie Chan,D,,,,,72.0,Incumbent retiring. Democratic hold.
+CA-12,HOUSE,CA,12,0,Lateefah Simon,D,1,Lateefah Simon,D,,,,,78.0,Incumbent advanced to general Democratic hold.
+CA-13,HOUSE,CA,13,0,Adam Gray,D,1,Adam Gray,D,Kevin Lincoln,R,,,4.0,Incumbent advanced to general
+CA-14,HOUSE,CA,14,0,Aisha Wahab,D,1,Aisha Wahab,D,,,,,38.0,Incumbent advanced to general. Democratic hold.
+CA-15,HOUSE,CA,15,0,Kevin Mullin,D,1,Kevin Mullin,D,Charles Hoelter,R,,,52.0,Incumbent advanced to general
+CA-16,HOUSE,CA,16,0,Sam Liccardo,D,1,Sam Liccardo,D,Peter Soulé,R,,,50.0,Incumbent advanced to general
+CA-17,HOUSE,CA,17,0,Ro Khanna,D,1,Ro Khanna,D,Ritesh Tandon,R,,,42.0,Incumbent advanced to general
+CA-18,HOUSE,CA,18,0,Zoe Lofgren,D,1,Zoe Lofgren,D,Shane Lewis,R,,,32.0,Incumbent advanced to general
+CA-19,HOUSE,CA,19,0,Jimmy Panetta,D,1,Jimmy Panetta,D,Peter Coe Verbica,R,,,36.0,Incumbent advanced to general
+CA-20,HOUSE,CA,20,0,Vince Fong,R,1,Sandra Van Scotter,D,Vince Fong,R,,,-32.0,Incumbent advanced to general
+CA-21,HOUSE,CA,21,0,Jim Costa,D,1,Jim Costa,D,Kyle Kirkland,R,,,10.0,Incumbent advanced to general
+CA-22,HOUSE,CA,22,0,David Valadao,R,1,Randy Villegas,D,David Valadao,R,,,2.0,Incumbent advanced to general
+CA-23,HOUSE,CA,23,0,Jay Obernolte,R,1,Tessa Lynn Hodge,D,Jay Obernolte,R,,,-18.0,Incumbent advanced to general
+CA-24,HOUSE,CA,24,0,Salud Carbajal,D,1,Salud Carbajal,D,Bob Smith,R,,,26.0,Incumbent advanced to general
+CA-25,HOUSE,CA,25,0,Raul Ruiz,D,1,Raul Ruiz,D,Joe Males,R,,,8.0,Incumbent advanced to general
+CA-26,HOUSE,CA,26,0,Julia Brownley,D,0,Jacqui Irwin,D,Sam Gallucci,R,,,18.0,Incumbent retiring
+CA-27,HOUSE,CA,27,0,George T. Whitesides,D,1,George Whitesides,D,Jason Gibbs,R,,,12.0,Incumbent advanced to general
+CA-28,HOUSE,CA,28,0,Judy Chu,D,1,Judy Chu,D,April Verlato,R,,,28.0,Incumbent advanced to general
+CA-29,HOUSE,CA,29,0,Luz Rivas,D,1,Luz Rivas,D,,,,,38.0,Incumbent advanced to general. Democratic hold.
+CA-30,HOUSE,CA,30,0,Laura Friedman,D,1,Laura Friedman,D,Scott Meyers,R,,,42.0,Incumbent advanced to general
+CA-31,HOUSE,CA,31,0,Gil Cisneros,D,1,Gil Cisneros,D,Eric Ching,R,,,16.0,Incumbent advanced to general
+CA-32,HOUSE,CA,32,0,Brad Sherman,D,1,Brad Sherman,D,Larry Thompson,R,,,28.0,Incumbent advanced to general
+CA-33,HOUSE,CA,33,0,Pete Aguilar,D,1,Pete Aguilar,D,Stephanie Vargas,R,,,14.0,Incumbent advanced to general
+CA-34,HOUSE,CA,34,0,Jimmy Gomez,D,1,Jimmy Gomez,D,,,,,56.0,Incumbent advanced to general. Democratic hold.
+CA-35,HOUSE,CA,35,0,Norma Torres,D,1,Norma Torres,D,Mike Cargile,R,,,12.0,Incumbent advanced to general
+CA-36,HOUSE,CA,36,0,Ted Lieu,D,1,Ted Lieu,D,Houston Brignano,R,,,42.0,Incumbent advanced to general
+CA-37,HOUSE,CA,37,0,Sydney Kamlager-Dove,D,1,Sydney Kamlager-Dove,D,,,,,66.0,Incumbent advanced to general. Democratic hold.
+CA-38,HOUSE,CA,38,0,,,0,Hilda Solis,D,Pedro Casas,R,,,16.0,New representative to be elected
+CA-39,HOUSE,CA,39,0,Mark Takano,D,1,Mark Takano,D,Steve Manos,R,,,14.0,Incumbent advanced to general
+CA-40,HOUSE,CA,40,0,Young Kim,R,1,,D,Young Kim,R,,,-12.0,Incumbent advanced to general. Republican hold.
+CA-41,HOUSE,CA,41,0,Linda Sánchez,D,1,Linda Sánchez,D,Mitch Clemmons,R,,,18.0,Incumbent advanced to general
+CA-42,HOUSE,CA,42,0,Robert Garcia,D,1,Robert Garcia,D,Brian Burley,R,,,16.0,Incumbent advanced to general
+CA-43,HOUSE,CA,43,0,Maxine Waters,D,1,Maxine Waters,D,Cristian Morales,R,,,54.0,Incumbent advanced to general
+CA-44,HOUSE,CA,44,0,Nanette Barragán,D,1,Nanette Barragán,D,Genevieve Angel,R,,,40.0,Incumbent advanced to general
+CA-45,HOUSE,CA,45,0,Derek Tran,D,1,Derek Tran,D,Chuong Vo,R,,,6.0,Incumbent advanced to general
+CA-46,HOUSE,CA,46,0,Lou Correa,D,1,Lou Correa,D,David Pan,R,,,20.0,Incumbent advanced to general
+CA-47,HOUSE,CA,47,0,Dave Min,D,1,Dave Min,D,Jenny Le Roux,R,,,12.0,Incumbent advanced to general
+CA-48,HOUSE,CA,48,0,Darrell Issa,R,0,Marni von Wilpert,D,Jim Desmond,R,,,4.0,Incumbent retiring
+CA-49,HOUSE,CA,49,0,Mike Levin,D,1,Mike Levin,D,Armen Kurdian,R,,,14.0,Incumbent advanced to general
+CA-50,HOUSE,CA,50,0,Scott Peters,D,1,Scott Peters,D,Steve Cohen,R,,,20.0,Incumbent advanced to general
+CA-51,HOUSE,CA,51,0,Sara Jacobs,D,1,Sara Jacobs,D,Ricardo Cabrera,R,,,20.0,Incumbent advanced to general
+CA-52,HOUSE,CA,52,0,Juan Vargas,D,1,Juan Vargas,D,Jeff Belle,R,,,22.0,Incumbent advanced to general
+CO-01,HOUSE,CO,01,0,Diana DeGette,D,0,Melat Kiros,D,Christy Peterson,R,,,58.0,Incumbent lost renomination
+CO-02,HOUSE,CO,02,0,Joe Neguse,D,1,Joe Neguse,D,Kelley Dennison,R,,,40.0,Incumbent renominated
+CO-03,HOUSE,CO,03,0,Jeff Hurd,R,1,Dwayne Romero,D,Jeff Hurd,R,,,-10.0,Incumbent renominated
+CO-04,HOUSE,CO,04,0,Lauren Boebert,R,1,Eileen Laubacher,D,Lauren Boebert,R,,,-18.0,Incumbent renominated
+CO-05,HOUSE,CO,05,0,Jeff Crank,R,1,Jessica Killin,D,Jeff Crank,R,,,-10.0,Incumbent renominated
+CO-06,HOUSE,CO,06,0,Jason Crow,D,1,Jason Crow,D,Jason Clark,R,,,22.0,Incumbent renominated
+CO-07,HOUSE,CO,07,0,Brittany Pettersen,D,1,Brittany Pettersen,D,Tim Bennett,R,,,16.0,Incumbent renominated
+CO-08,HOUSE,CO,08,0,Gabe Evans,R,1,Manny Rutinel,D,Gabe Evans,R,,,0,Incumbent renominated
+CT-01,HOUSE,CT,01,0,John B. Larson,D,0,Luke Bronin,D,Amy Chai,R,,,24.0,Incumbent lost renomination
+CT-02,HOUSE,CT,02,0,Joe Courtney,D,1,Joe Courtney,D,George Austin,R,,,8.0,Incumbent renominated
+CT-03,HOUSE,CT,03,0,Rosa DeLauro,D,1,Rosa DeLauro,D,Chris Lancia,R,,,16.0,Incumbent renominated
+CT-04,HOUSE,CT,04,0,Jim Himes,D,1,Jim Himes,D,Michael Goldstein,R,,,26.0,Incumbent renominated
+CT-05,HOUSE,CT,05,0,Jahana Hayes,D,1,Jahana Hayes,D,Chris Shea,R,,,6.0,Incumbent renominated
+DE-AL,HOUSE,DE,AL,0,Sarah McBride,D,1,Sarah McBride,D,Joseph Arminio,R,,,16.0,Incumbent renominated
+FL-01,HOUSE,FL,01,0,Jimmy Patronis,R,1,Gay Valimont,D,Jimmy Patronis,R,,,-36.0,Incumbent renominated
+FL-02,HOUSE,FL,02,0,Neal Dunn,R,0,Amanda Green,D,Austin Rogers,R,,,-16.0,Incumbent retiring
+FL-03,HOUSE,FL,03,0,Kat Cammack,R,1,Seth Harp,D,Kat Cammack,R,,,-20.0,Incumbent renominated
+FL-04,HOUSE,FL,04,0,Aaron Bean,R,1,LaShonda Holloway,D,Aaron Bean,R,,,-10.0,Incumbent renominated
+FL-05,HOUSE,FL,05,0,John Rutherford,R,1,Rachel Grage,D,John Rutherford,R,,,-20.0,Incumbent renominated
+FL-06,HOUSE,FL,06,0,Randy Fine,R,1,Eric Yonce,D,Randy Fine,R,,,-28.0,Incumbent renominated
+FL-07,HOUSE,FL,07,0,Cory Mills,R,0,Bale Dalton,D,Ryan Elijah,R,,,-10.0,Incumbent lost renomination
+FL-08,HOUSE,FL,08,0,Mike Haridopolos,R,1,Jennifer Jenkins,D,Mike Haridopolos,R,,,-16.0,Incumbent renominated
+FL-09,HOUSE,FL,09,0,Darren Soto,D,1,Darren Soto,D,Dan Green,R,,,-16.0,Incumbent renominated
+FL-10,HOUSE,FL,10,0,Maxwell Frost,D,1,Maxwell Frost,D,,,,,26.0,Incumbent re-elected
+FL-11,HOUSE,FL,11,0,Daniel Webster,R,0,James Pericola,D,Joe Strada,R,,,-14.0,Incumbent retiring
+FL-12,HOUSE,FL,12,0,Gus Bilirakis,R,1,Kimberly Overman,D,Gus Bilirakis,R,,,-14.0,Incumbent renominated
+FL-13,HOUSE,FL,13,0,Anna Paulina Luna,R,1,Leela Gray,D,Anna Paulina Luna,R,,,-12.0,Incumbent renominated
+FL-14,HOUSE,FL,14,0,Kathy Castor,D,1,Kathy Castor,D,Mike Beltran,R,,,-8.0,Incumbent renominated
+FL-15,HOUSE,FL,15,0,Laurel Lee,R,1,Robert People,D,Laurel Lee,R,,,-18.0,Incumbent renominated
+FL-16,HOUSE,FL,16,0,Vern Buchanan,R,0,Kelly Kirschner,D,Sydney Gruters,R,,,-12.0,Incumbent retiring
+FL-17,HOUSE,FL,17,0,Greg Steube,R,1,Matthew Montavon,D,Greg Steube,R,,,-20.0,Incumbent renominated
+FL-18,HOUSE,FL,18,0,Scott Franklin,R,1,Curtis Gibson,D,Scott Franklin,R,,,-16.0,Incumbent renominated
+FL-19,HOUSE,FL,19,0,Byron Donalds,R,0,Victor Arias,D,Jim Schwartzel,R,,,-28.0,Incumbent retiring to run for governor
+FL-20,HOUSE,FL,20,0,,,0,Debbie Wasserman Schultz,D,Brent Andersen,R,,,40.0,"Rep. Sheila Cherfilus-McCormick (D) resigned April 21, 2026. Democratic loss."
+FL-21,HOUSE,FL,21,0,Brian Mast,R,1,James Martin,D,Brian Mast,R,,,-14.0,Incumbent renominated
+FL-22,HOUSE,FL,22,0,,,0,Pia Dandiya,D,Casey Askar,R,,,-8.0,New representative to be elected
+FL-23,HOUSE,FL,23,0,Lois Frankel,D,1,Lois Frankel,D,Deborah Adeimy,R,,,18.0,Incumbent renominated
+FL-24,HOUSE,FL,24,0,Frederica Wilson,D,0,Oliver Gilbert,D,Te Mayonna Brown,R,,,44.0,Incumbent retiring
+FL-25,HOUSE,FL,25,0,Jared Moskowitz,D,1,Jared Moskowitz,D,Scott Singer,R,,,-6.0,Incumbent renominated
+FL-26,HOUSE,FL,26,0,Mario Díaz-Balart,R,1,Nicole Locklin,D,Mario Díaz-Balart,R,,,-14.0,Incumbent renominated
+FL-27,HOUSE,FL,27,0,María Elvira Salazar,R,1,Eliott Rodriguez,D,María Elvira Salazar,R,,,-12.0,Incumbent renominated
+FL-28,HOUSE,FL,28,0,Carlos A. Giménez,R,1,Phil Ehr,D,Carlos Giménez,R,,,-20.0,Incumbent renominated
+GA-01,HOUSE,GA,01,0,Buddy Carter,R,0,Amanda Hollowell,D,Jim Kingston,R,,,-16.0,Incumbent retiring to run for U.S. Senate
+GA-02,HOUSE,GA,02,0,Sanford Bishop,D,1,Sanford Bishop,D,Matt Day,R,,,8.0,Incumbent renominated
+GA-03,HOUSE,GA,03,0,Brian Jack,R,1,Maura Keller,D,Brian Jack,R,,,-30.0,Incumbent renominated
+GA-04,HOUSE,GA,04,0,Hank Johnson,D,1,Hank Johnson,D,James Duffie,R,,,54.0,Incumbent renominated
+GA-05,HOUSE,GA,05,0,Nikema Williams,D,1,Nikema Williams,D,John Oscar Salvesen,R,,,72.0,Incumbent renominated
+GA-06,HOUSE,GA,06,0,Lucy McBath,D,1,Lucy McBath,D,Kevin Martin,R,,,50.0,Incumbent renominated
+GA-07,HOUSE,GA,07,0,Rich McCormick,R,1,Tony Kozycki,D,Rich McCormick,R,,,-22.0,Incumbent renominated
+GA-08,HOUSE,GA,08,0,Austin Scott,R,1,Kelly Esti,D,Austin Scott,R,,,-30.0,Incumbent renominated
+GA-09,HOUSE,GA,09,0,Andrew Clyde,R,1,Caitlyn Gegen,D,Andrew Clyde,R,,,-34.0,Incumbent renominated
+GA-10,HOUSE,GA,10,0,Mike Collins,R,0,Pam Delancy,D,Houston Gaines,R,,,-22.0,Incumbent retiring to run for U.S. Senate
+GA-11,HOUSE,GA,11,0,Barry Loudermilk,R,0,Chris Harden,D,John Cowan,R,,,-24.0,Incumbent retiring
+GA-12,HOUSE,GA,12,0,Rick Allen,R,1,Ceretta Smith,D,Rick Allen,R,,,-14.0,Incumbent renominated
+GA-13,HOUSE,GA,13,0,Everton Blair,D,0,Jasmine Clark,D,Jonathan Chavez,R,,,42.0,Blair lost the initial nomination for the full term; later elected to complete David Scott's unexpired term.
+GA-14,HOUSE,GA,14,0,Clay Fuller,R,1,Shawn Harris,D,Clay Fuller,R,,,-38.0,Incumbent renominated
+HI-01,HOUSE,HI,01,0,Ed Case,D,1,Ed Case,D,Adriel Lam,R,,,26.0,Incumbent renominated
+HI-02,HOUSE,HI,02,0,Jill Tokuda,D,1,Jill Tokuda,D,Brenton Awa,R,,,24.0,Incumbent renominated
+ID-01,HOUSE,ID,01,0,Russ Fulcher,R,1,Kaylee Peterson,D,Russ Fulcher,R,,,-44.0,Incumbent renominated
+ID-02,HOUSE,ID,02,0,Mike Simpson,R,1,Ellie Gilbreath,D,Mike Simpson,R,,,-26.0,Incumbent renominated
+IL-01,HOUSE,IL,01,0,Jonathan Jackson,D,1,Jonathan Jackson,D,Christian Maxwell,R,,,36.0,Incumbent renominated
+IL-02,HOUSE,IL,02,0,Robin Kelly,D,0,Donna Miller,D,Michael Noack,R,,,36.0,Incumbent retiring to run for U.S. Senate
+IL-03,HOUSE,IL,03,0,Delia Ramirez,D,1,Delia Ramirez,D,Angel Oakley,R,,,34.0,Incumbent renominated
+IL-04,HOUSE,IL,04,0,Chuy García,D,0,Patty Garcia,D,Lupe Castillo,R,,,34.0,Incumbent retiring
+IL-05,HOUSE,IL,05,0,Mike Quigley,D,1,Mike Quigley,D,Tommy Hanson,R,,,38.0,Incumbent renominated
+IL-06,HOUSE,IL,06,0,Sean Casten,D,1,Sean Casten,D,Niki Conforti,R,,,6.0,Incumbent renominated
+IL-07,HOUSE,IL,07,0,Danny Davis,D,0,La Shawn Ford,D,Chad Koppie,R,,,68.0,Incumbent retiring
+IL-08,HOUSE,IL,08,0,Raja Krishnamoorthi,D,0,Melissa Bean,D,Jennifer Davis,R,,,10.0,Incumbent retiring to run for U.S. Senate
+IL-09,HOUSE,IL,09,0,Jan Schakowsky,D,0,Daniel Biss,D,John Elleson,R,,,38.0,Incumbent retiring
+IL-10,HOUSE,IL,10,0,Brad Schneider,D,1,Brad Schneider,D,Carl Lambrecht,R,,,24.0,Incumbent renominated
+IL-11,HOUSE,IL,11,0,Bill Foster,D,1,Bill Foster,D,Jeff Walter,R,,,12.0,Incumbent renominated
+IL-12,HOUSE,IL,12,0,Mike Bost,R,1,Julie Fortier,D,Mike Bost,R,,,-44.0,Incumbent renominated
+IL-13,HOUSE,IL,13,0,Nikki Budzinski,D,1,Nikki Budzinski,D,Jeff Wilson,R,,,10.0,Incumbent renominated
+IL-14,HOUSE,IL,14,0,Lauren Underwood,D,1,Lauren Underwood,D,James Marter,R,,,6.0,Incumbent renominated
+IL-15,HOUSE,IL,15,0,Mary Miller,R,1,Jennifer Todd,D,Mary Miller,R,,,-40.0,Incumbent renominated
+IL-16,HOUSE,IL,16,0,Darin LaHood,R,1,Paul Nolley,D,Darin LaHood,R,,,-22.0,Incumbent renominated
+IL-17,HOUSE,IL,17,0,Eric Sorensen,D,1,Eric Sorensen,D,Dillan Vancil,R,,,6.0,Incumbent renominated
+IN-01,HOUSE,IN,01,0,Frank J. Mrvan,D,1,Frank Mrvan,D,Barb Regnitz,R,,,2.0,Incumbent renominated
+IN-02,HOUSE,IN,02,0,Rudy Yakym,R,1,Jamee Decio,D,Rudy Yakym,R,,,-26.0,Incumbent renominated
+IN-03,HOUSE,IN,03,0,Marlin Stutzman,R,1,Kelly Thompson,D,Marlin Stutzman,R,,,-32.0,Incumbent renominated
+IN-04,HOUSE,IN,04,0,Jim Baird,R,1,Drew Cox,D,Jim Baird,R,,,-30.0,Incumbent renominated
+IN-05,HOUSE,IN,05,0,Victoria Spartz,R,1,J. D. Ford,D,Victoria Spartz,R,,,-16.0,Incumbent renominated
+IN-06,HOUSE,IN,06,0,Jefferson Shreve,R,1,Cinde Wirth,D,Jefferson Shreve,R,,,-32.0,Incumbent renominated
+IN-07,HOUSE,IN,07,0,André Carson,D,1,André Carson,D,Patrick McAuley,R,,,42.0,Incumbent renominated
+IN-08,HOUSE,IN,08,0,Mark Messmer,R,1,Mary Allen,D,Mark Messmer,R,,,-36.0,Incumbent renominated
+IN-09,HOUSE,IN,09,0,Erin Houchin,R,1,Brad Meyer,D,Erin Houchin,R,,,-30.0,Incumbent renominated
+IA-01,HOUSE,IA,01,0,Mariannette Miller-Meeks,R,1,Christina Bohannan,D,Mariannette Miller-Meeks,R,,,-8.0,Incumbent renominated
+IA-02,HOUSE,IA,02,0,Ashley Hinson,R,0,Lindsay James,D,Joe Mitchell,R,,,-8.0,Incumbent retiring to run for U.S. Senate
+IA-03,HOUSE,IA,03,0,Zach Nunn,R,1,Sarah Trone Garriott,D,Zach Nunn,R,,,-4.0,Incumbent renominated
+IA-04,HOUSE,IA,04,0,Randy Feenstra,R,0,David Dawson,D,Chris McGowan,R,,,-30.0,Incumbent retiring to run for governor
+KS-01,HOUSE,KS,01,0,Tracey Mann,R,1,Lauren Reinhold,D,Tracey Mann,R,,,-32.0,Incumbent renominated
+KS-02,HOUSE,KS,02,0,Derek Schmidt,R,1,Don Coover,D,Derek Schmidt,R,,,-20.0,Incumbent renominated
+KS-03,HOUSE,KS,03,0,Sharice Davids,D,1,Sharice Davids,D,Eric Jenkins,R,,,4.0,Incumbent renominated
+KS-04,HOUSE,KS,04,0,Ron Estes,R,1,Katy Tyndell,D,Ron Estes,R,,,-24.0,Incumbent renominated
+KY-01,HOUSE,KY,01,0,James Comer,R,1,Drew Williams,D,James Comer,R,,,-46.0,Incumbent renominated
+KY-02,HOUSE,KY,02,0,Brett Guthrie,R,1,Megan Wingfield,D,Brett Guthrie,R,,,-40.0,Incumbent renominated
+KY-03,HOUSE,KY,03,0,Morgan McGarvey,D,1,Morgan McGarvey,D,Maria Rodriquez,R,,,20.0,Incumbent renominated
+KY-04,HOUSE,KY,04,0,Thomas Massie,R,0,Melissa Strange,D,Ed Gallrein,R,,,-36.0,Incumbent lost renomination
+KY-05,HOUSE,KY,05,0,Hal Rogers,R,1,Ned Pillersdorf,D,Hal Rogers,R,,,-64.0,Incumbent renominated
+KY-06,HOUSE,KY,06,0,Andy Barr,R,0,Zach Dembo,D,Ralph Alvarado,R,,,-14.0,Incumbent retiring to run for U.S. Senate
+LA-01,HOUSE,LA,01,0,Steve Scalise,R,1,Lauren Jewett,D,Steve Scalise,R,,,-40.0,Incumbent running
+LA-02,HOUSE,LA,02,0,Troy Carter,D,1,Troy Carter,D,Peter Williams,R,,,50.0,Incumbent running
+LA-03,HOUSE,LA,03,0,Clay Higgins,R,1,John Day,D,Clay Higgins,R,,,-36.0,Incumbent running
+LA-04,HOUSE,LA,04,0,Mike Johnson,R,1,Conrad Cable,D,Mike Johnson,R,,,-34.0,Incumbent running
+LA-05,HOUSE,LA,05,0,Julia Letlow,R,0,Dan McKay,D,Stewart Cathey Jr.,R,,,-34.0,Incumbent retiring to run for U.S. Senate
+LA-06,HOUSE,LA,06,0,Cleo Fields,D,0,Pat Forbes,D,Monique Appeaning,R,,,-32.0,Incumbent retiring to run for Louisiana State Senate
+ME-01,HOUSE,ME,01,0,Chellie Pingree,D,1,Chellie Pingree,D,Ronald Russell,R,,,22.0,Incumbent renominated
+ME-02,HOUSE,ME,02,0,Jared Golden,D,0,Matthew Dunlap,D,Paul LePage,R,,,-8.0,Incumbent retiring
+MD-01,HOUSE,MD,01,0,Andy Harris,R,1,Dan Schwartz,D,Andy Harris,R,,,-16.0,Incumbent renominated
+MD-02,HOUSE,MD,02,0,Johnny Olszewski,D,1,Johnny Olszewski,D,Dave Wallace,R,,,20.0,Incumbent renominated
+MD-03,HOUSE,MD,03,0,Sarah Elfreth,D,1,Sarah Elfreth,D,Berney Flowers,R,,,24.0,Incumbent renominated
+MD-04,HOUSE,MD,04,0,Glenn Ivey,D,1,Glenn Ivey,D,George McDermott,R,,,78.0,Incumbent renominated
+MD-05,HOUSE,MD,05,0,Steny Hoyer,D,0,Adrian Boafo,D,Chris Chaffee,R,,,34.0,Incumbent retiring
+MD-06,HOUSE,MD,06,0,April McClain Delaney,D,1,April McClain Delaney,D,Robin Ficker,R,,,6.0,Incumbent renominated
+MD-07,HOUSE,MD,07,0,Kweisi Mfume,D,1,Kweisi Mfume,D,Scott Collier,R,,,62.0,Incumbent renominated
+MD-08,HOUSE,MD,08,0,Jamie Raskin,D,1,Jamie Raskin,D,Cheryl Riley,R,,,60.0,Incumbent renominated
+MA-01,HOUSE,MA,01,0,Richard Neal,D,1,Richard Neal,D,,,,,16.0,Incumbent renominated
+MA-02,HOUSE,MA,02,0,Jim McGovern,D,1,Jim McGovern,D,,,,,26.0,Incumbent re-elected
+MA-03,HOUSE,MA,03,0,Lori Trahan,D,1,Lori Trahan,D,Gary Grossi,R,,,22.0,Incumbent renominated
+MA-04,HOUSE,MA,04,0,Jake Auchincloss,D,1,Jake Auchincloss,D,Thomas Stalcup,R,,,22.0,Incumbent renominated
+MA-05,HOUSE,MA,05,0,Katherine Clark,D,1,Katherine Clark,D,,,,,48.0,Incumbent re-elected
+MA-06,HOUSE,MA,06,0,Seth Moulton,D,0,Dan Koh,D,Micah Jones,R,,,22.0,Incumbent retiring to run for U.S. Senate
+MA-07,HOUSE,MA,07,0,Ayanna Pressley,D,1,Ayanna Pressley,D,,,,,68.0,Incumbent re-elected
+MA-08,HOUSE,MA,08,0,Stephen Lynch,D,1,Stephen Lynch,D,Robert Burke,R,,,30.0,Incumbent renominated
+MA-09,HOUSE,MA,09,0,Bill Keating,D,1,Bill Keating,D,Tyler MacAllister,R,,,12.0,Incumbent renominated
+MI-01,HOUSE,MI,01,0,Jack Bergman,R,1,Callie Barr,D,Jack Bergman,R,,,-22.0,Incumbent renominated
+MI-02,HOUSE,MI,02,0,John Moolenaar,R,1,Ben Ambrose,D,John Moolenaar,R,,,-30.0,Incumbent renominated
+MI-03,HOUSE,MI,03,0,Hillary Scholten,D,1,Hillary Scholten,D,Terri DeBoer,R,,,8.0,Incumbent renominated
+MI-04,HOUSE,MI,04,0,Bill Huizenga,R,1,Sean McCann,D,Bill Huizenga,R,,,-6.0,Incumbent renominated
+MI-05,HOUSE,MI,05,0,Tim Walberg,R,1,Christian Vukasovich,D,Tim Walberg,R,,,-26.0,Incumbent renominated
+MI-06,HOUSE,MI,06,0,Debbie Dingell,D,1,Debbie Dingell,D,Heather Smiley,R,,,24.0,Incumbent renominated
+MI-07,HOUSE,MI,07,0,Tom Barrett,R,1,William Lawrence,D,Tom Barrett,R,,,0,Incumbent renominated
+MI-08,HOUSE,MI,08,0,Kristen McDonald Rivet,D,1,Kristen McDonald Rivet,D,Thomas Smith,R,,,-2.0,Incumbent renominated
+MI-09,HOUSE,MI,09,0,Lisa McClain,R,1,Ray Pooley,D,Lisa McClain,R,,,-32.0,Incumbent renominated
+MI-10,HOUSE,MI,10,0,John James,R,0,Christina Hines,D,Mike Bouchard Jr.,R,,,-6.0,Incumbent retiring to run for governor
+MI-11,HOUSE,MI,11,0,Haley Stevens,D,0,Jeremy Moss,D,Ethan Baker,R,,,18.0,Incumbent retiring to run for U.S. Senate
+MI-12,HOUSE,MI,12,0,Rashida Tlaib,D,1,Rashida Tlaib,D,James Hooper,R,,,42.0,Incumbent renominated
+MI-13,HOUSE,MI,13,0,Shri Thanedar,D,0,Donavan McKinney,D,T. P. Nykoriak,R,,,44.0,Incumbent lost renomination
+MN-01,HOUSE,MN,01,0,Brad Finstad,R,1,Jake Johnson,D,Brad Finstad,R,,,-12.0,Incumbent renominated
+MN-02,HOUSE,MN,02,0,Angie Craig,D,0,Matt Little,D,Eric Pratt,R,,,6.0,Incumbent retiring to run for U.S. Senate
+MN-03,HOUSE,MN,03,0,Kelly Morrison,D,1,Kelly Morrison,D,Tyler Bass,R,,,22.0,Incumbent renominated
+MN-04,HOUSE,MN,04,0,Betty McCollum,D,1,Betty McCollum,D,Paul Wikstrom,R,,,36.0,Incumbent renominated
+MN-05,HOUSE,MN,05,0,Ilhan Omar,D,1,Ilhan Omar,D,John Nagel,R,,,64.0,Incumbent renominated
+MN-06,HOUSE,MN,06,0,Tom Emmer,R,1,Doug Chapin,D,Tom Emmer,R,,,-20.0,Incumbent renominated
+MN-07,HOUSE,MN,07,0,Michelle Fischbach,R,1,Erik Osberg,D,Michelle Fischbach,R,,,-36.0,Incumbent renominated
+MN-08,HOUSE,MN,08,0,Pete Stauber,R,1,Trina Swanson,D,Pete Stauber,R,,,-14.0,Incumbent renominated
+MS-01,HOUSE,MS,01,0,Trent Kelly,R,1,Cliff Johnson,D,Trent Kelly,R,,,-36.0,Incumbent renominated
+MS-02,HOUSE,MS,02,0,Bennie Thompson,D,1,Bennie Thompson,D,Ron Eller,R,,,22.0,Incumbent renominated
+MS-03,HOUSE,MS,03,0,Michael Guest,R,1,Michael Chiaradio,D,Michael Guest,R,,,-28.0,Incumbent renominated
+MS-04,HOUSE,MS,04,0,Mike Ezell,R,1,Jeffrey Hulum III,D,Mike Ezell,R,,,-42.0,Incumbent renominated
+MO-01,HOUSE,MO,01,0,Wesley Bell,D,1,Wesley Bell,D,Paul Berry,R,,,58.0,Incumbent renominated
+MO-02,HOUSE,MO,02,0,Ann Wagner,R,1,Fred Wellman,D,Ann Wagner,R,,,-8.0,Incumbent renominated
+MO-03,HOUSE,MO,03,0,Bob Onder,R,1,Bethany Mann,D,Bob Onder,R,,,-26.0,Incumbent renominated
+MO-04,HOUSE,MO,04,0,Mark Alford,R,1,Jordan Herrera,D,Mark Alford,R,,,-42.0,Incumbent renominated
+MO-05,HOUSE,MO,05,0,Emanuel Cleaver,D,1,Emanuel Cleaver,D,Rick Brattin,R,,,24.0,Incumbent renominated
+MO-06,HOUSE,MO,06,0,Sam Graves,R,0,Josh Smead,D,Chris Stigall,R,,,-38.0,Incumbent retiring
+MO-07,HOUSE,MO,07,0,Eric Burlison,R,1,Missi Hesketh,D,Eric Burlison,R,,,-42.0,Incumbent renominated
+MO-08,HOUSE,MO,08,0,Jason Smith,R,1,Chris Reichard,D,Jason Smith,R,,,-54.0,Incumbent renominated
+MT-01,HOUSE,MT,01,0,Ryan Zinke,R,0,Sam Forstag,D,Aaron Flint,R,,,-10.0,Incumbent retiring
+MT-02,HOUSE,MT,02,0,Troy Downing,R,1,Brian Miller,D,Troy Downing,R,,,-30.0,Incumbent renominated
+NE-01,HOUSE,NE,01,0,Mike Flood,R,1,Chris Backemeyer,D,Mike Flood,R,,,-12.0,Incumbent renominated
+NE-02,HOUSE,NE,02,0,Don Bacon,R,0,Denise Powell,D,Brinker Harding,R,,,6.0,Incumbent retiring
+NE-03,HOUSE,NE,03,0,Adrian Smith,R,1,Becky Stille,D,Adrian Smith,R,,,-54.0,Incumbent renominated
+NV-01,HOUSE,NV,01,0,Dina Titus,D,1,Dina Titus,D,Carrie Buck,R,,,4.0,Incumbent renominated
+NV-02,HOUSE,NV,02,0,Mark Amodei,R,0,Teresa Benitez-Thompson,D,David Flippo,R,,,-14.0,Incumbent retiring
+NV-03,HOUSE,NV,03,0,Susie Lee,D,1,Susie Lee,D,Martin O'Donnell,R,,,2.0,Incumbent renominated
+NV-04,HOUSE,NV,04,0,Steven Horsford,D,1,Steven Horsford,D,Cody Whipple,R,,,4.0,Incumbent renominated
+NH-01,HOUSE,NH,01,0,Chris Pappas,D,0,Stefany Shaheen,D,Anthony DiLorenzo,R,,,4.0,Incumbent retiring to run for U.S. Senate
+NH-02,HOUSE,NH,02,0,Maggie Goodlander,D,1,Maggie Goodlander,D,Lily Tang Williams,R,,,4.0,Incumbent renominated
+NJ-01,HOUSE,NJ,01,0,Donald Norcross,D,1,Donald Norcross,D,Damon Galdo,R,,,20.0,Incumbent renominated
+NJ-02,HOUSE,NJ,02,0,Jeff Van Drew,R,1,Zack Mullock,D,Jeff Van Drew,R,,,-10.0,Incumbent renominated
+NJ-03,HOUSE,NJ,03,0,Herb Conaway,D,1,Herb Conaway,D,Michael McGuire,R,,,10.0,Incumbent renominated
+NJ-04,HOUSE,NJ,04,0,Chris Smith,R,1,Rachel Peace,D,Chris Smith,R,,,-28.0,Incumbent renominated
+NJ-05,HOUSE,NJ,05,0,Josh Gottheimer,D,1,Josh Gottheimer,D,Sean Kirrane,R,,,4.0,Incumbent renominated
+NJ-06,HOUSE,NJ,06,0,Frank Pallone,D,1,Frank Pallone,D,Hillary Herzig,R,,,10.0,Incumbent renominated
+NJ-07,HOUSE,NJ,07,0,Thomas Kean Jr.,R,1,Rebecca Bennett,D,Thomas Kean Jr.,R,,,0,Incumbent renominated
+NJ-08,HOUSE,NJ,08,0,Rob Menendez,D,1,Rob Menendez,D,,,,,30.0,Incumbent renominated
+NJ-09,HOUSE,NJ,09,0,Nellie Pou,D,1,Nellie Pou,D,Rosie Pino,R,,,4.0,Incumbent renominated
+NJ-10,HOUSE,NJ,10,0,LaMonica McIver,D,1,LaMonica McIver,D,Carmen Bucco,R,,,54.0,Incumbent renominated
+NJ-11,HOUSE,NJ,11,0,Analilia Mejia,D,1,Analilia Mejia,D,Joe Hathaway,R,,,10.0,Incumbent renominated
+NJ-12,HOUSE,NJ,12,0,Bonnie Watson Coleman,D,0,Adam Hamawy,D,Gregg Mele,R,,,26.0,Incumbent retiring
+NM-01,HOUSE,NM,01,0,Melanie Stansbury,D,1,Melanie Stansbury,D,Didi Okpareke,R,,,14.0,Incumbent renominated
+NM-02,HOUSE,NM,02,0,Gabe Vasquez,D,1,Gabe Vasquez,D,Greg Cunningham,R,,,0,Incumbent renominated
+NM-03,HOUSE,NM,03,0,Teresa Leger Fernandez,D,1,Teresa Leger Fernández,D,Martin Zamora,R,,,6.0,Incumbent renominated
+NY-01,HOUSE,NY,01,0,Nick LaLota,R,1,Chris Gallant,D,Nick LaLota,R,,,-8.0,Incumbent renominated
+NY-02,HOUSE,NY,02,0,Andrew Garbarino,R,1,Patrick Halpin,D,Andrew Garbarino,R,,,-12.0,Incumbent renominated
+NY-03,HOUSE,NY,03,0,Tom Suozzi,D,1,Tom Suozzi,D,Mike LiPetri,R,,,0,Incumbent renominated
+NY-04,HOUSE,NY,04,0,Laura Gillen,D,1,Laura Gillen,D,Jeanine Driscoll,R,,,4.0,Incumbent renominated
+NY-05,HOUSE,NY,05,0,Gregory Meeks,D,1,Gregory Meeks,D,George Marsh,R,,,48.0,Incumbent renominated
+NY-06,HOUSE,NY,06,0,Grace Meng,D,1,Grace Meng,D,Joseph Chou,R,,,12.0,Incumbent renominated
+NY-07,HOUSE,NY,07,0,Nydia Velázquez,D,0,Claire Valdez,D,Melvin Rivera,R,,,50.0,Incumbent retiring
+NY-08,HOUSE,NY,08,0,Hakeem Jeffries,D,1,Hakeem Jeffries,D,Lewis Mizrahi,R,,,48.0,Incumbent renominated
+NY-09,HOUSE,NY,09,0,Yvette Clarke,D,1,Yvette Clarke,D,Joel Azumah,R,,,44.0,Incumbent renominated
+NY-10,HOUSE,NY,10,0,Dan Goldman,D,0,Brad Lander,D,Jennifer Moore,R,,,64.0,Incumbent lost renomination
+NY-11,HOUSE,NY,11,0,Nicole Malliotakis,R,1,Michael DeCillis,D,Nicole Malliotakis,R,,,-20.0,Incumbent renominated
+NY-12,HOUSE,NY,12,0,Jerry Nadler,D,0,Micah Lasher,D,Caroline Shinkle,R,,,66.0,Incumbent retiring
+NY-13,HOUSE,NY,13,0,Adriano Espaillat,D,0,Darializa Avila Chevalier,D,Jomo Williams,R,,,64.0,Incumbent lost renomination
+NY-14,HOUSE,NY,14,0,Alexandria Ocasio-Cortez,D,1,Alexandria Ocasio-Cortez,D,Diamant Hysenaj,R,,,38.0,Incumbent renominated
+NY-15,HOUSE,NY,15,0,Ritchie Torres,D,1,Ritchie Torres,D,Stylo Sapaskis,R,,,54.0,Incumbent renominated
+NY-16,HOUSE,NY,16,0,George Latimer,D,1,George Latimer,D,Joseph Cinquemani,R,,,36.0,Incumbent renominated
+NY-17,HOUSE,NY,17,0,Mike Lawler,R,1,Cait Conley,D,Mike Lawler,R,,,2.0,Incumbent renominated
+NY-18,HOUSE,NY,18,0,Pat Ryan,D,1,Pat Ryan,D,Jacqueline Auringer,R,,,4.0,Incumbent renominated
+NY-19,HOUSE,NY,19,0,Josh Riley,D,1,Josh Riley,D,Peter Oberacker,R,,,2.0,Incumbent renominated
+NY-20,HOUSE,NY,20,0,Paul Tonko,D,1,Paul Tonko,D,Ralph Ambrosio,R,,,16.0,Incumbent renominated
+NY-21,HOUSE,NY,21,0,Elise Stefanik,R,0,Blake Gendebien,D,Anthony Constantino,R,,,-20.0,Incumbent retiring
+NY-22,HOUSE,NY,22,0,John Mannion,D,1,John Mannion,D,Kailee Buller,R,,,8.0,Incumbent renominated
+NY-23,HOUSE,NY,23,0,Nick Langworthy,R,1,Aaron Gies,D,Nick Langworthy,R,,,-20.0,Incumbent renominated
+NY-24,HOUSE,NY,24,0,Claudia Tenney,R,1,Alissa Ellman,D,Claudia Tenney,R,,,-22.0,Incumbent renominated
+NY-25,HOUSE,NY,25,0,Joseph Morelle,D,1,Joseph Morelle,D,Virginia McIntyre,R,,,20.0,Incumbent renominated
+NY-26,HOUSE,NY,26,0,Tim Kennedy,D,1,Tim Kennedy,D,Dennis Hannon,R,,,22.0,Incumbent renominated
+NC-01,HOUSE,NC,01,0,Don Davis,D,1,Don Davis,D,Laurie Buckhout,R,,,-10.0,Incumbent renominated
+NC-02,HOUSE,NC,02,0,Deborah Ross,D,1,Deborah Ross,D,Eugene Douglass,R,,,34.0,Incumbent renominated
+NC-03,HOUSE,NC,03,0,Greg Murphy,R,1,Raymond Smith Jr.,D,Greg Murphy,R,,,-12.0,Incumbent renominated
+NC-04,HOUSE,NC,04,0,Valerie Foushee,D,1,Valerie Foushee,D,Max Ganorkar,R,,,46.0,Incumbent renominated
+NC-05,HOUSE,NC,05,0,Virginia Foxx,R,1,Chuck Hubbard,D,Virginia Foxx,R,,,-18.0,Incumbent renominated
+NC-06,HOUSE,NC,06,0,Addison McDowell,R,1,Cyril Jefferson,D,Addison McDowell,R,,,-18.0,Incumbent renominated
+NC-07,HOUSE,NC,07,0,David Rouzer,R,1,Kimberly Hardy,D,David Rouzer,R,,,-14.0,Incumbent renominated
+NC-08,HOUSE,NC,08,0,Mark Harris,R,1,Colby Watson,D,Mark Harris,R,,,-20.0,Incumbent renominated
+NC-09,HOUSE,NC,09,0,Richard Hudson,R,1,Richard Ojeda,D,Richard Hudson,R,,,-16.0,Incumbent renominated
+NC-10,HOUSE,NC,10,0,Pat Harrigan,R,1,Ashley Bell,D,Pat Harrigan,R,,,-18.0,Incumbent renominated
+NC-11,HOUSE,NC,11,0,Chuck Edwards,R,1,Jamie Ager,D,Jennifer Balkcom,R,,,-10.0,Incumbent renominated but withdrew
+NC-12,HOUSE,NC,12,0,Alma Adams,D,1,Alma Adams,D,Jack Codiga,R,,,48.0,Incumbent renominated
+NC-13,HOUSE,NC,13,0,Brad Knott,R,1,Paul Barringer,D,Brad Knott,R,,,-16.0,Incumbent renominated
+NC-14,HOUSE,NC,14,0,Tim Moore,R,1,Lakesha Womack,D,Tim Moore,R,,,-16.0,Incumbent renominated
+ND-AL,HOUSE,ND,AL,0,Julie Fedorchak,R,1,Trygve Hammer,D,Julie Fedorchak,R,,,-36.0,Incumbent renominated
+OH-01,HOUSE,OH,01,0,Greg Landsman,D,1,Greg Landsman,D,Eric Conroy,R,,,-2.0,Incumbent renominated
+OH-02,HOUSE,OH,02,0,David Taylor,R,1,Jennifer Mazzuckelli,D,David Taylor,R,,,-42.0,Incumbent renominated
+OH-03,HOUSE,OH,03,0,Joyce Beatty,D,1,Joyce Beatty,D,Cleophus Dulaney,R,,,42.0,Incumbent renominated
+OH-04,HOUSE,OH,04,0,Jim Jordan,R,1,Joshua Kolasinski,D,Jim Jordan,R,,,-42.0,Incumbent renominated
+OH-05,HOUSE,OH,05,0,Bob Latta,R,1,Brian Shaver,D,Bob Latta,R,,,-24.0,Incumbent renominated
+OH-06,HOUSE,OH,06,0,Michael Rulli,R,1,Elizabeth Kirtley,D,Michael Rulli,R,,,-34.0,Incumbent renominated
+OH-07,HOUSE,OH,07,0,Max Miller,R,1,Brian Poindexter,D,Max Miller,R,,,-10.0,Incumbent renominated
+OH-08,HOUSE,OH,08,0,Warren Davidson,R,1,Vanessa Enoch,D,Warren Davidson,R,,,-16.0,Incumbent renominated
+OH-09,HOUSE,OH,09,0,Marcy Kaptur,D,1,Marcy Kaptur,D,Derek Merrin,R,,,-10.0,Incumbent renominated
+OH-10,HOUSE,OH,10,0,Mike Turner,R,1,Kristina Knickerbocker,D,Mike Turner,R,,,-8.0,Incumbent renominated
+OH-11,HOUSE,OH,11,0,Shontel Brown,D,1,Shontel Brown,D,Mike Kirchner,R,,,56.0,Incumbent renominated
+OH-12,HOUSE,OH,12,0,Troy Balderson,R,1,Jerrad Christian,D,Troy Balderson,R,,,-30.0,Incumbent renominated
+OH-13,HOUSE,OH,13,0,Emilia Sykes,D,1,Emilia Sykes,D,Carey Coleman,R,,,4.0,Incumbent renominated
+OH-14,HOUSE,OH,14,0,David Joyce,R,1,Maria Jukic,D,David Joyce,R,,,-20.0,Incumbent renominated
+OH-15,HOUSE,OH,15,0,Mike Carey,R,1,Don Leonard,D,Mike Carey,R,,,-10.0,Incumbent renominated
+OK-01,HOUSE,OK,01,0,Kevin Hern,R,0,John Croisant,D,Mark Tedford,R,,,-22.0,Incumbent retiring to run for U.S. Senate
+OK-02,HOUSE,OK,02,0,Josh Brecheen,R,1,Brandon Wade,D,Josh Brecheen,R,,,-56.0,Incumbent renominated
+OK-03,HOUSE,OK,03,0,Frank Lucas,R,1,Suzie Byrd,D,Frank Lucas,R,,,-46.0,Incumbent renominated
+OK-04,HOUSE,OK,04,0,Tom Cole,R,1,Mitchell Jacob,D,Tom Cole,R,,,-34.0,Incumbent renominated
+OK-05,HOUSE,OK,05,0,Stephanie Bice,R,1,Jena Nelson,D,Stephanie Bice,R,,,-18.0,Incumbent renominated
+OR-01,HOUSE,OR,01,0,Suzanne Bonamici,D,1,Suzanne Bonamici,D,Barbara Kahl,R,,,40.0,Incumbent renominated
+OR-02,HOUSE,OR,02,0,Cliff Bentz,R,1,Chris Beck,D,Cliff Bentz,R,,,-28.0,Incumbent renominated
+OR-03,HOUSE,OR,03,0,Maxine Dexter,D,1,Maxine Dexter,D,Loran Ayles,R,,,48.0,Incumbent renominated
+OR-04,HOUSE,OR,04,0,Val Hoyle,D,1,Val Hoyle,D,Monique DeSpain,R,,,12.0,Incumbent renominated
+OR-05,HOUSE,OR,05,0,Janelle Bynum,D,1,Janelle Bynum,D,Patti Adair,R,,,8.0,Incumbent renominated
+OR-06,HOUSE,OR,06,0,Andrea Salinas,D,1,Andrea Salinas,D,David Russ,R,,,12.0,Incumbent renominated
+PA-01,HOUSE,PA,01,0,Brian Fitzpatrick,R,1,Bob Harvie,D,Brian Fitzpatrick,R,,,2.0,Incumbent renominated
+PA-02,HOUSE,PA,02,0,Brendan Boyle,D,1,Brendan Boyle,D,Jessica Arriaga,R,,,38.0,Incumbent renominated
+PA-03,HOUSE,PA,03,0,Dwight Evans,D,0,Chris Rabb,D,,,,,80.0,Incumbent retiring
+PA-04,HOUSE,PA,04,0,Madeleine Dean,D,1,Madeleine Dean,D,Aurora Stuski,R,,,16.0,Incumbent renominated
+PA-05,HOUSE,PA,05,0,Mary Gay Scanlon,D,1,Mary Gay Scanlon,D,Nicholas Manganaro,R,,,30.0,Incumbent renominated
+PA-06,HOUSE,PA,06,0,Chrissy Houlahan,D,1,Chrissy Houlahan,D,Marty Young,R,,,12.0,Incumbent renominated
+PA-07,HOUSE,PA,07,0,Ryan Mackenzie,R,1,Bob Brooks,D,Ryan Mackenzie,R,,,-2.0,Incumbent renominated
+PA-08,HOUSE,PA,08,0,Rob Bresnahan,R,1,Paige Cognetti,D,Rob Bresnahan,R,,,-8.0,Incumbent renominated
+PA-09,HOUSE,PA,09,0,Dan Meuser,R,1,Rachel Wallace,D,Dan Meuser,R,,,-38.0,Incumbent renominated
+PA-10,HOUSE,PA,10,0,Scott Perry,R,1,Janelle Stelson,D,Scott Perry,R,,,-6.0,Incumbent renominated
+PA-11,HOUSE,PA,11,0,Lloyd Smucker,R,1,Nancy Mannion,D,Lloyd Smucker,R,,,-22.0,Incumbent renominated
+PA-12,HOUSE,PA,12,0,Summer Lee,D,1,Summer Lee,D,James Hayes,R,,,20.0,Incumbent renominated
+PA-13,HOUSE,PA,13,0,John Joyce,R,1,Beth Farnham,D,John Joyce,R,,,-46.0,Incumbent renominated
+PA-14,HOUSE,PA,14,0,Guy Reschenthaler,R,1,Alan Bradstock,D,Guy Reschenthaler,R,,,-34.0,Incumbent renominated
+PA-15,HOUSE,PA,15,0,Glenn Thompson,R,1,Ray Bilger,D,Glenn Thompson,R,,,-38.0,Incumbent renominated
+PA-16,HOUSE,PA,16,0,Mike Kelly,R,1,Justin Wagner,D,Mike Kelly,R,,,-22.0,Incumbent renominated
+PA-17,HOUSE,PA,17,0,Chris Deluzio,D,1,Chris Deluzio,D,Tony Guy,R,,,6.0,Incumbent renominated
+RI-01,HOUSE,RI,01,0,Gabe Amo,D,1,Gabe Amo,D,Kellie Keenan,R,,,24.0,Incumbent renominated
+RI-02,HOUSE,RI,02,0,Seth Magaziner,D,1,Seth Magaziner,D,Vic Mellor,R,,,8.0,Incumbent renominated
+SC-01,HOUSE,SC,01,0,Nancy Mace,R,0,Nancy Lacore,D,Jenny Costa Honeycutt,R,,,-12.0,Incumbent retiring to run for governor
+SC-02,HOUSE,SC,02,0,Joe Wilson,R,1,Zyon Khalifa,D,Joe Wilson,R,,,-14.0,Incumbent renominated
+SC-03,HOUSE,SC,03,0,Sheri Biggs,R,1,Eunice Lehmacher,D,Sheri Biggs,R,,,-42.0,Incumbent renominated
+SC-04,HOUSE,SC,04,0,William Timmons,R,1,Courtney McClain,D,William Timmons,R,,,-22.0,Incumbent renominated
+SC-05,HOUSE,SC,05,0,Ralph Norman,R,0,Mallory Dittmer,D,Wes Climer,R,,,-22.0,Incumbent retiring to run for governor
+SC-06,HOUSE,SC,06,0,Jim Clyburn,D,1,Jim Clyburn,D,John Peterson,R,,,26.0,Incumbent renominated
+SC-07,HOUSE,SC,07,0,Russell Fry,R,1,John Vincent,D,Russell Fry,R,,,-24.0,Incumbent renominated
+SD-AL,HOUSE,SD,AL,0,Dusty Johnson,R,0,Nikki Gronli,D,Marty Jackley,R,,,-30.0,Incumbent retiring to run for governor
+TN-01,HOUSE,TN,01,0,Diana Harshbarger,R,1,Kristi Burke,D,Diana Harshbarger,R,,,-58.0,Incumbent renominated
+TN-02,HOUSE,TN,02,0,Tim Burchett,R,1,Michaela Barnett,D,Tim Burchett,R,,,-34.0,Incumbent renominated
+TN-03,HOUSE,TN,03,0,Chuck Fleischmann,R,1,Anna Golladay,D,Chuck Fleischmann,R,,,-36.0,Incumbent renominated
+TN-04,HOUSE,TN,04,0,Scott DesJarlais,R,1,Victoria Broderick,D,Scott DesJarlais,R,,,-22.0,Incumbent renominated
+TN-05,HOUSE,TN,05,0,Andy Ogles,R,0,Chaz Molder,D,Charlie Hatcher,R,,,-20.0,Incumbent lost renomination
+TN-06,HOUSE,TN,06,0,John Rose,R,0,Mike Croley,D,Johnny Garrett,R,,,-26.0,Incumbent retiring to run for governor
+TN-07,HOUSE,TN,07,0,Matt Van Epps,R,1,Darden Copeland,D,Matt Van Epps,R,,,-22.0,Incumbent renominated
+TN-08,HOUSE,TN,08,0,David Kustoff,R,1,Heidi Kuhn,D,David Kustoff,R,,,-20.0,Incumbent renominated
+TN-09,HOUSE,TN,09,0,Steve Cohen,D,0,Justin Pearson,D,Brent Taylor,R,,,-18.0,Incumbent retiring
+TX-01,HOUSE,TX,01,0,Nathaniel Moran,R,1,Yolanda Prince,D,Nathaniel Moran,R,,,-48.0,Incumbent renominated
+TX-02,HOUSE,TX,02,0,Dan Crenshaw,R,0,Shaun Finnie,D,Steve Toth,R,,,-22.0,Incumbent lost renomination
+TX-03,HOUSE,TX,03,0,Keith Self,R,1,Evan Hunt,D,Keith Self,R,,,-22.0,Incumbent renominated
+TX-04,HOUSE,TX,04,0,Pat Fallon,R,1,Jason Pearce,D,Pat Fallon,R,,,-24.0,Incumbent renominated
+TX-05,HOUSE,TX,05,0,Lance Gooden,R,1,Chelsey Hockett,D,Lance Gooden,R,,,-20.0,Incumbent renominated
+TX-06,HOUSE,TX,06,0,Jake Ellzey,R,1,Danny Minton,D,Jake Ellzey,R,,,-22.0,Incumbent renominated
+TX-07,HOUSE,TX,07,0,Lizzie Fletcher,D,1,Lizzie Fletcher,D,Alexander Hale,R,,,26.0,Incumbent renominated
+TX-08,HOUSE,TX,08,0,Morgan Luttrell,R,0,Laura Jones,D,Jessica Hart Steinmann,R,,,-26.0,Incumbent retiring
+TX-09,HOUSE,TX,09,0,,,0,Leticia Gutierrez,D,Alex Mealer,R,,,-18.0,New representative to be elected
+TX-10,HOUSE,TX,10,0,Michael McCaul,R,0,Caitlin Rourk,D,Chris Gober,R,,,-20.0,Incumbent retiring
+TX-11,HOUSE,TX,11,0,August Pfluger,R,1,Claire Reynolds,D,August Pfluger,R,,,-34.0,Incumbent renominated
+TX-12,HOUSE,TX,12,0,Craig Goldman,R,1,Angela Rodriguez Prilliman,D,Craig Goldman,R,,,-22.0,Incumbent renominated
+TX-13,HOUSE,TX,13,0,Ronny Jackson,R,1,Mark Nair,D,Ronny Jackson,R,,,-46.0,Incumbent renominated
+TX-14,HOUSE,TX,14,0,Randy Weber,R,1,Thurman Bartie,D,Randy Weber,R,,,-24.0,Incumbent renominated
+TX-15,HOUSE,TX,15,0,Monica De La Cruz,R,1,Bobby Pulido,D,Monica De La Cruz,R,,,-14.0,Incumbent renominated
+TX-16,HOUSE,TX,16,0,Veronica Escobar,D,1,Veronica Escobar,D,Adam Bauman,R,,,22.0,Incumbent renominated
+TX-17,HOUSE,TX,17,0,Pete Sessions,R,1,Casey Shepard,D,Pete Sessions,R,,,-20.0,Incumbent renominated
+TX-18,HOUSE,TX,18,0,Christian Menefee,D,1,Christian Menefee,D,Ronald Whitfield,R,,,58.0,Incumbent renominated
+TX-19,HOUSE,TX,19,0,Jodey Arrington,R,0,Kyle Rable,D,Tom Sell,R,,,-50.0,Incumbent retiring
+TX-20,HOUSE,TX,20,0,Joaquin Castro,D,1,Joaquin Castro,D,Edgardo Rafael Baez,R,,,32.0,Incumbent renominated
+TX-21,HOUSE,TX,21,0,Chip Roy,R,0,Kristin Hook,D,Mark Teixeira,R,,,-20.0,Incumbent retiring to run for Texas attorney general
+TX-22,HOUSE,TX,22,0,Troy Nehls,R,0,Marquette Greene-Scott,D,Trever Nehls,R,,,-22.0,Incumbent retiring
+TX-23,HOUSE,TX,23,0,,,0,Katy Padilla Stout,D,Brandon Herrera,R,,,-14.0,"Rep. Tony Gonzales (R) resigned April 14, 2026."
+TX-24,HOUSE,TX,24,0,Beth Van Duyne,R,1,Kevin Burge,D,Beth Van Duyne,R,,,-16.0,Incumbent renominated
+TX-25,HOUSE,TX,25,0,Roger Williams,R,1,Dione Sims,D,Roger Williams,R,,,-22.0,Incumbent renominated
+TX-26,HOUSE,TX,26,0,Brandon Gill,R,1,Steven Shook,D,Brandon Gill,R,,,-22.0,Incumbent renominated
+TX-27,HOUSE,TX,27,0,Michael Cloud,R,1,Tanya Lloyd,D,Michael Cloud,R,,,-20.0,Incumbent renominated
+TX-28,HOUSE,TX,28,0,Henry Cuellar,D,1,Henry Cuellar,D,Tano Tijerina,R,,,-6.0,Incumbent renominated
+TX-29,HOUSE,TX,29,0,Sylvia Garcia,D,1,Sylvia Garcia,D,Martha Fierro,R,,,34.0,Incumbent renominated
+TX-30,HOUSE,TX,30,0,,,0,Frederick Haynes III,D,Everett Jackson,R,,,50.0,New representative to be elected
+TX-31,HOUSE,TX,31,0,John Carter,R,1,Justin Early,D,John Carter,R,,,-22.0,Incumbent renominated
+TX-32,HOUSE,TX,32,0,,,0,Dan Barrios,D,Jace Yarbrough,R,,,-16.0,New representative to be elected
+TX-33,HOUSE,TX,33,0,Jasmine Crockett,D,0,Colin Allred,D,Patrick Gillespie,R,,,36.0,Incumbent retiring to run for U.S. Senate. Democratic loss.
+TX-34,HOUSE,TX,34,0,Vicente Gonzalez,D,1,Vicente Gonzalez,D,Eric Flores,R,,,-6.0,Incumbent renominated
+TX-35,HOUSE,TX,35,0,,,0,Johnny Garcia,D,Carlos De La Cruz,R,,,-8.0,New representative to be elected
+TX-36,HOUSE,TX,36,0,Brian Babin,R,1,Rhonda Hart,D,Brian Babin,R,,,-24.0,Incumbent renominated
+TX-37,HOUSE,TX,37,0,Lloyd Doggett,D,0,Greg Casar,D,Lauren Peña,R,,,60.0,Incumbent retiring. Democratic loss.
+TX-38,HOUSE,TX,38,0,Wesley Hunt,R,0,Melissa McDonough,D,Jon Bonck,R,,,-20.0,Incumbent retiring to run for U.S. Senate
+UT-01,HOUSE,UT,01,0,,,0,Ben McAdams,D,Riley Owen,R,,,24.0,New representative to be elected
+UT-02,HOUSE,UT,02,0,Blake Moore,R,1,Peter Crosby,D,Blake Moore,R,,,-30.0,Incumbent renominated
+UT-03,HOUSE,UT,03,0,Celeste Maloy,R,1,Kent Udell,D,Celeste Maloy,R,,,-42.0,Incumbent renominated
+UT-04,HOUSE,UT,04,0,Burgess Owens,R,0,Jonny Larsen,D,Mike Kennedy,R,,,-34.0,Incumbent retiring. Republican loss.
+VT-AL,HOUSE,VT,AL,0,Becca Balint,D,1,Becca Balint,D,Gerald Malloy,R,,,34.0,Incumbent renominated
+VA-01,HOUSE,VA,01,0,Rob Wittman,R,1,Shannon Taylor,D,Rob Wittman,R,,,-6.0,Incumbent renominated
+VA-02,HOUSE,VA,02,0,Jen Kiggans,R,1,Elaine Luria,D,Jen Kiggans,R,,,0,Incumbent renominated
+VA-03,HOUSE,VA,03,0,Bobby Scott,D,1,Bobby Scott,D,Edwin Rivera,R,,,36.0,Incumbent renominated
+VA-04,HOUSE,VA,04,0,Jennifer McClellan,D,1,Jennifer McClellan,D,Robert Murray,R,,,34.0,Incumbent renominated
+VA-05,HOUSE,VA,05,0,John McGuire,R,1,Tom Perriello,D,John McGuire,R,,,-12.0,Incumbent renominated
+VA-06,HOUSE,VA,06,0,Ben Cline,R,1,Beth Macy,D,Ben Cline,R,,,-24.0,Incumbent renominated
+VA-07,HOUSE,VA,07,0,Eugene Vindman,D,1,Eugene Vindman,D,Doug Ollivant,R,,,4.0,Incumbent renominated
+VA-08,HOUSE,VA,08,0,Don Beyer,D,1,Don Beyer,D,Tony Sabio,R,,,52.0,Incumbent renominated
+VA-09,HOUSE,VA,09,0,Morgan Griffith,R,1,Joy Powers,D,Morgan Griffith,R,,,-44.0,Incumbent renominated
+VA-10,HOUSE,VA,10,0,Suhas Subramanyam,D,1,Suhas Subramanyam,D,Dave Beckwith,R,,,12.0,Incumbent renominated
+VA-11,HOUSE,VA,11,0,James Walkinshaw,D,1,James Walkinshaw,D,Arthur Purves,R,,,36.0,Incumbent renominated
+WA-01,HOUSE,WA,01,0,Suzan DelBene,D,1,Suzan DelBene,D,Mary Silva,R,,,30.0,Incumbent advanced to general
+WA-02,HOUSE,WA,02,0,Rick Larsen,D,1,Rick Larsen,D,Edwin Feller,R,,,24.0,Incumbent advanced to general
+WA-03,HOUSE,WA,03,0,Marie Gluesenkamp Perez,D,1,Marie Gluesenkamp Perez,D,John Braun,R,,,-4.0,Incumbent advanced to general
+WA-04,HOUSE,WA,04,0,Dan Newhouse,R,0,John Duresky,D,Amanda McKinney,R,,,-20.0,Incumbent retiring
+WA-05,HOUSE,WA,05,0,Michael Baumgartner,R,1,Carmela Conroy,D,Michael Baumgartner,R,,,-10.0,Incumbent advanced to general
+WA-06,HOUSE,WA,06,0,Emily Randall,D,1,Emily Randall,D,Teresa Fox,R,,,20.0,Incumbent advanced to general
+WA-07,HOUSE,WA,07,0,Pramila Jayapal,D,1,Pramila Jayapal,D,Nirav Sheth,R,,,78.0,Incumbent advanced to general
+WA-08,HOUSE,WA,08,0,Kim Schrier,D,1,Kim Schrier,D,Spencer Meline,R,,,6.0,Incumbent advanced to general
+WA-09,HOUSE,WA,09,0,Adam Smith,D,1,Adam Smith,D,Doug Basler,R,,,44.0,Incumbent advanced to general
+WA-10,HOUSE,WA,10,0,Marilyn Strickland,D,1,Marilyn Strickland,D,Chris Chung,R,,,18.0,Incumbent advanced to general
+WV-01,HOUSE,WV,01,0,Carol Miller,R,1,Vince George,D,Carol Miller,R,,,-44.0,Incumbent renominated
+WV-02,HOUSE,WV,02,0,Riley Moore,R,1,Ace Parsi,D,Riley Moore,R,,,-40.0,Incumbent renominated
+WI-01,HOUSE,WI,01,0,Bryan Steil,R,1,Mitchell Berman,D,Bryan Steil,R,,,-4.0,Incumbent renominated
+WI-02,HOUSE,WI,02,0,Mark Pocan,D,1,Mark Pocan,D,,,,,42.0,Incumbent re-elected
+WI-03,HOUSE,WI,03,0,Derrick Van Orden,R,1,Rebecca Cooke,D,Derrick Van Orden,R,,,-6.0,Incumbent renominated
+WI-04,HOUSE,WI,04,0,Gwen Moore,D,1,Gwen Moore,D,Tim Rogers,R,,,52.0,Incumbent renominated
+WI-05,HOUSE,WI,05,0,Scott Fitzgerald,R,1,Andrew Beck,D,Scott Fitzgerald,R,,,-22.0,Incumbent renominated
+WI-06,HOUSE,WI,06,0,Glenn Grothman,R,1,Brad Smith,D,Glenn Grothman,R,,,-16.0,Incumbent renominated
+WI-07,HOUSE,WI,07,0,Tom Tiffany,R,0,Fred Clark,D,Michael Alfonso,R,,,-22.0,Incumbent retiring to run for governor
+WI-08,HOUSE,WI,08,0,Tony Wied,R,1,Rick Crosson,D,Tony Wied,R,,,-16.0,Incumbent renominated
+WY-AL,HOUSE,WY,AL,0,Harriet Hageman,R,0,Lisa Kinney,D,Chuck Gray,R,,,-46.0,Incumbent retiring to run for U.S. Senate

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>How Congress Voted: Roll Call Votes by Member and Bill</title>
+<meta name="description" content="See how every senator and representative voted on each bill, amendment and nomination, with the bill&#x27;s sponsor and the party breakdown.">
+<link rel="canonical" href="https://capitolhillindex.com/votes/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Capitol Hill Index">
+<meta property="og:title" content="How Congress Voted: Roll Call Votes by Member and Bill">
+<meta property="og:description" content="See how every senator and representative voted on each bill, amendment and nomination, with the bill&#x27;s sponsor and the party breakdown.">
+<meta property="og:url" content="https://capitolhillindex.com/votes/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff">
+<meta name="chi-root" content="../">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/config.js"></script>
+<script src="../assets/site.js"></script>
+
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="brand" href="../"><i aria-hidden="true"></i>Capitol Hill Index</a>
+<nav class="nav" aria-label="Main"><a href="../members/">Members</a><a href="../polls/">Polls</a><a href="../votes/" aria-current=page>Votes</a><a href="../political-quiz/">Political Quiz</a><a href="../name-congress/">Name Congress</a><a href="../daily-game/">Daily Game</a></nav>
+<a class="acct" id="acct" href="../account/">Sign in</a>
+</div></header>
+<main class="wrap">
+  <span class="kicker">Congress</span>
+  <h1>How Congress voted</h1>
+  <p class="lede">Every recorded vote in the House and Senate this Congress: who sponsored the bill, how each party split, and how every member voted.</p>
+  <p class="small muted" id="summary"></p>
+
+  <div class="filters">
+    <label for="q">Search<input type="search" id="q" placeholder="Bill, title or sponsor"></label>
+    <label for="chamber">Chamber<select id="chamber"><option value="">Both</option><option value="H">House</option><option value="S">Senate</option></select></label>
+    <label for="kind">Type<select id="kind"><option value="">All votes</option><option value="passage">Passing a bill or resolution</option><option value="amend">Amendments</option><option value="nom">Nominations</option><option value="proc">Procedural</option></select></label>
+    <label for="result">Result<select id="result"><option value="">Any</option><option value="pass">Passed or agreed to</option><option value="fail">Failed or rejected</option></select></label>
+    <label for="party">Party split<select id="party"><option value="">Any</option><option value="bi">Bipartisan (both parties mostly yes)</option><option value="line">Party-line</option></select></label>
+    <label for="member">How did this member vote?<select id="member"><option value="">Pick a member</option></select></label>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="tablewrap"><table class="data"><thead id="thead"></thead><tbody id="rows"></tbody></table></div>
+  <p><button class="btn ghost" id="more" hidden>Show more</button></p>
+  <p class="small muted section">Votes: Voteview (UCLA), from House Clerk and Senate records. Bill titles and sponsors: GovInfo (Congress.gov). Party split counts members who voted yes or no.</p>
+</main>
+
+<div class="shade" id="shade" hidden></div>
+<aside class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dname"></aside>
+
+<script src="../data/votes.js"></script>
+<script src="../assets/js/votes.js"></script>
+
+<footer class="foot"><div class="wrap">
+<span>Capitol Hill Index · Independent and nonpartisan · Public data from the House Clerk, FEC, Voteview, VoteHub and Wikidata</span>
+<nav aria-label="Footer"><a href="../members/">Members</a><a href="../polls/">Polls</a><a href="../votes/">Votes</a><a href="../political-quiz/">Political Quiz</a><a href="../name-congress/">Name Congress</a><a href="../daily-game/">Daily Game</a></nav>
+</div></footer>
+</body>
+</html>

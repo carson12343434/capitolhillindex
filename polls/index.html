@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>2026 Election Polls and Forecast: Senate, House and Governor</title>
+<meta name="description" content="Daily-updated 2026 midterm polling averages adjusted for pollster lean, race ratings from Safe to Toss-up, maps and projected Senate and House control.">
+<link rel="canonical" href="https://capitolhillindex.com/polls/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Capitol Hill Index">
+<meta property="og:title" content="2026 Election Polls and Forecast: Senate, House and Governor">
+<meta property="og:description" content="Daily-updated 2026 midterm polling averages adjusted for pollster lean, race ratings from Safe to Toss-up, maps and projected Senate and House control.">
+<meta property="og:url" content="https://capitolhillindex.com/polls/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff">
+<meta name="chi-root" content="../">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/config.js"></script>
+<script src="../assets/site.js"></script>
+
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="brand" href="../"><i aria-hidden="true"></i>Capitol Hill Index</a>
+<nav class="nav" aria-label="Main"><a href="../members/">Members</a><a href="../polls/" aria-current=page>Polls</a><a href="../votes/">Votes</a><a href="../political-quiz/">Political Quiz</a><a href="../name-congress/">Name Congress</a><a href="../daily-game/">Daily Game</a></nav>
+<a class="acct" id="acct" href="../account/">Sign in</a>
+</div></header>
+<main class="wrap">
+  <span class="kicker">2026 midterms</span>
+  <h1>2026 election polls and forecast</h1>
+  <p class="lede" id="lede">Polling averages for every Senate, House and governor race, adjusted so no pollster's lean tilts the result, with odds for control of Congress.</p>
+
+  <div class="grid2" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:22px" id="topline"></div>
+
+  <section class="section" aria-labelledby="h-ch">
+    <h2 id="h-ch">Where the seats stand</h2>
+    <div class="stack" id="bars"></div>
+    <p class="tiny muted" id="legend"></p>
+  </section>
+
+  <div class="tabs" role="tablist" id="tabs">
+    <button role="tab" aria-selected="true" data-tab="SEN">Senate</button>
+    <button role="tab" aria-selected="false" data-tab="HOUSE">House</button>
+    <button role="tab" aria-selected="false" data-tab="GOV">Governors</button>
+    <button role="tab" aria-selected="false" data-tab="NAT">National polls</button>
+    <button role="tab" aria-selected="false" data-tab="PRES">President</button>
+  </div>
+
+  <section id="pane-races">
+    <div class="grid2" style="margin-top:18px;align-items:start;grid-template-columns:minmax(0,3fr) minmax(0,2fr)" id="viz">
+      <div id="map" style="min-width:0"></div>
+      <div id="side" class="stack" style="min-width:0"></div>
+    </div>
+    <div class="filters">
+      <label for="q">Search<input type="search" id="q" placeholder="Candidate or state"></label>
+      <label for="fstate">State<select id="fstate"></select></label>
+      <label for="frate">Rating<select id="frate">
+        <option value="">All</option><option value="comp">Competitive (Lean and Toss-up)</option><option value="tossup">Toss-up</option>
+        <option value="d">Leaning or safe Democratic side</option><option value="r">Leaning or safe Republican</option>
+        <option value="flip">Projected to flip</option></select></label>
+      <label for="finc">Incumbent<select id="finc"><option value="">Any</option><option value="D">Democrat</option><option value="R">Republican</option><option value="open">Open seat</option></select></label>
+      <label for="fpolls">Polling<select id="fpolls"><option value="">All races</option><option value="1">Has polls</option></select></label>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="tablewrap"><table class="data" id="tbl"><thead id="thead"></thead><tbody id="rows"></tbody></table></div>
+    <p><button class="btn ghost" id="more" hidden>Show all</button></p>
+  </section>
+
+  <section id="pane-nat" hidden></section>
+  <section id="pane-pres" hidden></section>
+
+  <section class="section small" id="method">
+    <h2>How the averages and forecast work</h2>
+    <div class="grid2">
+      <div>
+        <p><b>Polls.</b> Every public poll in VoteHub's open database is pulled each morning. Each poll's weight depends on how recent it is (half-life of three weeks), its sample size, and whether it surveyed likely voters.</p>
+        <p><b>Keeping partisan polls in check.</b> Polls paid for by a campaign or party move 3 points against their sponsor and count half. Each pollster's house effect, meaning how far its national polls run from everyone else's at the same time, is measured and subtracted. Firms that release many polls are down-weighted so no single pollster dominates. The National polls tab shows the averages from right-leaning, left-leaning and nonpartisan pollsters side by side.</p>
+      </div>
+      <div>
+        <p><b>Forecast.</b> Each race blends its poll average with a baseline built from the national generic ballot, the state or district's partisan lean (Cook PVI) and incumbency. Races with more polling lean more on polls. The model runs 20,000 simulated elections with a shared national error, so races move together.</p>
+        <p><b>Ratings.</b> Safe means a 95% or better chance, Likely 80 to 95%, Lean 60 to 80%, and Toss-up anything closer. Margins are the Democratic side minus the Republican side; where an independent is the main challenger to a Republican, the independent counts as that side.</p>
+        <p class="muted">Polls: VoteHub (CC BY 4.0). Nominees: Wikipedia and state election offices. Partisan lean: Cook PVI.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="shade" id="shade" hidden></div>
+<aside class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dname"></aside>
+<div id="tip" role="tooltip" hidden style="position:fixed;z-index:50;pointer-events:none;background:#fff;border:1px solid var(--line);box-shadow:0 4px 14px rgba(0,0,0,.1);padding:8px 10px;border-radius:4px;font-size:13px;max-width:260px"></div>
+
+<script src="../data/polls.js"></script>
+<script src="../assets/js/usmap.js"></script>
+<script src="../assets/js/polls.js"></script>
+
+<footer class="foot"><div class="wrap">
+<span>Capitol Hill Index · Independent and nonpartisan · Public data from the House Clerk, FEC, Voteview, VoteHub and Wikidata</span>
+<nav aria-label="Footer"><a href="../members/">Members</a><a href="../polls/">Polls</a><a href="../votes/">Votes</a><a href="../political-quiz/">Political Quiz</a><a href="../name-congress/">Name Congress</a><a href="../daily-game/">Daily Game</a></nav>
+</div></footer>
+</body>
+</html>

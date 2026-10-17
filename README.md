@@ -1,51 +1,48 @@
 # Capitol Hill Index
 
-A one-page site listing every sitting member of Congress with age, terms served,
-time in their current seat, state, party, portrait, education, stock trades, PAC
-money, and a reweightable financial integrity score.
+A nonpartisan site tracking every voting member of Congress: stock trades, trading volume and estimated gains, PAC money, education, roll call votes, a financial integrity score, and a daily 2026 election forecast. Also includes a political party quiz, a name-every-member quiz and a daily guess-the-politician game.
 
-## Files
+## Pages
 
-| File | What it does |
+| Path | Page |
 |---|---|
-| `index.html` | The website. Open it in a browser; it reads `data.js` and `photos.js` from the same folder. |
-| `data.js` | Member data. Ships with bio and term data filled in; trades, PAC money and education are empty until you run the fetch script. |
-| `photos.js` | Official portraits as small embedded thumbnails. |
-| `build_members.py` | Turns the official legislators file into the member list (ages, terms, dates). |
-| `fetch_data.py` | Pulls everything and rewrites `data.js`. |
-| `fetch_photos.py` | Re-downloads portraits after new members are sworn in. |
+| `/` | Home |
+| `/members/` | Members, money and integrity score |
+| `/polls/` | 2026 polls, ratings, maps and chamber forecast |
+| `/votes/` | Roll call votes with sponsors and member votes |
+| `/political-quiz/` | Party match quiz |
+| `/name-congress/` | Name the senators and representatives |
+| `/daily-game/` | Guess the politician |
+| `/account/` | Sign in and home state |
 
-## Fill in the missing data
+Page bodies live in `src/pages/`. After editing one, run `python scripts/build_pages.py` to rebuild the finished pages.
 
-```bash
-pip install requests pyyaml pillow
-export FEC_API_KEY=your_key        # free, instant: https://api.open.fec.gov/developers/
-export QUIVER_API_KEY=your_key     # optional, better trade data: https://www.quiverquant.com/
-python fetch_data.py               # writes data.js (education, PAC $, trades)
-python fetch_data.py --corporate   # also splits out corporate-only PAC money (slower)
-```
+## Data updates
 
-Then reopen `index.html`. On Windows, use `set FEC_API_KEY=...` instead of `export`.
+Two scheduled jobs in `.github/workflows/` keep the data current. Neither needs an API key.
 
-Without a Quiver key the script uses the free House/Senate Stock Watcher files,
-which stopped updating regularly; the site shows the date the trade data runs
-through so you can tell.
+**Daily (6 a.m. and 6 p.m. Eastern):** House stock trades, Senate trades when the Senate site allows downloads, polls and forecast, roll call votes.
 
-## How the score works
+**Weekly (Monday):** FEC campaign money, education, estimated trading gains, portraits.
 
-Each factor scores 0–100; sliders on the page set the weights (default 40/30/30).
+To run one now: **Actions** tab → pick the job → **Run workflow**.
 
-- **Trading restraint** = 100 − 25 × log₂(1 + trades per year in office since April 2012, when the STOCK Act took effect). 1/yr → 75, 3/yr → 50, 15/yr → 0.
-- **On-time disclosure** = share of trades reported within 45 days, the STOCK Act deadline.
-- **PAC independence** = 100 − 2 × (PAC share of total receipts). 25% → 50, 50%+ → 0. Uses corporate-only PAC money when `--corporate` was run, otherwise all PACs.
+| Data | Source |
+|---|---|
+| Members, ages, terms | [unitedstates/congress-legislators](https://github.com/unitedstates/congress-legislators) |
+| House stock trades | House Clerk periodic transaction reports, parsed by [congresskit](https://github.com/kovagent/congresskit) |
+| Senate stock trades | [Senate eFD](https://efdsearch.senate.gov) (often blocks cloud servers) |
+| PAC and total receipts | [FEC bulk data](https://www.fec.gov/data/browse-data/?tab=bulk-data) |
+| Education | Biographical Directory of Congress, Wikidata |
+| Votes | [Voteview](https://voteview.com) |
+| Bill sponsors and titles | [GovInfo BILLSTATUS](https://www.govinfo.gov/bulkdata/BILLSTATUS) |
+| Polls | [VoteHub](https://votehub.com/polls/api/) (CC BY 4.0) |
+| Nominees and partisan lean | Wikipedia, state election offices, Cook PVI |
+| Stock prices for gain estimates | Yahoo Finance, Stooq |
+| Portraits | [unitedstates/images](https://github.com/unitedstates/images) (public domain) |
 
-Factors with no data drop out and the rest are reweighted. 80+ shows green,
-60–79 amber, below 60 red. A low score flags a pattern worth a closer look; it
-does not prove wrongdoing.
+`data/static/races_2026.csv` holds the 506 races and nominees. Edit it by hand if a nominee changes.
 
-## Known limits
+## Settings
 
-- Trade counts come from periodic transaction reports, so they count reported transactions, not dollar amounts; spouse and dependent trades are included as filed.
-- Name matching for free trade data skips ambiguous names instead of guessing.
-- Wikidata education lists can include high schools and can be incomplete.
-- "Terms" counts every term in the official record, including short appointed ones.
+`assets/config.js` holds three settings: the site address, the GoatCounter code for visitor stats, and the Firebase config for accounts. `SETUP.md` walks through each.

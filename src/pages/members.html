@@ -1,0 +1,59 @@
+<main class="wrap">
+  <span class="kicker">Congress</span>
+  <h1>Members of Congress and their money</h1>
+  <p class="lede">All 533 voting members with their stock trades, corporate PAC money, education and tenure, plus a financial integrity score you can reweight.</p>
+  <p class="small muted" id="summary"></p>
+
+  <div class="filters">
+    <label for="q">Search<input type="search" id="q" placeholder="Name or state"></label>
+    <label for="chamber">Chamber<select id="chamber"><option value="">Both</option><option>Senate</option><option>House</option></select></label>
+    <label for="party">Party<select id="party"><option value="">All</option><option value="D">Democrat</option><option value="R">Republican</option><option value="I">Independent</option></select></label>
+    <label for="state">State<select id="state"></select></label>
+    <label for="age">Age<select id="age"><option value="">Any</option><option value="0-49">Under 50</option><option value="50-64">50 to 64</option><option value="65-79">65 to 79</option><option value="80-200">80 and up</option></select></label>
+    <label for="band">Score<select id="band"><option value="">Any</option><option value="80-100">80+ strong</option><option value="60-79">60 to 79 mixed</option><option value="0-59">Under 60 weak</option></select></label>
+    <label for="sort">Sort by<select id="sort">
+      <option value="state:1">State</option><option value="name:1">Last name</option>
+      <option value="pac:-1">Most corporate PAC money</option><option value="trades:-1">Most stock trades</option>
+      <option value="term:-1">Most trades this term</option><option value="vol:-1">Largest trading volume</option>
+      <option value="gain:-1">Largest estimated gain</option><option value="score:1">Lowest score</option>
+      <option value="score:-1">Highest score</option><option value="age:-1">Oldest</option><option value="age:1">Youngest</option>
+      <option value="since:1">Longest in seat</option><option value="terms:-1">Most terms</option>
+    </select></label>
+    <span class="count" id="count"></span>
+  </div>
+
+  <div class="tablewrap">
+    <table class="data" id="tbl">
+      <thead><tr id="heads"></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p><button class="btn ghost" id="more" hidden>Show all</button></p>
+
+  <section class="section" id="method">
+    <h2>How the score works</h2>
+    <div class="grid2">
+      <div class="stack small">
+        <p>Each member gets 0 to 100, higher meaning cleaner, built from three parts:</p>
+        <p><b>Trading restraint.</b> Fewer stock trades per year in office scores higher: one trade a year scores 75, three score 50, fifteen or more score 0. Only trades since the STOCK Act took effect in April 2012 count.</p>
+        <p><b>Filing on time.</b> The share of trades reported within the law's 45-day deadline.</p>
+        <p><b>Corporate PAC independence.</b> How little of their last campaign's money came from corporate PACs. 5% scores 75, 10% scores 50, 20% or more scores 0.</p>
+        <p>Missing data drops out and the other parts carry the score. A low score is a pattern worth a closer look, not proof of wrongdoing.</p>
+        <p class="muted"><b>Notes.</b> House trades come from members' e-filed transaction reports; scanned paper filings aren't included. Senate trades are shown when the Senate's disclosure site allows downloads. Trading volume and gains use the midpoint of each reported dollar range, so they are estimates. Estimated gain compares the price at purchase with the price when a sale of that stock was disclosed, or today's price.</p>
+      </div>
+      <div class="panel stack" aria-labelledby="wh">
+        <h3 id="wh">Adjust the weights</h3>
+        <label for="w1" class="small"><span class="row" style="justify-content:space-between"><span>Trading restraint</span><span id="w1v"></span></span><input type="range" id="w1" min="0" max="100" value="40" style="width:100%"></label>
+        <label for="w2" class="small"><span class="row" style="justify-content:space-between"><span>Filing on time</span><span id="w2v"></span></span><input type="range" id="w2" min="0" max="100" value="30" style="width:100%"></label>
+        <label for="w3" class="small"><span class="row" style="justify-content:space-between"><span>Corporate PAC independence</span><span id="w3v"></span></span><input type="range" id="w3" min="0" max="100" value="30" style="width:100%"></label>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="shade" id="shade" hidden></div>
+<aside class="drawer" id="drawer" hidden role="dialog" aria-modal="true" aria-labelledby="dname"></aside>
+
+<script src="{{root}}data/members.js"></script>
+<script src="{{root}}data/photos.js"></script>
+<script src="{{root}}assets/js/members.js"></script>

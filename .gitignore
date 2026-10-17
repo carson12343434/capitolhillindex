@@ -1,0 +1,6 @@
+.cache/
+__pycache__/
+*.pyc
+*.tmp
+.DS_Store
+data/sources/votehub_polls.json

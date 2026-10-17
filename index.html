@@ -1,311 +1,57 @@
-<title>Capitol Hill Index</title>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Capitol Hill Index: Congress Stock Trades, 2026 Polls and Votes</title>
+<meta name="description" content="Track every member of Congress: stock trades, PAC money and a financial integrity score, plus 2026 election polls, roll call votes and political quizzes.">
+<link rel="canonical" href="https://capitolhillindex.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Capitol Hill Index">
+<meta property="og:title" content="Capitol Hill Index: Congress Stock Trades, 2026 Polls and Votes">
+<meta property="og:description" content="Track every member of Congress: stock trades, PAC money and a financial integrity score, plus 2026 election polls, roll call votes and political quizzes.">
+<meta property="og:url" content="https://capitolhillindex.com/">
+<meta name="twitter:card" content="summary">
+<meta name="theme-color" content="#ffffff">
+<meta name="chi-root" content="./">
+<link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,600;0,800;1,400&family=Source+Serif+4:opsz,wght@8..60,600&display=swap">
-<style>
-/* Layout: plain data-desk page; headline, one filter row, full-width sortable table, notes below */
-:root {
-  --bg: #fbfbf9;
-  --fg: #202320;
-  --muted: #6a706b;
-  --line: #dcded8;
-  --zebra: #f2f3ef;
-  --link: #1d5e47;
-  --dem: #2f5fb3;
-  --rep: #b83a33;
-  --ind: #6d4a9c;
-  --good: #23703f;
-  --warn: #9a6a12;
-  --bad: #b03a31;
-  --shade: rgba(20, 24, 21, .4);
-  --head: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --body: "Public Sans", "Helvetica Neue", Arial, sans-serif;
-}
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
-  --bg: #161816; --fg: #e4e6e1; --muted: #9da39d; --line: #313530; --zebra: #1c1f1c; --link: #7cc6a2;
-  --dem: #7fa4ec; --rep: #ec847c; --ind: #b496e0; --good: #6cc68e; --warn: #deb15a; --bad: #ec847c; --shade: rgba(0,0,0,.6); color-scheme: dark } }
-:root[data-theme="dark"] {
-  --bg: #161816; --fg: #e4e6e1; --muted: #9da39d; --line: #313530; --zebra: #1c1f1c; --link: #7cc6a2;
-  --dem: #7fa4ec; --rep: #ec847c; --ind: #b496e0; --good: #6cc68e; --warn: #deb15a; --bad: #ec847c; --shade: rgba(0,0,0,.6); color-scheme: dark }
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="./assets/site.css">
+<script src="./assets/config.js"></script>
+<script src="./assets/site.js"></script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Capitol Hill Index", "url": "https://capitolhillindex.com/", "description": "Track every member of Congress: stock trades, PAC money and a financial integrity score, plus 2026 election polls, roll call votes and political quizzes."}</script>
+</head>
+<body>
+<header class="top"><div class="wrap">
+<a class="brand" href="./"><i aria-hidden="true"></i>Capitol Hill Index</a>
+<nav class="nav" aria-label="Main"><a href="./members/">Members</a><a href="./polls/">Polls</a><a href="./votes/">Votes</a><a href="./political-quiz/">Political Quiz</a><a href="./name-congress/">Name Congress</a><a href="./daily-game/">Daily Game</a></nav>
+<a class="acct" id="acct" href="./account/">Sign in</a>
+</div></header>
+<main class="wrap">
+  <section style="padding-block:18px 8px;border-bottom:2px solid var(--ink)">
+    <h1 style="font-size:clamp(32px,5vw,52px);max-width:16ch">Who's in Congress, and where their money comes from.</h1>
+    <p class="lede" style="font-size:19px">Stock trades, PAC money and voting records for every member of Congress, plus a daily 2026 election forecast. Independent and nonpartisan, built from public filings.</p>
+  </section>
 
-* { box-sizing: border-box }
-body { background: var(--bg); color: var(--fg); font: 15px/1.55 var(--body); font-variant-numeric: tabular-nums;
-  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-.page { max-width: 1180px; margin: 0 auto; padding-block: 32px 60px }
-h1 { font: 600 clamp(30px, 4.6vw, 42px)/1.1 var(--head); margin: 0 0 8px; letter-spacing: -.01em }
-h2 { font: 600 22px/1.2 var(--head); margin: 40px 0 10px }
-p { margin: 0 0 10px; max-width: 70ch }
-a { color: var(--link) }
-.dek { font-size: 17px; color: var(--fg) }
-.sub { color: var(--muted); font-size: 14px }
-button, input, select { font: inherit; color: inherit }
-:focus-visible { outline: 2px solid var(--link); outline-offset: 2px }
+  <div class="grid2 section" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr));margin-top:28px" id="tiles"></div>
 
-.filters { display: flex; flex-wrap: wrap; gap: 10px 14px; align-items: end; margin: 24px 0 12px; padding-top: 16px; border-top: 2px solid var(--fg) }
-.filters label { display: grid; gap: 2px; font-size: 13px; color: var(--muted) }
-.filters input, .filters select { padding: 6px 8px; border: 1px solid var(--line); border-radius: 2px; background: var(--bg); min-width: 0 }
-.filters input { width: 220px; max-width: 100% }
-.count { margin-left: auto; font-size: 14px; color: var(--muted) }
+  <section class="section" id="yours"></section>
 
-.tablewrap { overflow-x: auto; border-top: 1px solid var(--line) }
-table { border-collapse: collapse; width: 100%; min-width: 900px; font-size: 14px }
-th, td { padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--line); white-space: nowrap }
-th { font-weight: 600; font-size: 13px; position: sticky; top: env(safe-area-inset-top, 0px); background: var(--bg); z-index: 1 }
-th button { border: 0; background: none; padding: 0; cursor: pointer; font-weight: 600; text-align: inherit }
-th button:hover { text-decoration: underline }
-th[aria-sort=ascending] button::after { content: " ▲"; font-size: 10px }
-th[aria-sort=descending] button::after { content: " ▼"; font-size: 10px }
-td.n, th.n { text-align: right }
-tbody tr:nth-child(even) { background: var(--zebra) }
-tbody tr { cursor: pointer }
-tbody tr:hover td { background: color-mix(in srgb, var(--link) 8%, transparent) }
-td.person { display: flex; gap: 10px; align-items: center; white-space: normal; min-width: 230px }
-td.person img, td.person .ph { width: 30px; height: 37px; object-fit: cover; flex: none; background: var(--line) }
-td.person .ph { display: grid; place-items: center; font-size: 11px; color: var(--muted) }
-.nm { font-weight: 600 }
-.D { color: var(--dem) } .R { color: var(--rep) } .I { color: var(--ind) }
-.blank { color: var(--muted) }
-.g { color: var(--good); font-weight: 600 } .w { color: var(--warn); font-weight: 600 } .b { color: var(--bad); font-weight: 600 }
-.more { margin-top: 14px; padding: 7px 16px; border: 1px solid var(--fg); background: none; cursor: pointer }
+  <section class="section grid2" style="align-items:start">
+    <div><h2>Closest Senate races</h2><div id="close" class="stack" style="margin-top:10px;gap:6px"></div><p class="small" style="margin-top:10px"><a href="polls/">Full forecast</a></p></div>
+    <div><h2>Busiest stock traders this term</h2><div id="traders" class="stack" style="margin-top:10px;gap:6px"></div><p class="small" style="margin-top:10px"><a href="members/">All members</a></p></div>
+  </section>
 
-.method { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 320px); gap: 28px; align-items: start }
-@media (max-width: 760px) { .method { grid-template-columns: minmax(0, 1fr) } }
-.weights { display: grid; gap: 12px; padding: 14px 16px; border: 1px solid var(--line) }
-.weights label { display: grid; gap: 2px; font-size: 14px }
-.weights .row { display: flex; justify-content: space-between }
-.weights input { width: 100%; accent-color: var(--link) }
-.method ul { margin: 0 0 10px; padding-left: 20px; max-width: 70ch }
-.method li { margin-bottom: 6px }
-.small { font-size: 13px; color: var(--muted) }
-
-.shade { position: fixed; inset: 0; background: var(--shade); z-index: 10 }
-.panel { position: fixed; top: 0; right: 0; bottom: 0; width: min(440px, 100%); background: var(--bg); z-index: 11; overflow-y: auto;
-  padding: calc(env(safe-area-inset-top, 0px) + 18px) max(20px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 24px) 20px;
-  border-left: 1px solid var(--line) }
-.panel .top { display: flex; gap: 14px; align-items: flex-end; margin: 10px 0 18px }
-.panel .top img, .panel .top .ph { width: 90px; height: 110px; object-fit: cover; background: var(--line); display: grid; place-items: center; color: var(--muted) }
-.panel h3 { font: 600 24px/1.15 var(--head); margin: 0 0 4px }
-.panel h4 { font-size: 15px; margin: 22px 0 6px }
-.close { float: right; border: 1px solid var(--line); background: none; padding: 3px 10px; cursor: pointer }
-.panel table { min-width: 0; font-size: 14px }
-.panel td { white-space: normal; padding: 5px 0; background: none !important }
-.panel td:last-child { text-align: right }
-.panel ul { margin: 0; padding-left: 18px }
-</style>
-
-<main class="page">
-  <h1>Capitol Hill Index</h1>
-  <p class="dek">Who's in Congress, how long they've been there, and how they handle money: stock trades, PAC donations, and a financial integrity score.</p>
-  <p class="sub" id="summary"></p>
-
-  <div class="filters">
-    <label for="q">Search<input type="search" id="q" placeholder="Name or state"></label>
-    <label for="chamber">Chamber<select id="chamber"><option value="">Both</option><option>Senate</option><option>House</option></select></label>
-    <label for="party">Party<select id="party"><option value="">All</option><option value="D">Democrat</option><option value="R">Republican</option><option value="I">Independent</option></select></label>
-    <label for="state">State<select id="state"><option value="">All</option></select></label>
-    <label for="age">Age<select id="age"><option value="">Any</option><option value="0-49">Under 50</option><option value="50-64">50 to 64</option><option value="65-79">65 to 79</option><option value="80-200">80 and up</option></select></label>
-    <label for="band">Score<select id="band"><option value="">Any</option><option value="80-100">80+ (strong)</option><option value="60-79">60 to 79 (mixed)</option><option value="0-59">Under 60 (weak)</option></select></label>
-    <label for="sort">Sort by<select id="sort">
-      <option value="state:1">State</option><option value="name:1">Last name</option>
-      <option value="pac:-1">Most PAC money</option><option value="trades:-1">Most stock trades</option><option value="term:-1">Most trades this term</option>
-      <option value="score:1">Lowest score</option><option value="score:-1">Highest score</option>
-      <option value="age:-1">Oldest</option><option value="age:1">Youngest</option>
-      <option value="since:1">Longest in office</option><option value="terms:-1">Most terms</option>
-    </select></label>
-    <span class="count" id="count"></span>
-  </div>
-
-  <div class="tablewrap">
-    <table>
-      <thead><tr id="heads"></tr></thead>
-      <tbody id="rows"></tbody>
-    </table>
-  </div>
-  <button class="more" id="more" hidden>Show all</button>
-
-  <h2>How the score works</h2>
-  <div class="method">
-    <div>
-      <p>Each member gets a score from 0 to 100, where higher means cleaner. It combines three things:</p>
-      <ul>
-        <li><b>Trading restraint.</b> Fewer stock trades per year in office scores higher. One trade a year scores 75, three a year scores 50, and fifteen or more scores 0. Only trades since April 2012, when the STOCK Act started requiring disclosure, count.</li>
-        <li><b>Filing on time.</b> The share of trades reported within the STOCK Act's 45-day deadline.</li>
-        <li><b>PAC independence.</b> How little of their campaign money comes from PACs. 25% from PACs scores 50; half or more scores 0. Corporate PACs only, when that breakdown is available.</li>
-      </ul>
-      <p>If one piece of data is missing for a member, that part is left out and the other parts make up the score. A low score means the pattern deserves a closer look. It doesn't prove anyone did something wrong.</p>
-      <p class="small" id="sources"></p>
-    </div>
-    <div class="weights">
-      <b>Adjust the weights</b>
-      <label for="w1"><span class="row"><span>Trading restraint</span><span id="w1v"></span></span><input type="range" id="w1" min="0" max="100" value="40"></label>
-      <label for="w2"><span class="row"><span>Filing on time</span><span id="w2v"></span></span><input type="range" id="w2" min="0" max="100" value="30"></label>
-      <label for="w3"><span class="row"><span>PAC independence</span><span id="w3v"></span></span><input type="range" id="w3" min="0" max="100" value="30"></label>
-    </div>
-  </div>
+  <section class="section" id="latest"></section>
 </main>
+<script src="data/summary.js"></script>
+<script src="assets/js/home.js"></script>
 
-<div class="shade" id="shade" hidden></div>
-<aside class="panel" id="panel" hidden role="dialog" aria-modal="true" aria-labelledby="pname"></aside>
-
-<script src="data.js"></script>
-<script src="photos.js"></script>
-<script>
-(() => {
-  const DATA = window.CONGRESS_DATA || { members: [], sources: {} };
-  const PHOTOS = window.CONGRESS_PHOTOS || {};
-  const M = DATA.members, S = DATA.sources || {};
-  const STOCK_ACT = new Date("2012-04-04"), TODAY = new Date();
-  const PARTY = { D: "Democrat", R: "Republican", I: "Independent" };
-  const $ = id => document.getElementById(id);
-  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-  const money = n => n >= 1e6 ? "$" + (n / 1e6).toFixed(1) + "M" : n >= 1e3 ? "$" + Math.round(n / 1e3) + "K" : "$" + Math.round(n);
-  const month = d => new Date(d + "T12:00:00").toLocaleDateString("en-US", { month: "short", year: "numeric" });
-  const clamp = v => Math.max(0, Math.min(100, v));
-  const blank = '<span class="blank">–</span>';
-  const show = (v, f = x => x) => v == null ? blank : esc(f(v));
-  const terms = m => m.houseTerms + m.senateTerms;
-  const pacOf = m => m.corpPacDollars ?? m.pacDollars;
-
-  // score
-  function parts(m) {
-    const p = {};
-    if (m.tradesTotal != null) {
-      const since = new Date(Math.max(new Date(m.firstTookOfficeAny), STOCK_ACT));
-      const years = Math.max(0.5, (TODAY - since) / 3.156e10);
-      p.restraint = { v: clamp(100 - 25 * Math.log2(1 + m.tradesTotal / years)), why: `${m.tradesTotal} trades in ${years.toFixed(1)} years` };
-      p.timely = { v: m.tradesTotal ? clamp(100 * (1 - (m.tradesLate || 0) / m.tradesTotal)) : 100,
-        why: m.tradesTotal ? `${m.tradesLate || 0} of ${m.tradesTotal} reported late` : "no trades" };
-    }
-    if (pacOf(m) != null && m.totalReceipts > 0) {
-      const share = pacOf(m) / m.totalReceipts;
-      p.pac = { v: clamp(100 - 200 * share), why: `${(share * 100).toFixed(1)}% of money raised` };
-    }
-    return p;
-  }
-  const W = () => ({ restraint: +$("w1").value, timely: +$("w2").value, pac: +$("w3").value });
-  function score(p) { const w = W(); let s = 0, t = 0; for (const k in p) { s += p[k].v * w[k]; t += w[k]; } return t ? Math.round(s / t) : null; }
-  const tone = s => s >= 80 ? "g" : s >= 60 ? "w" : "b";
-
-  // summary line
-  const voting = M.filter(m => m.voting);
-  const withAge = voting.filter(m => m.age);
-  const oldest = [...withAge].sort((a, b) => b.age - a.age)[0], youngest = [...withAge].sort((a, b) => a.age - b.age)[0];
-  const missing = [!S.trades && "stock trades", !S.finance && "PAC money", !S.education && "education"].filter(Boolean);
-  $("summary").textContent = `${voting.length} voting members. Average age ${(withAge.reduce((a, m) => a + m.age, 0) / withAge.length).toFixed(0)}; oldest is ${oldest.name} (${oldest.age}), youngest is ${youngest.name} (${youngest.age}).`
-    + (DATA.generated ? ` Updated ${new Date(DATA.generated).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}.` : "")
-    + (missing.length ? ` Data on ${missing.join(", ").replace(/, ([^,]*)$/, " and $1")} is still being added.` : "");
-  $("sources").innerHTML = `Sources: <a href="https://github.com/unitedstates/congress-legislators" target="_blank" rel="noopener">congress-legislators</a> for members and terms, <a href="https://github.com/unitedstates/images" target="_blank" rel="noopener">unitedstates/images</a> for photos, the <a href="https://www.fec.gov/data/" target="_blank" rel="noopener">FEC</a> for campaign money, Wikidata for education, and STOCK Act disclosure reports for trades${S.tradesThrough ? ` (through ${month(S.tradesThrough)})` : ""}. "Since" is when they were first sworn into their current seat. Terms include partial ones.`;
-
-  // table
-  const COLS = [
-    { k: "name", label: "Member", sort: m => m.last },
-    { k: "party", label: "Party", sort: m => m.party },
-    { k: "state", label: "State", sort: m => m.state + (m.chamber === "Senate" ? "0" : "1") + String(m.district || 0).padStart(2, "0") },
-    { k: "age", label: "Age", n: 1, sort: m => m.age },
-    { k: "terms", label: "Terms", n: 1, sort: terms },
-    { k: "since", label: "Since", n: 1, sort: m => m.currentSeatSince },
-    { k: "trades", label: "Trades", n: 1, sort: m => m.tradesTotal },
-    { k: "term", label: "This term", n: 1, sort: m => m.tradesThisTerm },
-    { k: "pac", label: "PAC money", n: 1, sort: pacOf },
-    { k: "score", label: "Score", n: 1, sort: m => score(parts(m)) },
-  ];
-  const st = { sortKey: "state", dir: 1, limit: 100 };
-  $("heads").innerHTML = COLS.map(c => `<th class="${c.n ? "n" : ""}" data-k="${c.k}"><button>${c.label}</button></th>`).join("");
-  $("heads").addEventListener("click", e => {
-    const th = e.target.closest("th"); if (!th) return;
-    const k = th.dataset.k, numeric = COLS.find(c => c.k === k).n;
-    st.dir = st.sortKey === k ? -st.dir : (numeric ? -1 : 1); st.sortKey = k;
-    const opt = [...$("sort").options].find(o => o.value === `${k}:${st.dir}`);
-    if (opt) $("sort").value = opt.value; else $("sort").selectedIndex = -1;
-    render();
-  });
-  $("sort").addEventListener("input", () => { const [k, d] = $("sort").value.split(":"); st.sortKey = k; st.dir = +d; render(); });
-  const inRange = (v, r) => { if (!r) return true; if (v == null) return false; const [lo, hi] = r.split("-").map(Number); return v >= lo && v <= hi; };
-  [...new Set(M.map(m => m.state))].sort().forEach(s => $("state").insertAdjacentHTML("beforeend", `<option>${s}</option>`));
-  ["q", "chamber", "party", "state", "age", "band"].forEach(id => $(id).addEventListener("input", () => { st.limit = 100; render(); }));
-  $("more").addEventListener("click", () => { st.limit = Infinity; render(); });
-
-  try { const w = JSON.parse(localStorage.getItem("ledger-w") || "null"); if (w) ["w1", "w2", "w3"].forEach((k, i) => $(k).value = w[i]); } catch (e) {}
-  ["w1", "w2", "w3"].forEach(id => $(id).addEventListener("input", () => {
-    try { localStorage.setItem("ledger-w", JSON.stringify(["w1", "w2", "w3"].map(k => +$(k).value))); } catch (e) {}
-    weights(); render();
-  }));
-  function weights() { const w = W(), t = w.restraint + w.timely + w.pac;
-    [["w1", w.restraint], ["w2", w.timely], ["w3", w.pac]].forEach(([k, v]) => $(k + "v").textContent = (t ? Math.round(100 * v / t) : 0) + "%"); }
-
-  const pic = m => PHOTOS[m.id] ? `<img src="${PHOTOS[m.id]}" alt="" loading="lazy">` : `<span class="ph">${esc(m.first[0] + m.last[0])}</span>`;
-  const seat = m => m.chamber === "Senate" ? "Senate" : m.district ? `District ${m.district}` : m.voting ? "At-large" : "Delegate";
-
-  function render() {
-    const q = $("q").value.trim().toLowerCase(), ch = $("chamber").value, pa = $("party").value, sa = $("state").value;
-    const col = COLS.find(c => c.k === st.sortKey);
-    const list = M.filter(m => (!ch || m.chamber === ch) && (!pa || m.party === pa) && (!sa || m.state === sa) &&
-      (!q || m.name.toLowerCase().includes(q) || m.state.toLowerCase() === q) &&
-      inRange(m.age, $("age").value) && inRange(score(parts(m)), $("band").value))
-      .map(m => ({ m, key: col.sort(m) }))
-      .sort((a, b) => a.key == null ? 1 : b.key == null ? -1 : (a.key > b.key ? 1 : a.key < b.key ? -1 : 0) * st.dir)
-      .map(x => x.m);
-    document.querySelectorAll("#heads th").forEach(th => th.toggleAttribute("aria-sort", false));
-    const th = document.querySelector(`#heads th[data-k="${st.sortKey}"]`); th.setAttribute("aria-sort", st.dir > 0 ? "ascending" : "descending");
-    $("count").textContent = `${list.length} shown`;
-    $("rows").innerHTML = list.slice(0, st.limit).map(m => {
-      const s = score(parts(m));
-      return `<tr data-id="${m.id}" tabindex="0">
-        <td class="person">${pic(m)}<span><span class="nm">${esc(m.name)}</span><br><span class="small">${seat(m)}</span></span></td>
-        <td class="${m.party}">${PARTY[m.party] || esc(m.party)}</td>
-        <td>${m.state}</td>
-        <td class="n">${show(m.age)}</td>
-        <td class="n">${terms(m)}</td>
-        <td class="n">${m.currentSeatSince.slice(0, 4)}</td>
-        <td class="n">${show(m.tradesTotal)}</td>
-        <td class="n">${show(m.tradesThisTerm)}</td>
-        <td class="n">${show(pacOf(m), money)}</td>
-        <td class="n">${s == null ? blank : `<span class="${tone(s)}">${s}</span>`}</td></tr>`;
-    }).join("");
-    $("more").hidden = list.length <= st.limit;
-    $("more").textContent = `Show all ${list.length}`;
-  }
-
-  // member panel
-  const openRow = e => { const tr = e.target.closest("tr[data-id]"); if (tr) open(tr.dataset.id); };
-  $("rows").addEventListener("click", openRow);
-  $("rows").addEventListener("keydown", e => { if (e.key === "Enter") openRow(e); });
-  function open(id) {
-    const m = M.find(x => x.id === id), p = parts(m), s = score(p);
-    const row = (a, b) => `<tr><td>${a}</td><td>${b}</td></tr>`;
-    const part = (k, name) => row(name, p[k] ? `${Math.round(p[k].v)} <span class="small">(${esc(p[k].why)})</span>` : blank);
-    const edu = m.education == null ? `<p class="small">Not added yet.</p>`
-      : m.education.length ? `<ul>${m.education.map(e => `<li>${esc(e.school)}${e.degrees.length ? `, ${esc(e.degrees.join(", "))}` : ""}</li>`).join("")}</ul>`
-      : `<p class="small">None on record.</p>`;
-    $("panel").innerHTML = `<button class="close" id="close">Close</button>
-      <div class="top">${PHOTOS[m.id] ? `<img src="${PHOTOS[m.id]}" alt="Portrait of ${esc(m.name)}">` : `<span class="ph">${esc(m.first[0] + m.last[0])}</span>`}
-        <div><h3 id="pname">${esc(m.name)}</h3><span class="${m.party}">${PARTY[m.party] || m.party}</span>, ${m.state} · ${seat(m)}</div></div>
-      <table>
-        ${row("Age", show(m.age) + (m.birthday ? ` <span class="small">(born ${month(m.birthday)})</span>` : ""))}
-        ${row("In this seat since", month(m.currentSeatSince))}
-        ${row("First took federal office", month(m.firstTookOfficeAny))}
-        ${row("Terms", [m.houseTerms && m.houseTerms + " House", m.senateTerms && m.senateTerms + " Senate"].filter(Boolean).join(", "))}
-        ${row("Current term", `${month(m.currentTermStart)} to ${month(m.currentTermEnd)}`)}
-      </table>
-      <h4>Money</h4>
-      <table>
-        ${row("Stock trades in office", show(m.tradesTotal))}
-        ${row("Trades this term", show(m.tradesThisTerm))}
-        ${row("Reported late", show(m.tradesLate))}
-        ${row("Corporate PAC money", show(m.corpPacDollars, money))}
-        ${row("All PAC money", show(m.pacDollars, money))}
-        ${row(`Total raised${m.financeCycle ? ` ${m.financeCycle - 1}–${String(m.financeCycle).slice(2)}` : ""}`, show(m.totalReceipts, money))}
-      </table>
-      <h4>Score: ${s == null ? blank : `<span class="${tone(s)}">${s}</span>`}</h4>
-      <table>${part("restraint", "Trading restraint")}${part("timely", "Filing on time")}${part("pac", "PAC independence")}</table>
-      <h4>Education</h4>${edu}
-      ${m.url ? `<p style="margin-top:20px"><a href="${esc(m.url)}" target="_blank" rel="noopener">Official website</a></p>` : ""}`;
-    $("panel").hidden = $("shade").hidden = false;
-    $("close").focus(); $("close").onclick = shut;
-  }
-  function shut() { $("panel").hidden = $("shade").hidden = true; }
-  $("shade").addEventListener("click", shut);
-  document.addEventListener("keydown", e => { if (e.key === "Escape") shut(); });
-
-  weights(); render();
-})();
-</script>
+<footer class="foot"><div class="wrap">
+<span>Capitol Hill Index · Independent and nonpartisan · Public data from the House Clerk, FEC, Voteview, VoteHub and Wikidata</span>
+<nav aria-label="Footer"><a href="./members/">Members</a><a href="./polls/">Polls</a><a href="./votes/">Votes</a><a href="./political-quiz/">Political Quiz</a><a href="./name-congress/">Name Congress</a><a href="./daily-game/">Daily Game</a></nav>
+</div></footer>
+</body>
+</html>
