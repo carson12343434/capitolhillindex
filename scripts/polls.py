@@ -113,11 +113,32 @@ def load_races() -> list[dict]:
 
 
 def fetch_polls() -> list[dict]:
+    """All polls, plus targeted requests per poll type in case the unfiltered list is capped."""
     cache = SOURCES / "votehub_polls.json"
+    hdr = {"Accept": "application/json", "User-Agent": "Mozilla/5.0 (compatible; CapitolHillIndex/1.0)"}
+
+    def pull(params=None) -> list[dict]:
+        d = get(VOTEHUB, params=params, headers=hdr, timeout=120).json()
+        return (d.get("polls") or d.get("data") or []) if isinstance(d, dict) else d
+
     try:
-        data = get(VOTEHUB, headers={"Accept": "application/json", "User-Agent": "Mozilla/5.0 (compatible; CapitolHillIndex/1.0)"}, timeout=120).json()
-        if isinstance(data, dict):
-            data = data.get("polls") or data.get("data") or []
+        data = pull()
+        seen = {p.get("id") or (p.get("pollster"), p.get("end_date"), p.get("subject")) for p in data}
+        since = (date.today() - timedelta(days=200)).isoformat()
+        for t in ("generic-ballot", "approval", "us-senator", "governor", "us-representative"):
+            try:
+                extra = pull({"poll_type": t, "from_date": since})
+            except Exception as e:
+                log.info("  VoteHub %s: %s", t, e)
+                continue
+            added = 0
+            for p in extra:
+                k = p.get("id") or (p.get("pollster"), p.get("end_date"), p.get("subject"))
+                if k not in seen:
+                    seen.add(k)
+                    data.append(p)
+                    added += 1
+            log.info("  VoteHub %s: %d returned, %d new", t, len(extra), added)
         save_json(cache, data)
         log.info("VoteHub: %d polls", len(data))
         return data
