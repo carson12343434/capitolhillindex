@@ -9,9 +9,9 @@
     tile("polls/", "2026 forecast", P ? `<span class="D">D ${pct(P.senate.pD)}</span> · <span class="R">R ${pct(P.senate.pR)}</span>` : "Polls", P ? `Chance of controlling the Senate. ${P.daysOut} days to Election Day.` : "Senate, House and governor races."),
     tile("members/", "Members", "Financial integrity", "Stock trades, trading volume, corporate PAC money and education for every member."),
     tile("votes/", "Votes", "How they voted", "Every roll call with the sponsor and each member's vote."),
-    tile("daily-game/", "Daily game", "Guess the politician", "A new member of Congress every day."),
+    tile("capitle/", "Daily game", "Capitle", "Guess the politician. A new member of Congress every day."),
     tile("political-quiz/", "Quiz", "Which party do you match?", "16 questions on issues and priorities."),
-    tile("name-congress/", "Quiz", "Name every senator", "Or the whole House, or just your state."),
+    tile("headcount/", "Quiz", "Headcount", "Name every senator, the whole House, or just your state."),
   ].join("");
 
   const raceName = r => r.office === "HOUSE" ? `${r.state}-${r.district}` : STATES[r.state];

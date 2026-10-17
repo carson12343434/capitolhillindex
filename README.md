@@ -1,6 +1,6 @@
 # Capitol Hill Index
 
-A nonpartisan site tracking every voting member of Congress: stock trades, trading volume and estimated gains, PAC money, education, roll call votes, a financial integrity score, and a daily 2026 election forecast. Also includes a political party quiz, a name-every-member quiz and a daily guess-the-politician game.
+A nonpartisan site tracking every voting member of Congress: stock trades, trading volume and estimated gains, PAC money, education, roll call votes, a financial integrity score, and a daily 2026 election forecast. Also includes a political party quiz, Headcount (a name-every-member quiz) and Capitle (a daily guess-the-politician game).
 
 ## Pages
 
@@ -11,8 +11,8 @@ A nonpartisan site tracking every voting member of Congress: stock trades, tradi
 | `/polls/` | 2026 polls, ratings, maps and chamber forecast |
 | `/votes/` | Roll call votes with sponsors and member votes |
 | `/political-quiz/` | Party match quiz |
-| `/name-congress/` | Name the senators and representatives |
-| `/daily-game/` | Guess the politician |
+| `/headcount/` | Headcount: name the senators and representatives |
+| `/capitle/` | Capitle: guess the politician daily game |
 | `/account/` | Sign in and home state |
 
 Page bodies live in `src/pages/`. After editing one, run `python scripts/build_pages.py` to rebuild the finished pages.

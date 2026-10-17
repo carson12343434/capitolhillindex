@@ -43,7 +43,7 @@
   function shuffled(arr, seed) { const a = arr.slice(); let s = seed; for (let i = a.length - 1; i > 0; i--) { s = (s * 1664525 + 1013904223) % 4294967296; const j = s % (i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
   const cycle = Math.floor(dayNum / pool.length);
   const ANSWER = shuffled(pool.sort((a, b) => a.id.localeCompare(b.id)), 20260101 + cycle)[dayNum % pool.length];
-  $("meta").textContent = `Game #${dayNum + 1} · ${new Date(today + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}`;
+  $("meta").textContent = `Capitle #${dayNum + 1} · ${new Date(today + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}`;
   if (!ANSWER) { $("msg").textContent = "Today's game couldn't load."; return; }
 
   $("names").innerHTML = M.map(m => `<option value="${esc(display(m))}">${esc(m.chamber === "Senate" ? "Sen." : "Rep.")} ${m.party}-${m.state}</option>`).join("");
@@ -103,7 +103,7 @@
   function finish() {
     const a = ANSWER, s = accounts.load("game-stats", { played: 0, wins: 0, streak: 0, best: 0 });
     const grid = state.guesses.map(id => { const g = M.find(m => m.id === id); return [g.party === a.party, g.state === a.state, g.chamber === a.chamber, g.age === a.age, Math.abs(yrs(g) - yrs(a)) <= 1].map(x => x ? "🟩" : "⬜").join(""); }).join("\n");
-    const share = `Guess the Politician #${dayNum + 1}: ${state.won ? `${state.guesses.length}/${MAX}` : "X/" + MAX}${state.hints ? ` (${state.hints} hint${state.hints > 1 ? "s" : ""})` : ""}\n${grid}`;
+    const share = `Capitle #${dayNum + 1}: ${state.won ? `${state.guesses.length}/${MAX}` : "X/" + MAX}${state.hints ? ` (${state.hints} hint${state.hints > 1 ? "s" : ""})` : ""}\n${grid}`;
     $("done").hidden = false;
     $("done").innerHTML = `<div class="panel row" style="gap:18px;align-items:center">
       ${PHOTOS[a.id] ? `<img src="${PHOTOS[a.id]}" alt="Portrait of ${esc(a.name)}" width="96" height="118" style="object-fit:cover">` : ""}
