@@ -130,7 +130,8 @@ def main() -> None:
                 for cid in ids:
                     for k, v in periods[p].get(cid, {}).items():
                         tot[k] += v
-            rec[label] = {k: round(v) for k, v in tot.items()} | {"years": f"{plist[0] - 1}-{plist[-1]}"}
+            if tot:
+                rec[label] = {k: round(v) for k, v in tot.items()} | {"years": f"{plist[0] - 1}-{plist[-1]}"}
         if rec:
             result[mid] = rec
     if result:
