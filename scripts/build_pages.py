@@ -40,9 +40,11 @@ PAGES = [
      "A new member of Congress every day. Guess who it is from party, state, chamber, age and years in office, with hints if you need them."),
     ("account", "account/", None, "Your Account | Capitol Hill Index",
      "Sign in to save your home state, quiz results and game streak."),
+    ("stats", "stats/", None, "Site Stats | Capitol Hill Index", "Visits and activity across Capitol Hill Index."),
     ("404", "404.html", None, "Page not found | Capitol Hill Index", "That page doesn't exist."),
 ]
 NAV = [p for p in PAGES if p[2]]
+PRIVATE = {"account", "stats", "404"}
 FONTS = "https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap"
 
 
@@ -72,7 +74,7 @@ def head(slug: str, path: str, title: str, desc: str, url: str, pre: str) -> str
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{html.escape(title)}</title>
-<meta name="description" content="{html.escape(desc)}">
+<meta name="description" content="{html.escape(desc)}">{'<meta name="robots" content="noindex">' if slug in PRIVATE else ""}
 <link rel="canonical" href="{canon}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{SITE_NAME}">
@@ -132,10 +134,10 @@ def main() -> None:
 
     entries = "".join(
         f"<url><loc>{url}/{p[1]}</loc></url>"
-        for p in PAGES if p[0] not in ("account", "404"))
+        for p in PAGES if p[0] not in PRIVATE)
     (ROOT / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{entries}</urlset>\n')
-    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /account/\nSitemap: {url}/sitemap.xml\n")
+    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /account/\nDisallow: /stats/\nSitemap: {url}/sitemap.xml\n")
     print("wrote sitemap.xml, robots.txt")
 
 

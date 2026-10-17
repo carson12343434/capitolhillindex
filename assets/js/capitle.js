@@ -98,10 +98,27 @@
     s.played++; s.last = today;
     if (won) { s.wins++; s.streak = s.lastWin === yesterday ? s.streak + 1 : 1; s.lastWin = today; s.best = Math.max(s.best, s.streak); s.dist[state.guesses.length] = (s.dist[state.guesses.length] || 0) + 1; }
     else s.streak = 0;
+    CHI.track(won ? "capitle-win" : "capitle-loss");
     try { await accounts.save("game-stats", s); } catch (e) {}
+    paintStreak();
+  }
+  const BLANK = { played: 0, wins: 0, streak: 0, best: 0, last: null, lastWin: null, dist: {} };
+  const yesterdayOf = d => new Date(Date.parse(d + "T12:00:00Z") - 864e5).toISOString().slice(0, 10);
+  // A streak only counts if the last win was today or yesterday.
+  const liveStreak = s => (s.lastWin === today || s.lastWin === yesterdayOf(today)) ? s.streak : 0;
+  function paintStreak() {
+    const s = accounts.load("game-stats", BLANK);
+    const stat = (n, l) => `<div class="stat" style="text-align:center"><b style="font-size:22px">${n}</b><span>${l}</span></div>`;
+    $("streak").innerHTML = stat(liveStreak(s), "Streak") + stat(s.best || 0, "Best") + stat(s.played || 0, "Played");
+  }
+  function untilMidnightET() {
+    const now = new Date();
+    const et = new Date(now.toLocaleString("en-US", { timeZone: "America/New_York" }));
+    const mins = Math.max(1, Math.round((24 * 60) - (et.getHours() * 60 + et.getMinutes())));
+    return `${Math.floor(mins / 60)}h ${mins % 60}m`;
   }
   function finish() {
-    const a = ANSWER, s = accounts.load("game-stats", { played: 0, wins: 0, streak: 0, best: 0 });
+    const a = ANSWER, s = accounts.load("game-stats", BLANK);
     const grid = state.guesses.map(id => { const g = M.find(m => m.id === id); return [g.party === a.party, g.state === a.state, g.chamber === a.chamber, g.age === a.age, Math.abs(yrs(g) - yrs(a)) <= 1].map(x => x ? "🟩" : "⬜").join(""); }).join("\n");
     const share = `Capitle #${dayNum + 1}: ${state.won ? `${state.guesses.length}/${MAX}` : "X/" + MAX}${state.hints ? ` (${state.hints} hint${state.hints > 1 ? "s" : ""})` : ""}\n${grid}`;
     $("done").hidden = false;
@@ -109,10 +126,22 @@
       ${PHOTOS[a.id] ? `<img src="${PHOTOS[a.id]}" alt="Portrait of ${esc(a.name)}" width="96" height="118" style="object-fit:cover">` : ""}
       <div class="stack" style="gap:4px;min-width:0"><span class="kicker" style="color:var(--${state.won ? "ok" : "bad"})">${state.won ? `Solved in ${state.guesses.length}` : "Today's answer"}</span>
         <h2>${esc(a.name)}</h2><div class="small">${PARTY[a.party]}, ${STATES[a.state]} · ${a.chamber === "Senate" ? "Senator" : "Representative"} · age ${a.age} · ${yrs(a)} years in Congress</div>
-        <div class="small muted">Played ${s.played} · won ${s.played ? Math.round((s.wins / s.played) * 100) : 0}% · streak ${s.streak} · best ${s.best}</div>
         <div class="row" style="margin-top:8px"><button class="btn" id="share">Copy result</button><a class="btn ghost" href="../members/#${a.state}">See ${esc(a.last)}'s finances</a></div></div></div>
-      <p class="small muted" style="margin-top:10px">Next politician at midnight Eastern.</p><pre id="sharetext" hidden>${esc(share)}</pre>`;
+      <div class="grid2" style="margin-top:16px;align-items:start">
+        <div class="panel"><h3>Your stats</h3>
+          <div class="row" style="gap:22px;margin-top:10px">${[[s.played || 0, "Played"], [s.played ? Math.round((s.wins / s.played) * 100) + "%" : "0%", "Won"], [liveStreak(s), "Current streak"], [s.best || 0, "Best streak"]].map(([n, l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join("")}</div>
+          <p class="small muted" style="margin:12px 0 0">Next Capitle in <b>${untilMidnightET()}</b>, at midnight Eastern.</p>
+          ${accounts.enabled() && !CHI.profile.uid ? `<button class="btn ghost" id="keep" style="margin-top:12px">Create a free account to keep your streak</button>` : ""}</div>
+        <div class="panel"><h3>Guesses to solve</h3><div class="stack" style="gap:4px;margin-top:10px">${(() => {
+          const d = s.dist || {}, max = Math.max(1, ...Object.values(d));
+          return Array.from({ length: MAX }, (_, i) => i + 1).map(n => { const c = d[n] || 0, mine = state.won && state.guesses.length === n;
+            return `<div class="row small" style="gap:8px;flex-wrap:nowrap"><span style="width:12px;text-align:right">${n}</span><div style="flex:1"><div style="width:${Math.max(6, (c / max) * 100)}%;background:${mine ? "var(--ok)" : "#9aa1a9"};color:#fff;font-weight:700;font-size:12px;padding:1px 6px;border-radius:2px;text-align:right">${c}</div></div></div>`; }).join(""); })()}</div></div>
+      </div><pre id="sharetext" hidden>${esc(share)}</pre>`;
     $("share").onclick = () => navigator.clipboard.writeText(share).then(() => toast("Copied")).catch(() => { const p = $("sharetext"); p.hidden = false; getSelection().selectAllChildren(p); });
+    $("keep")?.addEventListener("click", () => CHI.promptSignIn("Save your Capitle streak"));
   }
   paint();
+  paintStreak();
+  // After signing in, stats saved to the account replace the ones on this device.
+  CHI.onProfile(() => { paintStreak(); if (state.over) finish(); });
 })();

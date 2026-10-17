@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /account/
+Disallow: /stats/
 Sitemap: https://capitolhillindex.com/sitemap.xml

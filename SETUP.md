@@ -24,9 +24,10 @@ New sites usually take a few weeks to show up in search. Specific searches ("nam
 ## 3. Visitor stats (GoatCounter, free)
 
 1. Sign up at [goatcounter.com](https://www.goatcounter.com/signup). Pick a code such as `capitolhillindex`.
-2. In `assets/config.js`, set `goatcounter: "capitolhillindex"`.
+2. In GoatCounter, open **Settings**, tick **Allow adding visitor counts on your website**, and save. This feeds the `/stats/` page.
+3. In `assets/config.js`, set `goatcounter: "capitolhillindex"`.
 
-Your dashboard at `https://capitolhillindex.goatcounter.com` shows page views, where visitors come from, and events such as quiz starts, quiz finishes, game guesses and sign-ups.
+Your dashboard at `https://capitolhillindex.goatcounter.com` shows page views, unique visitors, where they came from, and events such as sign-ups, Capitle wins and quiz finishes. The site's own `/stats/` page shows the totals at a glance.
 
 ## 4. Accounts (Firebase, free)
 

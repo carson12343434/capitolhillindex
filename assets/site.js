@@ -43,6 +43,18 @@
 
   // ---------------- Firebase accounts (optional) ----------------
   let fb = null; // { auth, db, mods }
+  let authKnown = false;
+  function mergeSaved(local, remote) {
+    const out = { ...local, ...remote };
+    for (const k of Object.keys(local)) {
+      if (!(k in remote)) continue;
+      const a = local[k], b = remote[k];
+      if (k === "game-stats") out[k] = (a.played || 0) > (b.played || 0) ? a : b;
+      else if (k.startsWith("name-")) out[k] = (a.score || 0) > (b.score || 0) || ((a.score || 0) === (b.score || 0) && (a.secs || 1e9) < (b.secs || 1e9)) ? a : b;
+      else if (a && b && a.at && b.at) out[k] = a.at > b.at ? a : b;
+    }
+    return out;
+  }
   const FB_VER = "10.12.2";
   async function firebase() {
     if (fb || !CFG.firebase || !CFG.firebase.apiKey) return fb;
@@ -51,11 +63,23 @@
     const a = app.initializeApp(CFG.firebase);
     fb = { auth: auth.getAuth(a), db: fs.getFirestore(a), A: auth, F: fs };
     auth.onAuthStateChanged(fb.auth, async user => {
-      if (!user) { if (profile.uid) setLocal({ uid: "", email: "" }); return; }
+      authKnown = true;
+      if (!user) { if (profile.uid) setLocal({ uid: "", email: "" }); maybeWelcome(); return; }
       let data = {};
       try { const snap = await fs.getDoc(fs.doc(fb.db, "users", user.uid)); data = snap.exists() ? snap.data() : {}; } catch (e) { console.warn(e); }
-      setLocal({ uid: user.uid, email: user.email || "", state: data.state || profile.state || "" });
-      if (data.saved) store.set("cloud", data.saved);
+      // Progress made on this device before signing in is kept and copied to the account.
+      const local = store.get("cloud", {}), remote = data.saved || {};
+      const merged = mergeSaved(local, remote);
+      store.set("cloud", merged);
+      const state = data.state || profile.state || "";
+      setLocal({ uid: user.uid, email: user.email || "", state });
+      const patch = {};
+      if (JSON.stringify(merged) !== JSON.stringify(remote)) patch.saved = merged;
+      if (!data.state && state) patch.state = state;
+      if (Object.keys(patch).length) {
+        try { await fs.setDoc(fs.doc(fb.db, "users", user.uid), patch, { merge: true }); } catch (e) { console.warn(e); }
+      }
+      closeWelcome();
     });
     return fb;
   }
@@ -92,6 +116,80 @@
     },
   };
 
+  // ---------------- welcome / sign-in prompt ----------------
+  const WELCOME_SNOOZE_DAYS = 7;
+  let welcomeEl = null;
+  function onAccountPage() { return /\/account\/?$/.test(location.pathname); }
+  function maybeWelcome() {
+    if (!accounts.enabled() || profile.uid || onAccountPage() || document.title.startsWith("Page not found")) return;
+    const later = store.get("welcome-later", 0);
+    if (later && Date.now() - later < WELCOME_SNOOZE_DAYS * 864e5) return;
+    try { if (sessionStorage.getItem("chi:welcome-shown")) return; } catch (e) {}
+    setTimeout(() => { if (!profile.uid) promptSignIn(); }, 1500);
+  }
+  function closeWelcome() { if (welcomeEl) { welcomeEl.remove(); welcomeEl = null; document.body.style.overflow = ""; } }
+  function promptSignIn(reason) {
+    if (!accounts.enabled() || profile.uid || welcomeEl) return;
+    try { sessionStorage.setItem("chi:welcome-shown", "1"); } catch (e) {}
+    const opener = document.activeElement;
+    welcomeEl = document.createElement("div");
+    welcomeEl.className = "shade";
+    welcomeEl.style.cssText = "display:grid;place-items:center;padding:16px;z-index:70";
+    welcomeEl.innerHTML = `<div role="dialog" aria-modal="true" aria-labelledby="w-title" class="panel stack" style="width:min(430px,100%);gap:12px;box-shadow:0 18px 50px rgba(0,0,0,.18);padding:22px">
+      <div><span class="kicker">Free account</span><h2 id="w-title" style="margin-top:6px">${esc(reason || "Keep your streak going")}</h2>
+        <p class="small muted" style="margin:6px 0 0">Save your Capitle streak, Headcount scores and quiz results, and see your own senators and races first on every device.</p></div>
+      <div class="tabs" role="tablist" style="margin-top:0"><button type="button" role="tab" aria-selected="true" data-m="up">Create account</button><button type="button" role="tab" aria-selected="false" data-m="in">Sign in</button></div>
+      <form class="stack" style="gap:10px" novalidate>
+        <label class="small" style="display:grid;gap:4px">Email<input class="input" type="email" name="em" autocomplete="email" required></label>
+        <label class="small" style="display:grid;gap:4px">Password<input class="input" type="password" name="pw" autocomplete="new-password" minlength="8" required></label>
+        <label class="small" style="display:grid;gap:4px" data-up>Home state<select class="input" name="st">${stateOptions(profile.state, "Choose your state")}</select></label>
+        <p class="small" role="alert" data-err style="color:var(--bad);margin:0;min-height:1.2em"></p>
+        <button class="btn" type="submit">Create account</button>
+      </form>
+      <button type="button" class="btn ghost" data-later>Maybe later</button></div>`;
+    document.body.appendChild(welcomeEl);
+    document.body.style.overflow = "hidden";
+    const form = welcomeEl.querySelector("form"), err = welcomeEl.querySelector("[data-err]");
+    let mode = "up";
+    welcomeEl.querySelector(".tabs").onclick = e => {
+      const b = e.target.closest("[data-m]"); if (!b) return;
+      mode = b.dataset.m;
+      welcomeEl.querySelectorAll("[data-m]").forEach(x => x.setAttribute("aria-selected", x === b));
+      welcomeEl.querySelector("[data-up]").hidden = mode !== "up";
+      form.querySelector("[type=submit]").textContent = mode === "up" ? "Create account" : "Sign in";
+      form.pw.autocomplete = mode === "up" ? "new-password" : "current-password";
+      err.textContent = "";
+    };
+    const later = () => { store.set("welcome-later", Date.now()); closeWelcome(); track("welcome-later"); if (opener && opener.focus) opener.focus(); };
+    welcomeEl.querySelector("[data-later]").onclick = later;
+    welcomeEl.addEventListener("click", e => { if (e.target === welcomeEl) later(); });
+    welcomeEl.addEventListener("keydown", e => { if (e.key === "Escape") later(); });
+    form.onsubmit = async e => {
+      e.preventDefault();
+      const em = form.em.value.trim(), pw = form.pw.value, st = form.st.value;
+      if (!em || !pw) { err.textContent = "Enter your email and a password."; return; }
+      if (mode === "up" && pw.length < 8) { err.textContent = "Use a password with at least 8 characters."; return; }
+      if (mode === "up" && !st) { err.textContent = "Choose your home state."; return; }
+      const btn = form.querySelector("[type=submit]"); btn.disabled = true; err.textContent = "";
+      try {
+        if (mode === "up") { await accounts.signUp(em, pw, st); track("signup"); toast("Account created. Your progress is saved."); }
+        else { await accounts.signIn(em, pw); track("signin"); toast("Signed in"); }
+        closeWelcome();
+      } catch (er) { err.textContent = friendlyError(er); btn.disabled = false; }
+    };
+    setTimeout(() => form.em.focus(), 50);
+    track("welcome-shown");
+  }
+  function friendlyError(e) {
+    const c = (e && e.code) || "";
+    return c.includes("invalid-credential") || c.includes("wrong-password") || c.includes("user-not-found") ? "That email and password don't match an account."
+      : c.includes("email-already-in-use") ? "An account with that email already exists. Use Sign in."
+      : c.includes("weak-password") ? "Use a password with at least 8 characters."
+      : c.includes("invalid-email") ? "Check the email address."
+      : c.includes("too-many-requests") ? "Too many tries. Wait a minute and try again."
+      : (e && e.message) || "Something went wrong. Try again.";
+  }
+
   // ---------------- visitor stats (GoatCounter) ----------------
   function track(name) {
     try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: name, event: true }); } catch (e) {}
@@ -109,6 +207,6 @@
     return `<option value="">${esc(blankLabel)}</option>` + Object.entries(STATES).map(([k, v]) => `<option value="${k}"${k === selected ? " selected" : ""}>${esc(v)}</option>`).join("");
   }
 
-  window.CHI = { root, STATES, PARTY, esc, money, signedMoney, month, day, store, toast, onProfile, accounts, track, stateOptions, get profile() { return profile; } };
+  window.CHI = { root, STATES, PARTY, esc, money, signedMoney, month, day, store, toast, onProfile, accounts, track, stateOptions, promptSignIn, friendlyError, get profile() { return profile; } };
   document.addEventListener("DOMContentLoaded", () => { paintAccount(); firebase().catch(e => console.warn("accounts unavailable", e)); });
 })();
