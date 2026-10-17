@@ -130,9 +130,8 @@ def main() -> None:
         out.write_text(page)
         print(f"wrote {out.relative_to(ROOT)}")
 
-    today = date.today().isoformat()
     entries = "".join(
-        f"<url><loc>{url}/{p[1]}</loc><lastmod>{today}</lastmod></url>"
+        f"<url><loc>{url}/{p[1]}</loc></url>"
         for p in PAGES if p[0] not in ("account", "404"))
     (ROOT / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{entries}</urlset>\n')
