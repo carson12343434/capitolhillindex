@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /account/
 Disallow: /stats/
-Sitemap: https://capitolhillindex.com/sitemap.xml
+Sitemap: https://carson12343434.github.io/capitolhillindex/sitemap.xml

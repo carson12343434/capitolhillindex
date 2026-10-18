@@ -83,7 +83,11 @@ def head(slug: str, path: str, title: str, desc: str, url: str, pre: str) -> str
 <meta property="og:title" content="{html.escape(title)}">
 <meta property="og:description" content="{html.escape(desc)}">
 <meta property="og:url" content="{canon}">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="{url}/assets/brand/share-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{url}/assets/brand/share-card.png">
 <meta name="theme-color" content="#ffffff">
 <meta name="chi-root" content="{pre}">
 <link rel="icon" href="{pre}assets/favicon.svg" type="image/svg+xml">
@@ -102,7 +106,7 @@ def header(slug: str, pre: str) -> str:
         f'<a href="{pre}{p[1]}"{" aria-current=page" if p[0] == slug else ""}>{p[2]}</a>' for p in NAV)
     return f"""<body>
 <header class="top"><div class="wrap">
-<a class="brand" href="{pre}"><i aria-hidden="true"></i>Capitol Hill Index</a>
+<a class="brand" href="{pre}"><img src="{pre}assets/brand/seal.svg" alt="" width="28" height="28">Capitol Hill Index</a>
 <nav class="nav" aria-label="Main">{links}</nav>
 <a class="acct" id="acct" href="{pre}account/">Sign in</a>
 </div></header>"""
