@@ -25,6 +25,8 @@ def _faces(img: Image.Image) -> list[tuple[int, int, int, int]]:
         _cascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
     gray = cv2.cvtColor(np.asarray(img.convert("RGB")), cv2.COLOR_RGB2GRAY)
     found = _cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=6, minSize=(40, 40))
+    if len(found) == 0:
+        found = _cascade.detectMultiScale(gray, scaleFactor=1.05, minNeighbors=4, minSize=(40, 40))
     return sorted((tuple(int(v) for v in f) for f in found), key=lambda f: -f[2] * f[3])
 
 
@@ -42,7 +44,9 @@ def crop_portrait(img: Image.Image, find_face: bool) -> Image.Image | None:
     if find_face:
         faces = _faces(img)
         if not faces:
-            return None
+            # Portrait-shaped photos with no detectable face are usually tight headshots at an angle;
+            # landscape ones are usually event photos, which we skip.
+            return crop_portrait(img, find_face=False) if H >= W * 1.1 else None
         x, y, w, h = faces[0]
         if w < 60:  # too small to look sharp once enlarged
             return None

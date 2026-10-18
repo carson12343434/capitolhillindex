@@ -1,7 +1,7 @@
 """Headshots for 2026 candidates.
 
 Sitting members of Congress use their official portrait (scripts/photos.py). Everyone else is looked up
-on Wikidata by name, and a match is accepted only when it is clearly the same person: a living American
+on Wikidata by name (search API, then each item's claims), and a match is accepted only when it is clearly the same person: a living American
 whose description or offices name the race's state, and whose recorded party (if any) matches. Ambiguous
 names get no photo. Photos come from Wikimedia Commons, are cropped around the face, and keep the credit
 line their license requires.
@@ -69,71 +69,108 @@ def candidates() -> list[dict]:
     return out
 
 
-Q = """SELECT ?item ?name ?img ?desc ?dod ?party ?posLabel ?citizen WHERE {
-  VALUES ?name { %s }
-  { ?item rdfs:label ?name } UNION { ?item skos:altLabel ?name }
-  ?item wdt:P31 wd:Q5 ; wdt:P18 ?img .
-  OPTIONAL { ?item wdt:P27 ?citizen }
-  OPTIONAL { ?item schema:description ?desc FILTER(lang(?desc) = "en") }
-  OPTIONAL { ?item wdt:P570 ?dod }
-  OPTIONAL { ?item wdt:P102 ?party }
-  OPTIONAL { ?item wdt:P39 ?pos . ?pos rdfs:label ?posLabel FILTER(lang(?posLabel) = "en") }
-}"""
+API = "https://www.wikidata.org/w/api.php"
 
 
-def lookup(cands: list[dict]) -> dict[str, str]:
-    """Candidate key -> Commons file name, for confident matches only."""
-    by_name = defaultdict(list)
-    for c in cands:
-        for v in variants(c["name"]):
-            by_name[v].append(c)
-    names = sorted(by_name)
-    items: dict[str, dict] = {}
-    for i in range(0, len(names), 25):
-        batch = names[i:i + 25]
-        lits = " ".join('"%s"@en' % n.replace('"', '\\"') for n in batch)
+def wd(params: dict) -> dict:
+    from common import get
+    return get(API, params={"format": "json", **params}, timeout=60).json()
+
+
+def search(name: str) -> list[str]:
+    try:
+        return [x["id"] for x in wd({"action": "wbsearchentities", "search": name, "language": "en", "type": "item", "limit": 7}).get("search", [])]
+    except Exception:
+        return []
+
+
+def entities(ids: list[str], props: str) -> dict:
+    out = {}
+    for i in range(0, len(ids), 50):
         try:
-            rows = commons.sparql(Q % lits)
+            out.update(wd({"action": "wbgetentities", "ids": "|".join(ids[i:i + 50]), "props": props, "languages": "en"}).get("entities", {}))
         except Exception as e:
-            log.info("wikidata batch failed: %s", e)
-            continue
-        for r in rows:
-            q = r["item"]["value"].rsplit("/", 1)[-1]
-            it = items.setdefault(q, {"names": set(), "img": commons.file_name(r["img"]["value"]), "desc": "", "dead": False,
-                                      "party": set(), "pos": set(), "citizen": set()})
-            it["names"].add(r["name"]["value"])
-            it["desc"] = r.get("desc", {}).get("value", it["desc"])
-            it["dead"] |= "dod" in r
-            if "party" in r:
-                it["party"].add(r["party"]["value"].rsplit("/", 1)[-1])
-            if "posLabel" in r:
-                it["pos"].add(r["posLabel"]["value"])
-            if "citizen" in r:
-                it["citizen"].add(r["citizen"]["value"].rsplit("/", 1)[-1])
+            log.info("wbgetentities failed: %s", e)
+    return out
+
+
+def claim_ids(e: dict, prop: str) -> list[str]:
+    out = []
+    for c in e.get("claims", {}).get(prop, []):
+        v = c.get("mainsnak", {}).get("datavalue", {}).get("value")
+        if isinstance(v, dict) and "id" in v:
+            out.append(v["id"])
+        elif isinstance(v, str):
+            out.append(v)
+    return out
+
+
+def lookup(cands: list[dict], report: dict) -> dict[str, str]:
+    """Candidate key -> Commons file name, for confident matches only. Reasons for misses go in `report`."""
+    from concurrent.futures import ThreadPoolExecutor
+    names = sorted({v for c in cands for v in variants(c["name"])})
+    with ThreadPoolExecutor(4) as pool:
+        hits = dict(zip(names, pool.map(search, names)))
+    qids = sorted({q for v in hits.values() for q in v})
+    ents = entities(qids, "labels|aliases|descriptions|claims")
+    related = sorted({q for e in ents.values() for p in ("P39", "P551", "P3602", "P1001") for q in claim_ids(e, p)})
+    rel_labels = {q: e.get("labels", {}).get("en", {}).get("value", "") for q, e in entities(related, "labels").items()}
+    log.info("wikidata: %d names searched, %d items, %d related labels", len(names), len(ents), len(rel_labels))
 
     out = {}
     for c in cands:
         if c.get("mid"):
             continue
+        vs = {norm(v) for v in variants(c["name"])}
         state_name = ABBR.get(c["state"], "")
         want_party = PARTY_QID.get(c["party"][:1]) if c["party"] in ("D", "R") else None
-        pool = [it for it in items.values() if it["names"] & set(variants(c["name"]))]
-        ok = []
-        for it in pool:
-            if it["dead"] or (it["citizen"] and "Q30" not in it["citizen"]):
+        pool = []
+        for v in variants(c["name"]):
+            for q in hits.get(v, []):
+                e = ents.get(q)
+                if not e or q in [x[0] for x in pool]:
+                    continue
+                labels = [e.get("labels", {}).get("en", {}).get("value", "")] + [a["value"] for a in e.get("aliases", {}).get("en", [])]
+                if not any(norm(l) in vs for l in labels):
+                    continue
+                if "Q5" not in claim_ids(e, "P31"):
+                    continue
+                pool.append((q, e))
+        if not pool:
+            report[c["key"]] = "no Wikidata item with this name"
+            continue
+        ok, why = [], []
+        for q, e in pool:
+            img = claim_ids(e, "P18")
+            if not img:
+                why.append(f"{q}: no image")
                 continue
-            if want_party and it["party"] and want_party not in it["party"]:
+            if claim_ids(e, "P570"):
+                why.append(f"{q}: deceased")
                 continue
-            text = " ".join([it["desc"], *it["pos"]])
+            cit = claim_ids(e, "P27")
+            if cit and "Q30" not in cit:
+                why.append(f"{q}: not American")
+                continue
+            parties = claim_ids(e, "P102")
+            if want_party and parties and want_party not in parties:
+                why.append(f"{q}: different party")
+                continue
+            desc = e.get("descriptions", {}).get("en", {}).get("value", "")
+            text = " ".join([desc] + [rel_labels.get(x, "") for p in ("P39", "P551", "P3602", "P1001") for x in claim_ids(e, p)])
             in_state = bool(state_name) and state_name.lower() in text.lower()
-            politics = bool(it["pos"]) or "politician" in it["desc"].lower()
-            party_match = bool(want_party) and want_party in it["party"]
-            if in_state or (len(pool) == 1 and politics and party_match):
-                ok.append((in_state, it))
+            politics = bool(claim_ids(e, "P39")) or bool(claim_ids(e, "P3602")) or "politic" in desc.lower()
+            party_match = bool(want_party) and want_party in parties
+            if in_state or (len(pool) == 1 and politics and (party_match or not want_party)):
+                ok.append((in_state, q, img[0]))
+            else:
+                why.append(f"{q}: no tie to {state_name} ({desc[:60]})")
         if len(ok) > 1:
             ok = [o for o in ok if o[0]]
         if len(ok) == 1:
-            out[c["key"]] = ok[0][1]["img"]
+            out[c["key"]] = ok[0][2]
+        else:
+            report[c["key"]] = "ambiguous: " + ", ".join(o[1] for o in ok) if ok else "; ".join(why)[:300]
     return out
 
 
@@ -146,7 +183,8 @@ def main() -> None:
     overrides = load_json(STATIC / "candidate_photo_overrides.json", {})
     prev = load_json(SOURCES / "candidate_photos.json", {})
 
-    found = lookup([c for c in cands if not c.get("mid")])
+    report: dict[str, str] = {}
+    found = lookup([c for c in cands if not c.get("mid")], report)
     if not found and prev:
         log.info("candidate photos: Wikidata returned nothing; keeping the previous set")
         return
@@ -180,6 +218,7 @@ def main() -> None:
             data = fetch(i["thumb"]) if i.get("thumb") else None
             img = crop_portrait(open_image(data), find_face=True) if data else None
             if img is None:
+                report[k] = "photo found but no clear face" if data else "photo download failed"
                 continue
             save(path, webp(img, BIG, 78))
             added += 1
@@ -194,6 +233,7 @@ def main() -> None:
         if p.name not in live:
             p.unlink()
     save_json(SOURCES / "candidate_photos.json", {k: v for k, v in prev.items() if k in result})
+    save_json(SOURCES / "candidate_photos_report.json", {k: v for k, v in sorted(report.items()) if k not in result})
     write_js(DATA / "candphotos.js", "CHI_CANDPHOTOS", result)
     log.info("candidate photos: %d of %d candidates have a headshot (%d new, %d unchanged)", len(result), len(cands), added, kept)
 
