@@ -12,6 +12,15 @@ from __future__ import annotations
 from common import DATA, SOURCES, load_json, log, now_iso, write_js
 from legislators import load_members
 
+RANK = {"PhD": 5, "MD": 5, "JD": 5, "MA": 4, "MS": 4, "MBA": 4, "BA": 3, "BS": 3, "Bachelor's": 3, "AA": 2, "GED": 1}
+
+
+def edu_record(o: dict) -> dict:
+    items = o["list"]
+    top = max(items, key=lambda x: (RANK.get(x.get("degree") or "", 0), x.get("year") or 0))
+    label = top["degree"] if top.get("degree") == "GED" else f'{top["degree"]}, {top["school"]}' if top.get("degree") else top["school"]
+    return {"list": items, "top": label, "source": o.get("source")}
+
 
 def main() -> None:
     members = load_members()
@@ -20,6 +29,8 @@ def main() -> None:
     fec = load_json(SOURCES / "fec.json", {})
     edu = load_json(SOURCES / "education.json", {})
     covered = trades.get("covered", {})
+    over = load_json(DATA / "static" / "member_overrides.json", {})
+    credits = load_json(SOURCES / "photo_credits.json", {})
     out = []
     for m in members:
         bid = m["id"]
@@ -37,6 +48,12 @@ def main() -> None:
         rec["gains"] = gains.get("members", {}).get(bid)
         rec["fec"] = fec.get("members", {}).get(bid)
         rec["edu"] = edu.get("members", {}).get(bid)
+        if not rec["edu"] and bid in over.get("education", {}):
+            rec["edu"] = edu_record(over["education"][bid])
+        if bid in over.get("notes", {}):
+            rec["fecNote"] = over["notes"][bid]
+        if (credits.get(bid) or {}).get("credit"):
+            rec["photoCredit"] = credits[bid]["credit"]
         prefix = "S" if m["chamber"] == "Senate" else "H"
         rec["fecId"] = next((i for i in reversed(m["fec"]) if i.startswith(prefix)), None)
         rec["upIn2026"] = m["chamber"] == "House" or m["termEnd"][:4] in ("2026", "2027")

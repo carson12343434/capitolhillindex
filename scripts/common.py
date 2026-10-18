@@ -21,7 +21,7 @@ for d in (DATA, SOURCES, STATIC, CACHE):
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(message)s", datefmt="%H:%M:%S", stream=sys.stderr)
 log = logging.getLogger("chi")
 
-UA = "CapitolHillIndex/1.0 (nonpartisan civic data site; contact via GitHub repo)"
+UA = "CapitolHillIndex/1.0 (https://github.com/carson12343434/capitolhillindex; nonpartisan civic data site)"
 http = requests.Session()
 http.headers.update({"User-Agent": UA})
 

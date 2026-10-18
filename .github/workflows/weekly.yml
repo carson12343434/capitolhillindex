@@ -39,6 +39,9 @@ jobs:
       - name: Portraits
         run: python scripts/photos.py
         continue-on-error: true
+      - name: Candidate headshots
+        run: python scripts/candidate_photos.py
+        continue-on-error: true
       - name: Combine and build pages
         run: |
           python scripts/members.py

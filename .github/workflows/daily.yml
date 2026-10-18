@@ -37,6 +37,9 @@ jobs:
       - name: Roll call votes
         run: python scripts/votes.py
         continue-on-error: true
+      - name: Portraits for new members
+        run: python scripts/photos.py --missing
+        continue-on-error: true
       - name: Combine and build pages
         run: |
           python scripts/members.py

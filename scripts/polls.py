@@ -21,6 +21,12 @@ Forecast
   20,000 simulations share one national error, so races move together the way they do on
   election night. Ratings come from each side's win probability:
   Safe 95%+, Likely 80-95%, Lean 60-80%, Toss-up under 60%.
+
+Projected vote share
+  The expected margin is split around 50-50 after setting aside the third-party and write-in vote:
+  the polled share of a named third candidate where polls include one, otherwise 2%. Undecided
+  voters are assumed to split in proportion to the margin, so the two shares plus the other vote sum
+  to 100. The range is the middle 80% of simulated outcomes.
 Writes data/polls.js and appends to data/sources/forecast_history.json.
 """
 from __future__ import annotations
@@ -57,6 +63,8 @@ FUND_SD = {"HOUSE": 7.0, "SEN": 9.0, "GOV": 12.0}
 NATIONAL_SD = 2.5
 POLL_FLOOR_SD = 4.0
 HALF_LIFE = 21.0
+OTHER_DEFAULT = 2.0
+Z80 = 1.2816
 
 
 # ---------------------------------------------------------------- helpers
@@ -300,14 +308,14 @@ def race_key(p: dict) -> tuple[str, str] | None:
     return None
 
 
-def match_answers(answers: list[dict], race: dict) -> tuple[float, float] | None:
-    def find(name, exclude=None):
+def match_answers(answers: list[dict], race: dict) -> tuple[float, float, float | None] | None:
+    def find(name, exclude=()):
         if not name:
             return None
         full, ln = tokens(name), last_name(name)
         best = None
         for i, a in enumerate(answers):
-            if i == exclude or a.get("pct") is None:
+            if i in exclude or a.get("pct") is None:
                 continue
             at = tokens(a.get("choice"))
             if at == full or (ln and ln in at):
@@ -315,10 +323,11 @@ def match_answers(answers: list[dict], race: dict) -> tuple[float, float] | None
                     best = i
         return best
     li = find(race["main_left"])
-    ri = find(race["main_right"], exclude=li)
+    ri = find(race["main_right"], exclude=(li,))
     if li is None or ri is None:
         return None
-    return float(answers[li]["pct"]), float(answers[ri]["pct"])
+    oi = find(race.get("other"), exclude=(li, ri))
+    return float(answers[li]["pct"]), float(answers[ri]["pct"]), (float(answers[oi]["pct"]) if oi is not None else None)
 
 
 def race_polls(raw: list[dict], races: dict[str, dict]) -> dict[str, list[dict]]:
@@ -335,7 +344,7 @@ def race_polls(raw: list[dict], races: dict[str, dict]) -> dict[str, list[dict]]
         mt = match_answers(p.get("answers") or [], races[rid])
         if not mt:
             continue
-        out[rid].append({**base(p), "d": mt[0], "r": mt[1], "m": mt[0] - mt[1]})
+        out[rid].append({**base(p), "d": mt[0], "r": mt[1], "m": mt[0] - mt[1], "o": mt[2]})
     return out
 
 
@@ -348,7 +357,8 @@ def forecast_race(r: dict, polls: list[dict], he: dict, G: float, today: date) -
            "other": {"name": r["other"], "party": r["other_party"]} if r["other"] else None, "lean": r["lean"], "status": r["status"]}
     if not right or not left:
         winner = "left" if left else "right"
-        res.update(mean=60.0 if winner == "left" else -60.0, sd=1.0, uncontested=True, fund=None, polls=None)
+        res.update(mean=60.0 if winner == "left" else -60.0, sd=1.0, uncontested=True, fund=None, polls=None,
+                   share={"left": 100.0 if left else 0.0, "right": 100.0 if right else 0.0, "other": 0.0})
         return res
     inc = 0.0
     if r["inc_running"] and r["inc_party"]:
@@ -365,11 +375,23 @@ def forecast_race(r: dict, polls: list[dict], he: dict, G: float, today: date) -
     else:
         mean, sd = fund, sd_f
     plist = sorted(polls, key=lambda p: p["end"], reverse=True)[:12]
-    res.update(mean=round(mean, 2), sd=round(sd, 2), uncontested=False, fund=round(fund, 1),
+    res.update(mean=round(mean, 2), sd=round(sd, 2), uncontested=False, fund=round(fund, 1), share=vote_share(mean, sd, polls, today),
                polls=None if not avg else {**avg, "list": [{"pollster": p["pollster"], "end": p["end"], "n": p["n"], "pop": p["pop"],
                                                              "left": p["d"], "right": p["r"], "party": p["party"], "internal": p["internal"],
                                                              "adj": round(adjust(p, he) - p["m"], 1)} for p in plist]})
     return res
+
+
+def vote_share(mean: float, sd: float, polls: list[dict], today: date) -> dict:
+    """Projected share for each main candidate (see module notes)."""
+    named = [p["o"] for p in polls if p.get("o") is not None and pdate(p["end"]) and (today - pdate(p["end"])).days <= 120]
+    other = max(OTHER_DEFAULT, sum(named) / len(named)) if named else OTHER_DEFAULT
+    half = (100 - other) / 2
+    sd = math.hypot(sd, NATIONAL_SD)  # the simulations add a shared national error on top of each race's own
+    clip = lambda v: round(min(100 - other, max(0.0, v)), 1)
+    return {"left": clip(half + mean / 2), "right": clip(half - mean / 2), "other": round(other, 1),
+            "leftLo": clip(half + (mean - Z80 * sd) / 2), "leftHi": clip(half + (mean + Z80 * sd) / 2),
+            "rightLo": clip(half - (mean + Z80 * sd) / 2), "rightHi": clip(half - (mean - Z80 * sd) / 2)}
 
 
 def attach_members(races: list[dict], members: list[dict]) -> None:
@@ -478,9 +500,12 @@ def other_polls(raw: list[dict], today: date) -> list[dict]:
         for p in ps:
             for a in p.get("answers") or []:
                 if a.get("pct") is not None:
-                    tot[a["choice"]].append(float(a["pct"]))
-        cands = sorted(({"name": k, "avg": round(sum(v) / len(v), 1), "n": len(v)} for k, v in tot.items() if len(v) >= max(1, len(ps) // 3)),
-                       key=lambda x: -x["avg"])[:8]
+                    tot[" ".join(tokens(a["choice"]))].append((a["choice"], float(a["pct"])))
+        def label(v):  # most common spelling, preferring the hyphenated/punctuated form on ties
+            names = [n for n, _ in v]
+            return max(set(names), key=lambda n: (names.count(n), sum(c in "-.'" for c in n)))
+        cands = sorted(({"name": label(v), "avg": round(sum(x for _, x in v) / len(v), 1), "n": len(v)} for k, v in tot.items()
+                        if len(v) >= max(1, len(ps) // 3)), key=lambda x: -x["avg"])[:8]
         out.append({"subject": subj, "n": len(ps), "last": max(p["end_date"] for p in ps), "candidates": cands})
     return sorted(out, key=lambda x: -x["n"])[:6]
 
