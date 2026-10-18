@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import html
 import json
+from urllib.parse import urlparse
 import re
 from datetime import date
 from pathlib import Path
@@ -56,9 +57,11 @@ def out_file(path: str) -> Path:
     return ROOT / path / "index.html"
 
 
-def prefix_for(path: str) -> str:
+def prefix_for(path: str, url: str = "") -> str:
     if path == "404.html":
-        return "/"  # GitHub Pages serves this file for any missing path, so links must be absolute
+        # GitHub Pages serves this file for any missing path, so links must be absolute
+        # from the site's base path ("/" on a custom domain, "/repo/" on github.io).
+        return urlparse(url).path.rstrip("/") + "/"
     depth = 0 if path.endswith(".html") or path == "" else path.count("/")
     return "../" * depth or "./"
 
@@ -130,7 +133,7 @@ def main() -> None:
         if not src.exists():
             print(f"skip {slug}: no {src.name}")
             continue
-        pre = prefix_for(path)
+        pre = prefix_for(path, url)
         body = src.read_text().replace("{{root}}", pre)
         page = head(slug, path, title, desc, url, pre) + "\n" + header(slug, pre) + "\n" + body + "\n" + footer(pre)
         out = out_file(path)
