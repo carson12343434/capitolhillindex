@@ -5,7 +5,7 @@ window.CHI_CONFIG = {
 
   // Visitor stats: the code from your GoatCounter account (the part before .goatcounter.com).
   // Leave empty to turn stats off.
-  goatcounter: "",
+  goatcounter: "carson",
 
   // Accounts: paste the "firebaseConfig" object from your Firebase project settings.
   // Leave as null and the site saves each visitor's state on their own device instead.
