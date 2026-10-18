@@ -56,8 +56,13 @@
     return out;
   }
   const FB_VER = "10.12.2";
-  async function firebase() {
-    if (fb || !CFG.firebase || !CFG.firebase.apiKey) return fb;
+  let fbLoading = null;
+  function firebase() {
+    if (fb || !CFG.firebase || !CFG.firebase.apiKey) return Promise.resolve(fb);
+    if (!fbLoading) fbLoading = loadFirebase().catch(e => { fbLoading = null; throw e; });
+    return fbLoading;
+  }
+  async function loadFirebase() {
     const base = `https://www.gstatic.com/firebasejs/${FB_VER}/`;
     const [app, auth, fs] = await Promise.all([import(base + "firebase-app.js"), import(base + "firebase-auth.js"), import(base + "firebase-firestore.js")]);
     const a = app.initializeApp(CFG.firebase);
