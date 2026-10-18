@@ -21,6 +21,17 @@
   const lead = r => r.pLeft >= 0.5 ? r.pLeft : 1 - r.pLeft;
   const winParty = r => (r.pLeft >= 0.5 ? r.left.party : r.right.party);
   const flips = r => r.incParty && !r.uncontested && winParty(r) !== r.incParty && !(r.incParty === "I" && winParty(r) === "R" && r.office === "HOUSE");
+  const PHOTOS = window.CHI_CANDPHOTOS || {};
+  const norm = n => (n || "").replace(/\(.*?\)/g, " ").toLowerCase().replace(/[^a-z\s'-]/g, " ").replace(/'/g, "").replace(/-/g, " ").trim().split(/\s+/).join(" ");
+  const photoOf = (r, c) => c && c.name ? PHOTOS[`${r.state}|${norm(c.name)}`] : null;
+  const initials = n => (n || "").replace(/\(.*?\)/g, "").split(/\s+/).filter(w => /^[A-Za-z]/.test(w) && !/^(jr|sr|ii|iii|iv)\.?$/i.test(w)).map(w => w[0]).filter((_, i, a) => i === 0 || i === a.length - 1).join("").toUpperCase();
+  const face = (r, c, size) => {
+    const ph = photoOf(r, c), h = Math.round(size * 1.22);
+    return ph ? `<img class="face" src="${CHI.root}data/${esc(ph.src)}" alt="" width="${size}" height="${h}" loading="lazy" style="width:${size}px;height:${h}px">`
+      : `<span class="face none" aria-hidden="true" style="width:${size}px;height:${h}px;font-size:${Math.round(size / 2.6)}px">${esc(initials(c && c.name))}</span>`;
+  };
+  const share = (r, side) => r.share ? r.share[side] : null;
+  const pct1 = v => v == null ? "–" : v >= 99.95 ? "100%" : v.toFixed(1) + "%";
   const tip = $("tip");
   const showTip = (e, html) => { tip.innerHTML = html; tip.hidden = false; const x = Math.min(e.clientX + 14, innerWidth - 280); tip.style.left = x + "px"; tip.style.top = (e.clientY + 14) + "px"; };
   const hideTip = () => { tip.hidden = true; };
@@ -83,7 +94,7 @@
   // ---------- map / grid ----------
   function tipHtml(r) {
     return `<b>${esc(raceName(r))}</b> <span class="rate ${r.ratingSlug}">${r.rating}</span><br>${cand(r.left)} vs ${cand(r.right)}<br>
-      ${r.uncontested ? "Uncontested" : `${esc(leader(r).name)} ${pctFine(lead(r))} to win · forecast ${marginTxt(r.mean, r)}`}${r.polls ? `<br><span class="muted">Poll average ${marginTxt(r.polls.margin, r)} (${r.polls.n} polls)</span>` : ""}`;
+      ${r.uncontested ? "Uncontested" : `Projected vote ${pct1(share(r, "left"))} to ${pct1(share(r, "right"))}<br>${esc(leader(r).name)} ${pctFine(lead(r))} to win`}${r.polls ? `<br><span class="muted">Poll average ${marginTxt(r.polls.margin, r)} (${r.polls.n} polls)</span>` : ""}`;
   }
   function renderViz() {
     const list = RACES.filter(r => r.office === tab);
@@ -148,16 +159,15 @@
       (!q || [r.left.name, r.right.name, r.incumbent, STATES[r.state], r.state, raceName(r)].some(x => (x || "").toLowerCase().includes(q))))
       .sort((a, b) => Math.abs(a.pLeft - 0.5) - Math.abs(b.pLeft - 0.5) || a.id.localeCompare(b.id));
     $("count").textContent = `${list.length} races, closest first`;
-    $("thead").innerHTML = `<tr><th>Race</th><th>Democratic side</th><th>Republican side</th><th>Incumbent</th><th class="n">Poll average</th><th class="n">Polls</th><th class="n">Forecast</th><th class="n">Chance to win</th><th>Rating</th></tr>`;
+    $("thead").innerHTML = `<tr><th>Race</th><th>Candidates</th><th class="n">Projected vote</th><th class="n">Chance to win</th><th class="n">Poll average</th><th>Incumbent</th><th>Rating</th></tr>`;
+    const two = (r, f) => `<div class="pair">${["left", "right"].map(sd => `<div>${f(sd)}</div>`).join("")}</div>`;
     $("rows").innerHTML = list.slice(0, st.limit).map(r => `<tr class="click" data-id="${r.id}" tabindex="0">
       <td><b>${esc(raceName(r))}</b>${flips(r) ? ' <span class="chip" style="border-color:var(--ink)">Flip</span>' : ""}</td>
-      <td>${cand(r.left)}${r.left.party === "D" && r.left.name === r.incumbent ? ' <span class="tiny muted">inc.</span>' : ""}</td>
-      <td>${cand(r.right)}${r.right.name === r.incumbent ? ' <span class="tiny muted">inc.</span>' : ""}</td>
+      <td>${two(r, sd => r[sd].name ? `<span class="who">${face(r, r[sd], 26)}<span>${cand(r[sd])}${r[sd].name === r.incumbent || (r[sd].mid && r[sd].mid === r.incumbentId) ? ' <span class="tiny muted">inc.</span>' : ""}</span></span>` : '<span class="blank">No candidate</span>')}</td>
+      <td class="n">${r.uncontested ? "Unopposed" : two(r, sd => `<b class="${partyClass(r[sd].party)}">${pct1(share(r, sd))}</b>`)}</td>
+      <td class="n">${r.uncontested ? "" : two(r, sd => { const p = sd === "left" ? r.pLeft : 1 - r.pLeft; return `<span class="${p >= 0.5 ? partyClass(r[sd].party) : "muted"}" style="font-weight:${p >= 0.5 ? 700 : 400}">${pctFine(p)}</span>`; })}</td>
+      <td class="n">${r.polls ? `${two(r, sd => (sd === "left" ? r.polls.a : r.polls.b).toFixed(1))}<span class="tiny muted">${r.polls.n} poll${r.polls.n > 1 ? "s" : ""}</span>` : '<span class="blank">no polls</span>'}</td>
       <td class="small">${r.incRunning ? `<span class="${partyClass(r.incParty)}">${esc(r.incParty)}</span> running` : r.incParty ? `Open (${esc(r.incParty)} held)` : "Open"}</td>
-      <td class="n">${r.polls ? `${r.polls.a}–${r.polls.b}` : '<span class="blank">no polls</span>'}</td>
-      <td class="n">${r.polls ? r.polls.n : ""}</td>
-      <td class="n">${r.uncontested ? "Uncontested" : marginTxt(r.mean, r)}</td>
-      <td class="n">${r.uncontested ? "" : `<span class="${partyClass(leader(r).party)}" style="font-weight:700">${pctFine(lead(r))}</span> <span class="tiny muted">${esc(leader(r).name.split(" ").slice(-1)[0])}</span>`}</td>
       <td><span class="rate ${r.ratingSlug}">${r.rating}</span></td></tr>`).join("");
     $("more").hidden = list.length <= st.limit;
     $("more").textContent = `Show all ${list.length}`;
@@ -178,9 +188,14 @@
       <span class="kicker">${r.office === "SEN" ? "Senate" : r.office === "GOV" ? "Governor" : "House"}</span>
       <h2 id="dname" style="margin:4px 0 8px">${esc(raceName(r))}</h2>
       <span class="rate ${r.ratingSlug}">${r.rating}</span>
-      <div class="stack" style="margin-top:16px;gap:6px">
-        <div>${cand(r.left)}</div><div>${cand(r.right)}</div>${r.other ? `<div class="small muted">Also running: ${esc(r.other.name)} (${esc(r.other.party)})</div>` : ""}
-      </div>
+      <div class="duel">${["left", "right"].map(sd => { const c = r[sd], p = sd === "left" ? r.pLeft : 1 - r.pLeft, ph = photoOf(r, c), sh = r.share || {};
+        return `<div class="side">${face(r, c, 72)}<div class="stack" style="gap:2px;min-width:0"><div>${cand(c)}</div>
+          ${r.uncontested ? (c.name ? '<div class="small">Unopposed</div>' : "") : `<div class="big ${partyClass(c.party)}">${pct1(sh[sd])}</div>
+          <div class="tiny muted">projected vote${sh[sd + "Lo"] != null ? `, likely ${sh[sd + "Lo"].toFixed(0)} to ${sh[sd + "Hi"].toFixed(0)}` : ""}</div>
+          <div class="small" style="margin-top:4px"><b>${pctFine(p)}</b> chance to win</div>`}
+          ${r.polls ? `<div class="tiny muted">Poll average ${(sd === "left" ? r.polls.a : r.polls.b).toFixed(1)}%</div>` : ""}
+          ${ph && ph.credit ? `<div class="tiny muted credit">${esc(ph.credit)}</div>` : ""}</div></div>`; }).join("")}</div>
+      ${r.other ? `<p class="small muted" style="margin-top:10px">Also running: ${esc(r.other.name)} (${esc(r.other.party)})${r.share && r.share.other ? `. Third-party and write-in vote projected at ${r.share.other.toFixed(1)}%.` : ""}</p>` : ""}
       ${r.uncontested ? `<p class="small" style="margin-top:14px">Only one major-party candidate is on the ballot.</p>` : `
       <div style="margin-top:16px"><div class="row small" style="justify-content:space-between"><span class="${partyClass(r.left.party)}"><b>${pctFine(r.pLeft)}</b> ${esc(r.left.name)}</span><span class="${partyClass(r.right.party)}">${esc(r.right.name)} <b>${pctFine(1 - r.pLeft)}</b></span></div>
         <div style="display:flex;gap:2px;height:10px;margin-top:4px"><div style="flex:${r.pLeft};background:var(--d);border-radius:2px"></div><div style="flex:${1 - r.pLeft};background:var(--r);border-radius:2px"></div></div></div>

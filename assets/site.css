@@ -134,3 +134,16 @@ dl.facts dt { color: var(--muted) } dl.facts dd { margin: 0; text-align: right }
 
 .qshort { display: none }
 @media (max-width: 560px) { .qfull { display: none } .qshort { display: inline } }
+
+/* candidate headshots */
+.face { display: inline-block; flex: none; object-fit: cover; border-radius: 4px; background: #eceef1; vertical-align: middle }
+.face.none { display: inline-grid; place-items: center; color: #7a828b; font-weight: 700; letter-spacing: .02em }
+.who { display: inline-flex; align-items: center; gap: 8px }
+.pair { display: grid; gap: 6px }
+.pair > div { min-height: 32px; display: flex; align-items: center; justify-content: inherit }
+td.n .pair > div { justify-content: flex-end }
+.duel { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px }
+.duel .side { display: flex; gap: 10px; align-items: flex-start }
+.duel .big { font-size: 26px; font-weight: 800; line-height: 1.1 }
+.duel .credit { margin-top: 4px; overflow-wrap: anywhere }
+@media (max-width: 560px) { .duel { grid-template-columns: 1fr } }
