@@ -27,7 +27,7 @@
         <div><span class="small muted">Signed in as</span><br><b>${esc(p.email)}</b></div>
         <label for="st" class="small" style="display:grid;gap:4px;max-width:280px">Home state<select id="st" class="input">${CHI.stateOptions(p.state, "Choose a state")}</select></label>
         <div class="small"><b>Daily game:</b> ${g ? `played ${g.played}, won ${g.wins}, current streak ${g.streak}, best ${g.best}` : "not played yet"}</div>
-        <div class="small"><b>Political quiz:</b> ${q ? `${esc(q.party)}, ${esc(q.label)} <button class="btn ghost" id="delquiz" style="padding:2px 8px;margin-left:6px">Delete</button>` : "no saved result"}</div>
+        <div class="small"><b>Political quiz:</b> ${q ? `${q.score != null ? `${q.score}/100, ` : ""}${esc(q.label || q.party)} <button class="btn ghost" id="delquiz" style="padding:2px 8px;margin-left:6px">Delete</button>` : "no saved result"}</div>
         <div class="row"><button class="btn ghost" id="out">Sign out</button></div></div>`;
       box.querySelector("#st").onchange = async e => { try { await accounts.setState(e.target.value); toast("Saved"); } catch (er) { toast(friendly(er)); } };
       box.querySelector("#out").onclick = () => accounts.signOut();

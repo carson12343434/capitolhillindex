@@ -13,18 +13,18 @@
         <input class="input" id="guess" list="names" autocomplete="off" placeholder="Start typing a name" style="width:100%;font-size:18px;padding:10px 12px"></label>
       <datalist id="names"></datalist>
       <button class="btn" id="submit">Guess</button>
-      <button class="btn ghost" id="hint">Show a hint</button>
       <button class="btn ghost" id="giveup">Give up</button>
     </div>
     <p class="small" id="msg" role="status" aria-live="polite" style="min-height:1.5em;margin-top:8px"></p>
-    <div id="hints" class="stack small" style="gap:4px;margin-bottom:12px"></div>
+    <div id="hints" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-bottom:14px"></div>
     <div class="tablewrap"><table class="data" id="grid" style="text-align:center"><thead><tr><th>Guess</th><th>Party</th><th>State</th><th>Chamber</th><th>Age</th><th>Years in Congress</th><th>Gender</th></tr></thead><tbody id="rows"></tbody></table></div>
     <div id="done" class="section" hidden></div>
   </div>
 
   <section class="section small muted">
     <h2 style="color:var(--ink)">How to play</h2>
-    <p>You get 8 guesses. Green means a match. Yellow means close: a state in the same region, an age within 3 years, or years in Congress within 3. Arrows point toward the answer. Hints reveal the party, then the state, then the initials. A new politician appears at midnight Eastern.</p>
+    <p>You get 8 guesses. Green means a match. Yellow means close: a state in the same region, an age within 3 years, or years in Congress within 3. Arrows point toward the answer.</p>
+    <p>You get three hints, one from each tier, and you choose which clue to take. Hint 1 (gender, chamber or party) is open until your 2nd guess. Hint 2 (age range or terms served) opens after your 1st guess and closes at your 4th. Hint 3 (state or year they took office) opens after your 3rd guess and closes at your 6th. A new politician appears at midnight Eastern.</p>
   </section>
 </main>
 <script src="{{root}}data/members.js"></script>

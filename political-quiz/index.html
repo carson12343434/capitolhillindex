@@ -32,11 +32,13 @@
 <main class="wrap" style="max-width:780px">
   <span class="kicker">Quiz</span>
   <h1>Which party do you match?</h1>
-  <p class="lede">16 questions on issues and priorities. You'll see where you land on the economic and social scales and how closely your answers match Democrats, Republicans and independents.</p>
+  <p class="lede">16 questions on issues and priorities. You get a score from 0 (most liberal) to 100 (most conservative) and a label from Democrat to Republican.</p>
   <div id="quiz" class="section"></div>
   <section class="section small muted" id="about">
     <h2 style="color:var(--ink)">How the quiz decides</h2>
-    <p>Each question was asked in national surveys by Pew Research Center or Gallup, so we know roughly how Democrats, Republicans and independents answer it. The quiz compares your full set of answers with each group and reports how likely your answers are to come from each one. Ranking questions compare your priorities with each group's. In a test with 9,000 simulated respondents drawn from those survey patterns, it named the right group 92% of the time; real people are messier than simulations, so treat the result as a match, not a label.</p>
+    <p>Every question comes from national surveys by Pew Research Center or Gallup, so we know how Democrats, Republicans and independents actually answer it. Each answer is placed on a line from the most liberal response to the most conservative one. Questions that divide the parties more sharply count more toward your score.</p>
+    <p>The labels: 0 to 32 Democrat, 33 to 44 Moderate Democrat, 45 to 54 Independent, 55 to 66 Moderate Republican, 67 to 100 Republican. We tested the cutoffs on 12,000 simulated respondents built from the survey answers: 95% of Democrats and 96% of Republicans landed on their own side of the line.</p>
+    <p>Ranking questions start in a random order, so the starting order never nudges your result.</p>
     <p>Your answers stay in your browser. They're saved to your account only if you're signed in and choose to save them.</p>
   </section>
 </main>
@@ -44,7 +46,7 @@
 <script src="../assets/js/quiz.js"></script>
 
 <footer class="foot"><div class="wrap">
-<span>Capitol Hill Index · Independent and nonpartisan · Public data from the House Clerk, FEC, Voteview, VoteHub and Wikidata</span>
+<span>Capitol Hill Index · Nonpartisan. Built from official records and nonpartisan research. <a href="../standards/" style="text-decoration:underline">Our standards</a></span>
 <nav aria-label="Footer"><a href="../members/">Members</a><a href="../polls/">Polls</a><a href="../votes/">Votes</a><a href="../political-quiz/">Political Quiz</a><a href="../headcount/">Headcount</a><a href="../capitle/">Capitle</a></nav>
 </div></footer>
 </body>

@@ -50,6 +50,7 @@
       if (!(k in remote)) continue;
       const a = local[k], b = remote[k];
       if (k === "game-stats") out[k] = (a.played || 0) > (b.played || 0) ? a : b;
+      else if (k.startsWith("blitz-")) out[k] = (a.score || 0) >= (b.score || 0) ? a : b;
       else if (k.startsWith("name-")) out[k] = (a.score || 0) > (b.score || 0) || ((a.score || 0) === (b.score || 0) && (a.secs || 1e9) < (b.secs || 1e9)) ? a : b;
       else if (a && b && a.at && b.at) out[k] = a.at > b.at ? a : b;
     }

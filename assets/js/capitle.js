@@ -46,8 +46,10 @@
   $("meta").textContent = `Capitle #${dayNum + 1} · ${new Date(today + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}`;
   if (!ANSWER) { $("msg").textContent = "Today's game couldn't load."; return; }
 
-  $("names").innerHTML = M.map(m => `<option value="${esc(display(m))}">${esc(m.chamber === "Senate" ? "Sen." : "Rep.")} ${m.party}-${m.state}</option>`).join("");
-  let state = store.get("game-" + today, { guesses: [], hints: 0, over: false, won: false });
+  // Suggestions show names only; party and state would give too much away.
+  $("names").innerHTML = [...new Set(M.map(display))].sort((a, b) => a.split(" ").slice(-1)[0].localeCompare(b.split(" ").slice(-1)[0])).map(n => `<option value="${esc(n)}"></option>`).join("");
+  let state = store.get("game-" + today, { guesses: [], hints: {}, over: false, won: false });
+  if (typeof state.hints !== "object" || state.hints === null) state.hints = {};
 
   const yrs = m => Math.round(m.yearsInCongress);
   function compare(g) {
@@ -62,12 +64,47 @@
       ${cell(Math.abs(yrs(g) - yrs(a)) <= 1 ? "g" : Math.abs(yrs(g) - yrs(a)) <= 3 ? "y" : "n", yrs(g) + (Math.abs(yrs(g) - yrs(a)) <= 1 ? "" : arrow(yrs(g), yrs(a))))}
       ${cell(g.gender === a.gender ? "g" : "n", g.gender === "F" ? "Woman" : "Man")}</tr>`;
   }
-  const HINTS = [() => `Party: ${PARTY[ANSWER.party]}`, () => `State: ${STATES[ANSWER.state]}`, () => `Initials: ${ANSWER.first[0]}. ${ANSWER.last[0]}.`];
+  // Three hints, one per tier. Each tier opens and closes at set points in the round,
+  // so hints have to be spent as you go: pick one option per tier before it expires.
+  const a5 = Math.floor(ANSWER.age / 5) * 5;
+  const TIERS = [
+    { id: "t1", name: "Hint 1", opens: 0, closes: 2, options: [
+      ["gender", "Gender", () => ANSWER.gender === "F" ? "Woman" : "Man"],
+      ["chamber", "Chamber", () => ANSWER.chamber],
+      ["party", "Party", () => PARTY[ANSWER.party]]] },
+    { id: "t2", name: "Hint 2", opens: 1, closes: 4, options: [
+      ["age", "Age range", () => `${a5} to ${a5 + 5} years old`],
+      ["terms", "Terms served", () => { const t = ANSWER.houseTerms + ANSWER.senateTerms; return `${t} term${t === 1 ? "" : "s"} in Congress`; }]] },
+    { id: "t3", name: "Hint 3", opens: 3, closes: 6, options: [
+      ["state", "State", () => STATES[ANSWER.state]],
+      ["start", "Year they took office", () => `First took office in ${ANSWER.firstTookOffice.slice(0, 4)}`]] },
+  ];
+  const ord = n => n + (n === 1 ? "st" : n === 2 ? "nd" : n === 3 ? "rd" : "th");
+  function paintHints(n) {
+    $("hints").innerHTML = TIERS.map(t => {
+      const used = state.hints[t.id];
+      const opt = used && t.options.find(o => o[0] === used);
+      let body, status;
+      if (opt) { body = `<div style="font-weight:700">${esc(opt[1])}: ${esc(opt[2]())}</div>`; status = "Used"; }
+      else if (state.over) { body = ""; status = "Not used"; }
+      else if (n < t.opens) { body = t.options.map(o => `<button class="btn ghost" disabled style="padding:4px 10px">${o[1]}</button>`).join(""); status = `Opens after your ${ord(t.opens)} guess`; }
+      else if (n >= t.closes) { body = ""; status = `Expired after your ${ord(t.closes)} guess`; }
+      else { body = t.options.map(o => `<button class="btn ghost" data-tier="${t.id}" data-opt="${o[0]}" style="padding:4px 10px">${o[1]}</button>`).join(""); status = `Pick one before your ${ord(t.closes)} guess`; }
+      const live = !opt && !state.over && n >= t.opens && n < t.closes;
+      return `<div class="panel" style="padding:12px 14px;${live ? "border-color:var(--ink)" : opt ? "" : "opacity:.7"}">
+        <div class="row" style="justify-content:space-between;gap:6px"><b>${t.name}</b><span class="tiny muted">${status}</span></div>
+        <div class="row small" style="gap:6px;margin-top:8px;min-height:30px">${body}</div></div>`;
+    }).join("");
+  }
+  $("hints").addEventListener("click", e => {
+    const b = e.target.closest("[data-tier]"); if (!b || state.over) return;
+    state.hints[b.dataset.tier] = b.dataset.opt;
+    store.set("game-" + today, state); paint(); CHI.track("game-hint");
+  });
   function paint() {
     const gs = state.guesses.map(id => M.find(m => m.id === id)).filter(Boolean);
     $("rows").innerHTML = gs.map(compare).join("");
-    $("hints").innerHTML = HINTS.slice(0, state.hints).map(h => `<div class="chip" style="justify-self:start">${esc(h())}</div>`).join("");
-    $("hint").disabled = state.over || state.hints >= HINTS.length;
+    paintHints(gs.length);
     const left = MAX - gs.length;
     $("msg").textContent = state.over ? "" : `${left} guess${left === 1 ? "" : "es"} left.`;
     ["guess", "submit", "giveup"].forEach(id => $(id).disabled = state.over);
@@ -88,7 +125,6 @@
   }
   $("submit").onclick = submit;
   $("guess").addEventListener("keydown", e => { if (e.key === "Enter") submit(); });
-  $("hint").onclick = () => { state.hints = Math.min(HINTS.length, state.hints + 1); store.set("game-" + today, state); paint(); CHI.track("game-hint"); };
   $("giveup").onclick = () => { state.over = true; record(false); store.set("game-" + today, state); paint(); CHI.track("game-giveup"); };
 
   async function record(won) {
@@ -120,7 +156,7 @@
   function finish() {
     const a = ANSWER, s = accounts.load("game-stats", BLANK);
     const grid = state.guesses.map(id => { const g = M.find(m => m.id === id); return [g.party === a.party, g.state === a.state, g.chamber === a.chamber, g.age === a.age, Math.abs(yrs(g) - yrs(a)) <= 1].map(x => x ? "🟩" : "⬜").join(""); }).join("\n");
-    const share = `Capitle #${dayNum + 1}: ${state.won ? `${state.guesses.length}/${MAX}` : "X/" + MAX}${state.hints ? ` (${state.hints} hint${state.hints > 1 ? "s" : ""})` : ""}\n${grid}`;
+    const share = `Capitle #${dayNum + 1}: ${state.won ? `${state.guesses.length}/${MAX}` : "X/" + MAX}${Object.keys(state.hints).length ? ` (${Object.keys(state.hints).length} hint${Object.keys(state.hints).length > 1 ? "s" : ""})` : ""}\n${grid}`;
     $("done").hidden = false;
     $("done").innerHTML = `<div class="panel row" style="gap:18px;align-items:center">
       ${PHOTOS[a.id] ? `<img src="${PHOTOS[a.id]}" alt="Portrait of ${esc(a.name)}" width="96" height="118" style="object-fit:cover">` : ""}

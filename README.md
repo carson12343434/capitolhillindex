@@ -33,11 +33,12 @@ To run one now: **Actions** tab → pick the job → **Run workflow**.
 | House stock trades | House Clerk periodic transaction reports, parsed by [congresskit](https://github.com/kovagent/congresskit) |
 | Senate stock trades | [Senate eFD](https://efdsearch.senate.gov) (often blocks cloud servers) |
 | PAC and total receipts | [FEC bulk data](https://www.fec.gov/data/browse-data/?tab=bulk-data) |
-| Education | Biographical Directory of Congress, Wikidata |
+| Education | Biographical Directory of Congress and public biographical records |
 | Votes | [Voteview](https://voteview.com) |
 | Bill sponsors and titles | [GovInfo BILLSTATUS](https://www.govinfo.gov/bulkdata/BILLSTATUS) |
 | Polls | [VoteHub](https://votehub.com/polls/api/) (CC BY 4.0) |
-| Nominees and partisan lean | Wikipedia, state election offices, Cook PVI |
+| Nominees | Each state's certified primary results |
+| Partisan lean | Cook Political Report PVI |
 | Stock prices for gain estimates | Yahoo Finance, Stooq |
 | Portraits | [unitedstates/images](https://github.com/unitedstates/images) (public domain) |
 

@@ -32,12 +32,19 @@
 <main class="wrap">
   <span class="kicker">Headcount</span>
   <h1>Can you name every member of Congress?</h1>
-  <p class="lede">Type names as fast as you can. Try all 100 senators, the whole House, or just one state's delegation.</p>
+  <p class="lede">Type names as fast as you can. Fill in the full roster, or race the clock in a speed round and beat your high score.</p>
 
-  <div class="filters" id="setup">
-    <label for="scope">Who<select id="scope"><option value="Senate">All 100 senators</option><option value="House">All House members</option><option value="Both">Everyone in Congress</option></select></label>
+  <div class="tabs" role="tablist" id="modes">
+    <button role="tab" aria-selected="true" data-mode="roster">Full roster</button>
+    <button role="tab" aria-selected="false" data-mode="speed">Speed round</button>
+  </div>
+  <p class="small muted" id="modeinfo" style="margin-top:10px"></p>
+
+  <div class="filters" id="setup" style="margin-top:6px">
+    <label for="scope">Who<select id="scope"><option value="Senate">Senators</option><option value="House">Representatives</option><option value="Both">Everyone in Congress</option></select></label>
     <label for="state">State<select id="state"></select></label>
-    <label for="timer">Time limit<select id="timer"><option value="0">No limit</option><option value="300">5 minutes</option><option value="600">10 minutes</option><option value="900">15 minutes</option><option value="1800">30 minutes</option></select></label>
+    <label for="timer">Time limit<select id="timer"></select></label>
+    <label for="custom" id="customwrap" hidden>Minutes<input class="input" id="custom" type="number" min="0.5" max="60" step="0.5" value="4" style="width:90px"></label>
     <button class="btn" id="go">Start</button>
     <span class="count" id="best"></span>
   </div>
@@ -52,13 +59,19 @@
     <p class="small" id="msg" role="status" aria-live="polite" style="min-height:1.5em"></p>
     <div id="board" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px 20px"></div>
   </div>
+
+  <section class="section" id="scores" hidden>
+    <h2>Your speed round high scores</h2>
+    <div class="tablewrap" style="margin-top:10px"><table class="data"><thead><tr><th>Group</th><th>Time limit</th><th class="n">High score</th><th>Set</th></tr></thead><tbody id="scorerows"></tbody></table></div>
+    <p class="small muted" id="scorenote"></p>
+  </section>
 </main>
 <script src="../data/members.js"></script>
 <script src="../data/photos.js"></script>
 <script src="../assets/js/headcount.js"></script>
 
 <footer class="foot"><div class="wrap">
-<span>Capitol Hill Index · Independent and nonpartisan · Public data from the House Clerk, FEC, Voteview, VoteHub and Wikidata</span>
+<span>Capitol Hill Index · Nonpartisan. Built from official records and nonpartisan research. <a href="../standards/" style="text-decoration:underline">Our standards</a></span>
 <nav aria-label="Footer"><a href="../members/">Members</a><a href="../polls/">Polls</a><a href="../votes/">Votes</a><a href="../political-quiz/">Political Quiz</a><a href="../headcount/">Headcount</a><a href="../capitle/">Capitle</a></nav>
 </div></footer>
 </body>

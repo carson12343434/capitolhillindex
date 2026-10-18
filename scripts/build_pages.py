@@ -24,8 +24,8 @@ def site_url() -> str:
 
 # slug, output path, nav label, <title>, meta description
 PAGES = [
-    ("home", "", None, "Capitol Hill Index: Congress Stock Trades, 2026 Polls and Votes",
-     "Track every member of Congress: stock trades, PAC money and a financial integrity score, plus 2026 election polls, roll call votes and political quizzes."),
+    ("home", "", None, "Capitol Hill Index: Nonpartisan Congress Stock Trades, Polls and Votes",
+     "Nonpartisan, built from official records: every member of Congress's stock trades, PAC money and votes, a financial integrity score, and lean-corrected 2026 election polls."),
     ("members", "members/", "Members", "Congress Stock Trades and Financial Integrity Index",
      "Every voting member of Congress with stock trades, trading volume, corporate PAC money, education, age, tenure and a financial integrity score."),
     ("polls", "polls/", "Polls", "2026 Election Polls and Forecast: Senate, House and Governor",
@@ -38,6 +38,8 @@ PAGES = [
      "How many members of Congress can you name? Try all 100 senators, the whole House, or just your state's delegation."),
     ("capitle", "capitle/", "Capitle", "Capitle: Guess the Politician, a Daily Congress Game",
      "A new member of Congress every day. Guess who it is from party, state, chamber, age and years in office, with hints if you need them."),
+    ("standards", "standards/", None, "Our Standards: Nonpartisan, Official Data | Capitol Hill Index",
+     "Capitol Hill Index is nonpartisan: every number comes from official government records or nonpartisan research, and every member is measured by the same rules."),
     ("account", "account/", None, "Your Account | Capitol Hill Index",
      "Sign in to save your home state, quiz results and game streak."),
     ("stats", "stats/", None, "Site Stats | Capitol Hill Index", "Visits and activity across Capitol Hill Index."),
@@ -109,7 +111,7 @@ def header(slug: str, pre: str) -> str:
 def footer(pre: str) -> str:
     links = "".join(f'<a href="{pre}{p[1]}">{p[2]}</a>' for p in NAV)
     return f"""<footer class="foot"><div class="wrap">
-<span>Capitol Hill Index · Independent and nonpartisan · Public data from the House Clerk, FEC, Voteview, VoteHub and Wikidata</span>
+<span>Capitol Hill Index · Nonpartisan. Built from official records and nonpartisan research. <a href="{pre}standards/" style="text-decoration:underline">Our standards</a></span>
 <nav aria-label="Footer">{links}</nav>
 </div></footer>
 </body>

@@ -139,7 +139,7 @@
         ${fact("Current term", `${month(m.termStart)} to ${month(m.termEnd)}`)}
       </dl>
       <h3 style="margin:22px 0 8px">Education</h3>
-      ${m.edu ? `<ul class="small" style="margin:0;padding-left:18px">${m.edu.list.map(e => `<li>${e.degree ? `<b>${esc(e.degree)}</b>, ` : ""}${esc(e.school)}${e.year ? ` (${e.year})` : ""}</li>`).join("")}</ul><p class="tiny muted" style="margin-top:6px">Source: ${esc(m.edu.source)}</p>` : `<p class="small muted">Loads with the next data update.</p>`}
+      ${m.edu ? `<ul class="small" style="margin:0;padding-left:18px">${m.edu.list.map(e => `<li>${e.degree ? `<b>${esc(e.degree)}</b>, ` : ""}${esc(e.school)}${e.year ? ` (${e.year})` : ""}</li>`).join("")}</ul>${m.edu.source && m.edu.source.startsWith("Biographical") ? `<p class="tiny muted" style="margin-top:6px">Source: ${esc(m.edu.source)}</p>` : ""}` : `<p class="small muted">Loads with the next data update.</p>`}
       <h3 style="margin:22px 0 8px">Stock trading</h3>
       ${t == null ? `<p class="small muted">Senate trade filings aren't available yet.</p>` : `<dl class="facts">
         ${fact("Trades while in office", t.total.toLocaleString() + (t.partial ? " (House years only)" : ""))}

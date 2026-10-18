@@ -1,8 +1,8 @@
 """2026 polling averages and forecast.
 
 Polls: VoteHub open polling API (api.votehub.com, CC BY 4.0), fetched daily.
-Races and nominees: data/static/races_2026.csv (from Wikipedia and state election offices).
-Partisan lean: Cook PVI for each state and district (via Wikipedia), stored as a D-minus-R margin.
+Races and nominees: data/static/races_2026.csv (each state's certified primary results).
+Partisan lean: Cook Political Report PVI for each state and district, stored as a D-minus-R margin.
 
 How the averages avoid partisan skew
   1. Polls paid for by a party or campaign (VoteHub's "partisan"/"internal" flags) are moved
@@ -535,7 +535,7 @@ def main() -> None:
         },
         "senate": chambers["SEN"], "house": chambers["HOUSE"], "governors": chambers["GOV"],
         "races": races, "president": other_polls(raw, today), "history": hist[-120:],
-        "sources": {"polls": "VoteHub (CC BY 4.0)", "races": "Wikipedia; state election offices", "lean": "Cook PVI via Wikipedia",
+        "sources": {"polls": "VoteHub (CC BY 4.0)", "races": "State primary results", "lean": "Cook Political Report PVI",
                     "nPolls": len(raw), "nRacePolls": sum(len(v) for v in rp.values())},
     }
     write_js(DATA / "polls.js", "CHI_POLLS", payload)

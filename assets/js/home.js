@@ -10,8 +10,8 @@
     tile("members/", "Members", "Financial integrity", "Stock trades, trading volume, corporate PAC money and education for every member."),
     tile("votes/", "Votes", "How they voted", "Every roll call with the sponsor and each member's vote."),
     tile("capitle/", "Daily game", "Capitle", "Guess the politician. A new member of Congress every day."),
-    tile("political-quiz/", "Quiz", "Which party do you match?", "16 questions on issues and priorities."),
-    tile("headcount/", "Quiz", "Headcount", "Name every senator, the whole House, or just your state."),
+    tile("political-quiz/", "Quiz", "Where do you land, 0 to 100?", "16 questions place you from Democrat to Republican."),
+    tile("headcount/", "Quiz", "Headcount", "Name every senator, or race the clock in a speed round and beat your high score."),
   ].join("");
 
   const raceName = r => r.office === "HOUSE" ? `${r.state}-${r.district}` : STATES[r.state];

@@ -11,7 +11,7 @@
     ["Headcount", "/headcount/"], ["Capitle", "/capitle/"], ["Account", "/account/"]];
   const EVENTS = [["Sign-ups", "signup"], ["Sign-ins", "signin"], ["Sign-up prompt shown", "welcome-shown"], ["Prompt dismissed", "welcome-later"],
     ["Capitle wins", "capitle-win"], ["Capitle losses", "capitle-loss"], ["Capitle guesses", "game-guess"], ["Capitle hints", "game-hint"],
-    ["Quiz starts", "quiz-start"], ["Quiz finishes", "quiz-finish"], ["Headcount games", "name-start"], ["Headcount finishes", "name-finish"],
+    ["Quiz starts", "quiz-start"], ["Quiz finishes", "quiz-finish"], ["Headcount games", "name-start"], ["Headcount finishes", "name-finish"], ["Speed rounds played", "speed-start"], ["Speed rounds finished", "speed-finish"],
     ["Member profiles opened", "member-open"], ["Races opened", "race-open"], ["Votes opened", "vote-open"]];
   const prefix = (() => { const p = location.pathname.replace(/stats\/?$/, ""); return p.endsWith("/") ? p : p + "/"; })();
   async function count(path) {

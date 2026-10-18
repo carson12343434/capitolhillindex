@@ -165,7 +165,7 @@ def main() -> None:
             items = bio[bid] + [w for w in wd.get(bid, []) if not any(w["school"].lower() in b["school"].lower() or b["school"].lower() in w["school"].lower() for b in bio[bid])]
             out[bid] = summarize(items) | {"source": "Biographical Directory of Congress"}
         elif bid in wd:
-            out[bid] = summarize(wd[bid]) | {"source": "Wikidata"}
+            out[bid] = summarize(wd[bid]) | {"source": None}
         elif bid in prev:
             out[bid] = prev[bid]
     if out:
