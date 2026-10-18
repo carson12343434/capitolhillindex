@@ -25,6 +25,7 @@ from polls import STATE_NAMES
 
 OUT = DATA / "photos" / "c"
 PARTY_QID = {"D": "Q29552", "R": "Q29468"}
+OPPOSITE = {"D": "Q29468", "R": "Q29552"}
 ABBR = {v: k for k, v in STATE_NAMES.items()}
 
 
@@ -77,11 +78,12 @@ def wd(params: dict) -> dict:
     return get(API, params={"format": "json", **params}, timeout=60).json()
 
 
-def search(name: str) -> list[str]:
+def search(name: str) -> list[str] | None:
+    """Item IDs for a name, or None if the request failed (so it can be retried)."""
     try:
         return [x["id"] for x in wd({"action": "wbsearchentities", "search": name, "language": "en", "type": "item", "limit": 7}).get("search", [])]
     except Exception:
-        return []
+        return None
 
 
 def entities(ids: list[str], props: str) -> dict:
@@ -109,8 +111,19 @@ def lookup(cands: list[dict], report: dict) -> dict[str, str]:
     """Candidate key -> Commons file name, for confident matches only. Reasons for misses go in `report`."""
     from concurrent.futures import ThreadPoolExecutor
     names = sorted({v for c in cands for v in variants(c["name"])})
-    with ThreadPoolExecutor(4) as pool:
+    with ThreadPoolExecutor(2) as pool:
         hits = dict(zip(names, pool.map(search, names)))
+    import time
+    for attempt in range(3):
+        failed = [n for n, v in hits.items() if v is None]
+        if not failed:
+            break
+        log.info("wikidata: retrying %d searches", len(failed))
+        time.sleep(20)
+        for n in failed:
+            hits[n] = search(n)
+            time.sleep(0.4)
+    hits = {n: v or [] for n, v in hits.items()}
     qids = sorted({q for v in hits.values() for q in v})
     ents = entities(qids, "labels|aliases|descriptions|claims")
     related = sorted({q for e in ents.values() for p in ("P39", "P551", "P3602", "P1001") for q in claim_ids(e, p)})
@@ -139,7 +152,7 @@ def lookup(cands: list[dict], report: dict) -> dict[str, str]:
         if not pool:
             report[c["key"]] = "no Wikidata item with this name"
             continue
-        ok, why = [], []
+        ok, why, eligible = [], [], []
         for q, e in pool:
             img = claim_ids(e, "P18")
             if not img:
@@ -153,16 +166,19 @@ def lookup(cands: list[dict], report: dict) -> dict[str, str]:
                 why.append(f"{q}: not American")
                 continue
             parties = claim_ids(e, "P102")
-            if want_party and parties and want_party not in parties:
-                why.append(f"{q}: different party")
+            # State affiliates (Minnesota DFL, Alaska Democratic Party...) aren't a mismatch; only the other major party is.
+            opp = OPPOSITE.get(c["party"][:1]) if c["party"] in ("D", "R") else None
+            if opp and opp in parties and want_party not in parties:
+                why.append(f"{q}: other party")
                 continue
+            eligible.append((q, e, img[0], parties))
+        for q, e, img, parties in eligible:
             desc = e.get("descriptions", {}).get("en", {}).get("value", "")
             text = " ".join([desc] + [rel_labels.get(x, "") for p in ("P39", "P551", "P3602", "P1001") for x in claim_ids(e, p)])
             in_state = bool(state_name) and state_name.lower() in text.lower()
-            politics = bool(claim_ids(e, "P39")) or bool(claim_ids(e, "P3602")) or "politic" in desc.lower()
-            party_match = bool(want_party) and want_party in parties
-            if in_state or (len(pool) == 1 and politics and (party_match or not want_party)):
-                ok.append((in_state, q, img[0]))
+            politics = bool(claim_ids(e, "P39")) or bool(claim_ids(e, "P3602")) or bool(parties) or "politic" in desc.lower()
+            if in_state or (len(eligible) == 1 and politics):
+                ok.append((in_state, q, img))
             else:
                 why.append(f"{q}: no tie to {state_name} ({desc[:60]})")
         if len(ok) > 1:

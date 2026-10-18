@@ -48,7 +48,7 @@ def crop_portrait(img: Image.Image, find_face: bool) -> Image.Image | None:
             # landscape ones are usually event photos, which we skip.
             return crop_portrait(img, find_face=False) if H >= W * 1.1 else None
         x, y, w, h = faces[0]
-        if w < 60:  # too small to look sharp once enlarged
+        if w < 60 or w < W * 0.12:  # too small to look sharp once enlarged, or a face in a crowd
             return None
         cw = min(W, int(w * 2.4))
         ch = int(cw / RATIO)
