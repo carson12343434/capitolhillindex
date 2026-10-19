@@ -44,10 +44,11 @@ PAGES = [
     ("account", "account/", None, "Your Account | Capitol Hill Index",
      "Sign in to save your home state, quiz results and game streak."),
     ("stats", "stats/", None, "Site Stats | Capitol Hill Index", "Visits and activity across Capitol Hill Index."),
+    ("post-maker", "post-maker/", None, "Post Maker | Capitol Hill Index", "Make Instagram graphics from the latest forecast and member data."),
     ("404", "404.html", None, "Page not found | Capitol Hill Index", "That page doesn't exist."),
 ]
 NAV = [p for p in PAGES if p[2]]
-PRIVATE = {"account", "stats", "404"}
+PRIVATE = {"account", "stats", "post-maker", "404"}
 
 
 def out_file(path: str) -> Path:
@@ -144,7 +145,7 @@ def main() -> None:
         for p in PAGES if p[0] not in PRIVATE)
     (ROOT / "sitemap.xml").write_text(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{entries}</urlset>\n')
-    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /account/\nDisallow: /stats/\nSitemap: {url}/sitemap.xml\n")
+    (ROOT / "robots.txt").write_text(f"User-agent: *\nAllow: /\nDisallow: /account/\nDisallow: /stats/\nDisallow: /post-maker/\nSitemap: {url}/sitemap.xml\n")
     print("wrote sitemap.xml, robots.txt")
 
 

@@ -1,0 +1,56 @@
+<main class="wrap">
+  <h1>Post maker</h1>
+  <p class="lede">Instagram graphics built from today's forecast and member data. Pick a template, download the image or share it, then paste the caption.</p>
+
+  <div class="pm">
+    <div class="pm-controls stack">
+      <label class="fld" for="tpl">Template
+        <select id="tpl" class="input">
+          <option value="race">One race, head to head</option>
+          <option value="control">Senate or House control</option>
+          <option value="closest">Closest races</option>
+          <option value="traders">Most stock trades</option>
+        </select>
+      </label>
+      <label class="fld" for="office" id="f-office">Races
+        <select id="office" class="input">
+          <option value="SEN">Senate</option>
+          <option value="GOV">Governor</option>
+          <option value="HOUSE">House</option>
+        </select>
+      </label>
+      <label class="fld" for="race" id="f-race">Race
+        <select id="race" class="input"></select>
+      </label>
+      <label class="fld" for="chamber" id="f-chamber" hidden>Chamber
+        <select id="chamber" class="input">
+          <option value="senate">Senate</option>
+          <option value="house">House</option>
+        </select>
+      </label>
+      <div class="row">
+        <button class="btn" id="download" type="button">Download image</button>
+        <button class="btn ghost" id="share" type="button" hidden>Share</button>
+      </div>
+      <label class="fld" for="caption">Caption
+        <textarea id="caption" class="input" rows="9"></textarea>
+      </label>
+      <div class="row"><button class="btn ghost" id="copy" type="button">Copy caption</button><span class="small muted" id="copied" aria-live="polite"></span></div>
+      <p class="small muted" style="margin:0">Images are 1080 by 1350, Instagram's tallest feed size. Photo credits that a license requires are added to the caption automatically.</p>
+    </div>
+    <div class="pm-preview"><canvas id="card" width="1080" height="1350" aria-label="Post preview"></canvas></div>
+  </div>
+</main>
+<style>
+  .pm { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 32px; margin-top: 24px; align-items: start }
+  .fld { display: grid; gap: 4px; font-size: 13px; font-weight: 700; color: var(--ink2) }
+  .fld .input { font-weight: 400; font-size: 15px; width: 100% }
+  textarea.input { resize: vertical; line-height: 1.45 }
+  .pm-preview { background: var(--soft); padding: 18px; border-radius: 3px; display: grid; justify-items: center }
+  .pm-preview canvas { width: 100%; max-width: 540px; height: auto; box-shadow: 0 0 0 1px var(--line); background: #fff }
+  @media (max-width: 820px) { .pm { grid-template-columns: 1fr } .pm-preview { order: -1; padding: 10px } }
+</style>
+<script src="{{root}}data/polls.js"></script>
+<script src="{{root}}data/candphotos.js"></script>
+<script src="{{root}}data/summary.js"></script>
+<script src="{{root}}assets/js/postmaker.js"></script>
