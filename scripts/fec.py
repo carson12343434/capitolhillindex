@@ -101,11 +101,11 @@ def read_period(period: int, cand_ids: set[str]) -> dict[str, dict]:
 def find_missing_ids(members: list[dict], period: int) -> dict[str, list[str]]:
     """Members with no FEC ID in the legislator file (new appointees, recent nominees): match the FEC
     candidate summary by office, state and name ("GRAHAM, DARLINE")."""
-    want = {}
+    want = defaultdict(list)
     for m in members:
         prefix = "S" if m["chamber"] == "Senate" else "H"
         if not any(i.startswith(prefix) for i in m["fec"]):
-            want[(prefix, m["state"], m["last"].upper().split()[-1])] = m
+            want[(prefix, m["state"])].append(m)
     if not want:
         return {}
     found = defaultdict(list)
@@ -113,10 +113,11 @@ def find_missing_ids(members: list[dict], period: int) -> dict[str, list[str]]:
         if len(f) < 20 or not f[0]:
             continue
         last, _, first = f[1].partition(",")
-        key = (f[0][0], f[18], last.strip().split()[-1] if last.strip() else "")
-        m = want.get(key)
-        if m and first.strip().split()[:1] == [m["first"].upper().split()[0]]:
-            found[m["id"]].append(f[0])
+        last_tokens, first_tokens = last.upper().replace("-", " ").split(), first.upper().split()
+        for m in want.get((f[0][0], f[18]), []):
+            # Married and hyphenated names: "GRAHAM NORDONE, DARLINE" matches Darline Graham.
+            if m["last"].upper().replace("-", " ").split()[-1] in last_tokens and first_tokens[:1] == [m["first"].upper().split()[0]]:
+                found[m["id"]].append(f[0])
     for bid, ids in found.items():
         log.info("FEC: matched %s to %s by name", bid, ", ".join(ids))
     return dict(found)
