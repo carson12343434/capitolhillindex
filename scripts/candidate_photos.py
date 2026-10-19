@@ -35,6 +35,11 @@ def norm(name: str) -> str:
     return " ".join(s.split())
 
 
+def fl(name: str) -> tuple[str, str] | None:
+    t = [w for w in norm(name).split() if w not in ("jr", "sr", "ii", "iii", "iv")]
+    return (t[0], t[-1]) if len(t) >= 2 else None
+
+
 def key(state: str, name: str) -> str:
     return f"{state}|{norm(name)}"
 
@@ -135,6 +140,7 @@ def lookup(cands: list[dict], report: dict) -> dict[str, str]:
         if c.get("mid"):
             continue
         vs = {norm(v) for v in variants(c["name"])}
+        fls = {fl(v) for v in variants(c["name"])} - {None}
         state_name = ABBR.get(c["state"], "")
         want_party = PARTY_QID.get(c["party"][:1]) if c["party"] in ("D", "R") else None
         pool = []
@@ -144,7 +150,9 @@ def lookup(cands: list[dict], report: dict) -> dict[str, str]:
                 if not e or q in [x[0] for x in pool]:
                     continue
                 labels = [e.get("labels", {}).get("en", {}).get("value", "")] + [a["value"] for a in e.get("aliases", {}).get("en", [])]
-                if not any(norm(l) in vs for l in labels):
+                # Match on the full name, or on first and last name when one side has a middle name or initial
+                # ("Aaron D. Ford" on Wikidata vs "Aaron Ford" on the ballot).
+                if not any(norm(l) in vs or (fl(l) and fl(l) in fls) for l in labels):
                     continue
                 if "Q5" not in claim_ids(e, "P31"):
                     continue

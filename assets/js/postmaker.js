@@ -124,8 +124,9 @@
     text(`${which === "senate" ? "Senate" : "House"} forecast`, PAD, 340, { w: 900, size: 136, fam: DISP });
     text(`${need} seats for a majority${which === "senate" ? ", or 50 with the vice president" : ""}`, PAD, 404, { w: 500, size: 34, color: C.ink2, max: W - 2 * PAD });
     const ny = 740 + Math.round(X / 2);
-    text(String(d), PAD, ny, { w: 900, size: 330, fam: DISP, color: C.D });
-    text(String(rr), R, ny, { w: 900, size: 330, fam: DISP, color: C.R, align: "right" });
+    const half = (W - 2 * PAD) / 2 - 24;
+    text(String(d), PAD, ny, { w: 900, size: 330, fam: DISP, color: C.D, max: half });
+    text(String(rr), R, ny, { w: 900, size: 330, fam: DISP, color: C.R, align: "right", max: half });
     text("Democrats", PAD, ny + 72, { w: 700, size: 42, color: C.D });
     text("Republicans", R, ny + 72, { w: 700, size: 42, color: C.R, align: "right" });
     seatBar(PAD, ny + 124, W - 2 * PAD, 50, d, total, need);
