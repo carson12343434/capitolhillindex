@@ -33,13 +33,13 @@ PAGES = [
      "Daily-updated 2026 midterm polling averages adjusted for pollster lean, race ratings from Safe to Toss-up, maps and projected Senate and House control."),
     ("votes", "votes/", "Votes", "How Congress Voted: Roll Call Votes by Member and Bill",
      "See how every senator and representative voted on each bill, amendment and nomination, with the bill's sponsor and the party breakdown."),
-    ("political-quiz", "political-quiz/", "Political Quiz", "Political Party Quiz: Democrat, Republican or Independent?",
+    ("political-quiz", "political-quiz/", "Political quiz", "Political Party Quiz: Democrat, Republican or Independent?",
      "Answer 16 questions about issues and priorities to see where you fall on the economic and social scales and which party you match."),
     ("headcount", "headcount/", "Headcount", "Headcount: Name All Senators and Representatives Quiz",
      "How many members of Congress can you name? Try all 100 senators, the whole House, or just your state's delegation."),
     ("capitle", "capitle/", "Capitle", "Capitle: Guess the Politician, a Daily Congress Game",
      "A new member of Congress every day. Guess who it is from party, state, chamber, age and years in office, with hints if you need them."),
-    ("standards", "standards/", None, "Our Standards: Nonpartisan, Official Data | Capitol Hill Index",
+    ("standards", "standards/", None, "How We Work: Nonpartisan, Official Data | Capitol Hill Index",
      "Capitol Hill Index is nonpartisan: every number comes from official government records or nonpartisan research, and every member is measured by the same rules."),
     ("account", "account/", None, "Your Account | Capitol Hill Index",
      "Sign in to save your home state, quiz results and game streak."),
@@ -48,7 +48,6 @@ PAGES = [
 ]
 NAV = [p for p in PAGES if p[2]]
 PRIVATE = {"account", "stats", "404"}
-FONTS = "https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap"
 
 
 def out_file(path: str) -> Path:
@@ -94,9 +93,8 @@ def head(slug: str, path: str, title: str, desc: str, url: str, pre: str) -> str
 <meta name="theme-color" content="#ffffff">
 <meta name="chi-root" content="{pre}">
 <link rel="icon" href="{pre}assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="{FONTS}">
+<link rel="preload" href="{pre}assets/fonts/public-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{pre}assets/fonts/big-shoulders-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{pre}assets/site.css">
 <script src="{pre}assets/config.js"></script>
 <script src="{pre}assets/site.js"></script>
@@ -109,7 +107,7 @@ def header(slug: str, pre: str) -> str:
         f'<a href="{pre}{p[1]}"{" aria-current=page" if p[0] == slug else ""}>{p[2]}</a>' for p in NAV)
     return f"""<body>
 <header class="top"><div class="wrap">
-<a class="brand" href="{pre}"><img src="{pre}assets/brand/seal.svg" alt="" width="28" height="28">Capitol Hill Index</a>
+<a class="brand" href="{pre}"><img src="{pre}assets/brand/seal.svg" alt="" width="30" height="30">Capitol Hill Index</a>
 <nav class="nav" aria-label="Main">{links}</nav>
 <a class="acct" id="acct" href="{pre}account/">Sign in</a>
 </div></header>"""
@@ -118,7 +116,7 @@ def header(slug: str, pre: str) -> str:
 def footer(pre: str) -> str:
     links = "".join(f'<a href="{pre}{p[1]}">{p[2]}</a>' for p in NAV)
     return f"""<footer class="foot"><div class="wrap">
-<span>Capitol Hill Index · Nonpartisan. Built from official records and nonpartisan research. <a href="{pre}standards/" style="text-decoration:underline">Our standards</a></span>
+<p>Capitol Hill Index is nonpartisan and built from public records. <a href="{pre}standards/" style="text-decoration:underline">How we work</a></p>
 <nav aria-label="Footer">{links}</nav>
 </div></footer>
 </body>

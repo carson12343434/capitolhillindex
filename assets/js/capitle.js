@@ -43,7 +43,7 @@
   function shuffled(arr, seed) { const a = arr.slice(); let s = seed; for (let i = a.length - 1; i > 0; i--) { s = (s * 1664525 + 1013904223) % 4294967296; const j = s % (i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; }
   const cycle = Math.floor(dayNum / pool.length);
   const ANSWER = shuffled(pool.sort((a, b) => a.id.localeCompare(b.id)), 20260101 + cycle)[dayNum % pool.length];
-  $("meta").textContent = `Capitle #${dayNum + 1} · ${new Date(today + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}`;
+  $("meta").textContent = `Capitle #${dayNum + 1} for ${new Date(today + "T12:00:00").toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}`;
   if (!ANSWER) { $("msg").textContent = "Today's game couldn't load."; return; }
 
   // Suggestions show names only; party and state would give too much away.
@@ -161,7 +161,7 @@
     $("done").innerHTML = `<div class="panel row" style="gap:18px;align-items:center">
       ${PHOTOS[a.id] ? `<img src="${PHOTOS[a.id]}" alt="Portrait of ${esc(a.name)}" width="96" height="118" style="object-fit:cover">` : ""}
       <div class="stack" style="gap:4px;min-width:0"><span class="kicker" style="color:var(--${state.won ? "ok" : "bad"})">${state.won ? `Solved in ${state.guesses.length}` : "Today's answer"}</span>
-        <h2>${esc(a.name)}</h2><div class="small">${PARTY[a.party]}, ${STATES[a.state]} · ${a.chamber === "Senate" ? "Senator" : "Representative"} · age ${a.age} · ${yrs(a)} years in Congress</div>
+        <h2>${esc(a.name)}</h2><div class="small">${PARTY[a.party]} ${a.chamber === "Senate" ? "senator" : "representative"} from ${STATES[a.state]}, age ${a.age}, ${yrs(a)} years in Congress</div>
         <div class="row" style="margin-top:8px"><button class="btn" id="share">Copy result</button><a class="btn ghost" href="../members/#${a.state}">See ${esc(a.last)}'s finances</a></div></div></div>
       <div class="grid2" style="margin-top:16px;align-items:start">
         <div class="panel"><h3>Your stats</h3>

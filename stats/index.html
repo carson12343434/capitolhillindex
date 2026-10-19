@@ -19,9 +19,8 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="chi-root" content="../">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&display=swap">
+<link rel="preload" href="../assets/fonts/public-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/big-shoulders-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/site.css">
 <script src="../assets/config.js"></script>
 <script src="../assets/site.js"></script>
@@ -29,12 +28,11 @@
 </head>
 <body>
 <header class="top"><div class="wrap">
-<a class="brand" href="../"><img src="../assets/brand/seal.svg" alt="" width="28" height="28">Capitol Hill Index</a>
-<nav class="nav" aria-label="Main"><a href="../members/">Members</a><a href="../polls/">Polls</a><a href="../votes/">Votes</a><a href="../political-quiz/">Political Quiz</a><a href="../headcount/">Headcount</a><a href="../capitle/">Capitle</a></nav>
+<a class="brand" href="../"><img src="../assets/brand/seal.svg" alt="" width="30" height="30">Capitol Hill Index</a>
+<nav class="nav" aria-label="Main"><a href="../members/">Members</a><a href="../polls/">Polls</a><a href="../votes/">Votes</a><a href="../political-quiz/">Political quiz</a><a href="../headcount/">Headcount</a><a href="../capitle/">Capitle</a></nav>
 <a class="acct" id="acct" href="../account/">Sign in</a>
 </div></header>
 <main class="wrap" style="max-width:900px">
-  <span class="kicker">Site stats</span>
   <h1>How the site is doing</h1>
   <p class="lede">Visits and activity across Capitol Hill Index. Counts come from GoatCounter and refresh every time you open this page.</p>
   <div id="stats" class="section" style="margin-top:20px"></div>
@@ -42,8 +40,8 @@
 <script src="../assets/js/stats.js"></script>
 
 <footer class="foot"><div class="wrap">
-<span>Capitol Hill Index · Nonpartisan. Built from official records and nonpartisan research. <a href="../standards/" style="text-decoration:underline">Our standards</a></span>
-<nav aria-label="Footer"><a href="../members/">Members</a><a href="../polls/">Polls</a><a href="../votes/">Votes</a><a href="../political-quiz/">Political Quiz</a><a href="../headcount/">Headcount</a><a href="../capitle/">Capitle</a></nav>
+<p>Capitol Hill Index is nonpartisan and built from public records. <a href="../standards/" style="text-decoration:underline">How we work</a></p>
+<nav aria-label="Footer"><a href="../members/">Members</a><a href="../polls/">Polls</a><a href="../votes/">Votes</a><a href="../political-quiz/">Political quiz</a><a href="../headcount/">Headcount</a><a href="../capitle/">Capitle</a></nav>
 </div></footer>
 </body>
 </html>

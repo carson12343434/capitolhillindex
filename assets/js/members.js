@@ -43,7 +43,7 @@
   const parts2 = [`${M.length} members`, `average age ${avg.toFixed(0)}`, `${traders} have disclosed stock trades`];
   if (S.trades?.throughHouse) parts2.push(`House filings through ${day(S.trades.throughHouse)}`);
   if (!S.trades?.covered?.Senate) parts2.push("Senate trade filings not yet available");
-  $("summary").textContent = parts2.join(" · ") + ".";
+  $("summary").textContent = parts2.map(x => x[0].toUpperCase() + x.slice(1)).join(". ") + ".";
 
   // ---------- table ----------
   const COLS = [
@@ -129,7 +129,7 @@
       ${t.recent.map(r => `<tr><td>${esc(r[0])}</td><td style="white-space:normal">${r[1] ? `<b>${esc(r[1])}</b> ` : ""}<span class="small">${esc(r[2].replace(/\s*\[[A-Z]{2}\]\s*$/, "").replace(/\s*\([A-Z.]+\)\s*$/, "").slice(0, 48))}</span><br><span class="tiny muted">${esc(r[6])}</span></td><td>${esc(r[3].replace("_", " "))}</td><td class="n">${money(r[4])}–${money(r[5])}</td></tr>`).join("")}</tbody></table></div>` : "";
     $("drawer").innerHTML = `<button class="btn ghost close" id="close">Close</button>
       <div class="row" style="gap:14px;align-items:flex-end;margin:6px 0 18px">${pic(m, 90, 110)}
-        <div><h2 id="dname">${esc(m.name)}</h2><div class="${m.party}" style="font-weight:600">${PARTY[m.party]}</div><div class="small muted">${STATES[m.state]} · ${seat(m)}</div>${m.photoCredit ? `<div class="tiny muted" style="margin-top:4px">${esc(m.photoCredit)}</div>` : ""}</div></div>
+        <div><h2 id="dname">${esc(m.name)}</h2><div class="${m.party}" style="font-weight:600">${PARTY[m.party]}</div><div class="small muted">${STATES[m.state]}, ${seat(m).replace(/^S/, "s").replace(/^D/, "d")}</div>${m.photoCredit ? `<div class="tiny muted" style="margin-top:4px">${esc(m.photoCredit)}</div>` : ""}</div></div>
       <dl class="facts">
         ${fact("Age", show(m.age))}
         ${fact("In this seat since", month(m.seatSince))}

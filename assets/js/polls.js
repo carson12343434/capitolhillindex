@@ -41,16 +41,18 @@
 
   // ---------- topline ----------
   const S = P.senate, H = P.house, G = P.national.generic, A = P.national.approval;
-  const control = (c, need) => `<div class="row" style="gap:6px 14px"><span class="D" style="font-weight:800;font-size:26px">${pct(c.pD)}</span><span class="small muted">Democrats</span>
-    <span class="R" style="font-weight:800;font-size:26px">${pct(c.pR)}</span><span class="small muted">Republicans</span></div>
-    <div class="small muted">Projected ${Math.round(c.dMean)} D, ${Math.round(c.rMean)} R${c.iMean >= 0.5 ? `, ${Math.round(c.iMean)} I` : ""}. Majority is ${need}.</div>`;
-  $("topline").innerHTML = `
-    <div class="panel stack" style="gap:6px"><span class="kicker" style="color:var(--ink2)">Senate control</span>${control(S, "51, or 50 with the vice president")}</div>
-    <div class="panel stack" style="gap:6px"><span class="kicker" style="color:var(--ink2)">House control</span>${control(H, "218")}</div>
-    <div class="panel stack" style="gap:6px"><span class="kicker" style="color:var(--ink2)">Generic ballot</span>
-      ${G ? `<b style="font-size:26px;font-weight:800" class="${G.margin >= 0 ? "D" : "R"}">${G.margin >= 0 ? "D" : "R"}+${Math.abs(G.margin).toFixed(1)}</b><div class="small muted">Democrats ${G.a}%, Republicans ${G.b}% across ${G.n} polls</div>` : '<span class="muted">No recent polls</span>'}</div>
-    <div class="panel stack" style="gap:6px"><span class="kicker" style="color:var(--ink2)">Trump approval</span>
-      ${A ? `<b style="font-size:26px;font-weight:800">${A.a}%</b><div class="small muted">${A.b}% disapprove, net ${(A.a - A.b).toFixed(0)} across ${A.n} polls</div>` : '<span class="small muted">No recent polls</span>'}</div>`;
+  const chamber = (name, c, total, need) => {
+    const d = Math.round(c.dMean), r = total - d;
+    return `<div><p class="ch">${name}</p>
+      <div class="nums"><span class="D">${d}<small>Dem.</small></span><span class="R"><small>Rep.</small>${r}</span></div>
+      <div class="seatbar" role="img" aria-label="${d} Democratic and ${r} Republican seats projected"><i style="flex:${d};background:var(--d)"></i><i style="flex:${r};background:var(--r)"></i><b style="left:calc(${(need / total) * 100}% - 1px)"></b></div>
+      <div class="odds"><span class="D">Democrats ${pct(c.pD)} to win</span><span class="R">Republicans ${pct(c.pR)}</span></div>
+      <p class="note">Majority is ${need === 51 ? "51, or 50 with the vice president" : need}.${c.iMean >= 0.5 ? ` Projection includes ${Math.round(c.iMean)} independent${Math.round(c.iMean) > 1 ? "s" : ""}.` : ""}</p></div>`;
+  };
+  $("topline").innerHTML = chamber("Senate", S, 100, 51) + chamber("House", H, 435, 218) + `<div>
+      <p class="ch">Generic ballot</p>
+      ${G ? `<div class="big ${G.margin >= 0 ? "D" : "R"}">${G.margin >= 0 ? "D" : "R"}+${Math.abs(G.margin).toFixed(1)}</div><p class="note">Democrats ${G.a}%, Republicans ${G.b}%, from ${G.n} polls.</p>` : '<p class="note">No recent polls.</p>'}
+      ${A ? `<p style="margin:14px 0 0;font-weight:600">Trump approval ${A.a}%</p><p class="note" style="margin-top:2px">${A.b}% disapprove, from ${A.n} polls.</p>` : ""}</div>`;
 
   // ---------- chamber bars ----------
   function bar(title, c, total, need) {
@@ -76,6 +78,8 @@
     try { history.replaceState(null, "", "#" + tab.toLowerCase()); } catch (e) {}
     paint();
   });
+  const raceFromHash = RACES.find(r => r.id === decodeURIComponent(location.hash.slice(1)).toUpperCase());
+  if (raceFromHash) { tab = raceFromHash.office; }
   const fromHash = { sen: "SEN", senate: "SEN", house: "HOUSE", gov: "GOV", governors: "GOV", nat: "NAT", national: "NAT", pres: "PRES", president: "PRES" }[location.hash.slice(1).toLowerCase()];
   if (fromHash) { tab = fromHash; $("tabs").querySelectorAll("button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === tab)); }
 
@@ -185,8 +189,7 @@
         <td>${esc(day(p.end))}</td><td class="n">${p.n ? p.n.toLocaleString() + " " + esc(p.pop) : esc(p.pop)}</td><td class="n">${p.left}</td><td class="n">${p.right}</td><td class="n">${p.adj ? (p.adj > 0 ? "+" : "") + p.adj : "0"}</td></tr>`).join("")}</tbody></table></div>
       <p class="tiny muted">Adj. is the change to the poll's margin from sponsor and house-effect corrections (positive moves it toward the Democratic side).</p>` : '<p class="small muted">No public polls yet. The forecast uses the baseline only.</p>';
     $("drawer").innerHTML = `<button class="btn ghost close" id="close">Close</button>
-      <span class="kicker">${r.office === "SEN" ? "Senate" : r.office === "GOV" ? "Governor" : "House"}</span>
-      <h2 id="dname" style="margin:4px 0 8px">${esc(raceName(r))}</h2>
+      <h2 id="dname" style="margin:4px 0 8px">${esc(raceName(r))} ${r.office === "SEN" ? "Senate" : r.office === "GOV" ? "governor" : ""}</h2>
       <span class="rate ${r.ratingSlug}">${r.rating}</span>
       <div class="duel">${["left", "right"].map(sd => { const c = r[sd], p = sd === "left" ? r.pLeft : 1 - r.pLeft, ph = photoOf(r, c), sh = r.share || {};
         return `<div class="side">${face(r, c, 72)}<div class="stack" style="gap:2px;min-width:0"><div>${cand(c)}</div>
@@ -287,4 +290,5 @@
 
   CHI.onProfile(() => { if (!$("pane-races").hidden) renderViz(); });
   paint();
+  if (raceFromHash) { $("tabs").querySelectorAll("button").forEach(x => x.setAttribute("aria-selected", x.dataset.tab === tab)); open(raceFromHash.id); }
 })();

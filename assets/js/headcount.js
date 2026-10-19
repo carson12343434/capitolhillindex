@@ -91,7 +91,7 @@
     const label = m.chamber === "Senate" ? "Senator" : m.district ? `District ${m.district}` : "At-large";
     return `<div class="row" style="gap:8px;flex-wrap:nowrap;min-height:38px">
       ${(got || missed) && PHOTOS[m.id] ? `<img src="${PHOTOS[m.id]}" alt="" width="28" height="34" style="object-fit:cover;flex:none${missed ? ";opacity:.45" : ""}">` : `<span style="width:28px;height:34px;flex:none;background:var(--soft);border-left:3px solid var(--${m.party === "D" ? "d" : m.party === "R" ? "r" : "i"})"></span>`}
-      <span class="small" style="line-height:1.25"><span class="tiny muted">${speed ? `${m.state} · ` : ""}${label} · ${m.party}</span><br>${got ? `<b>${esc(m.name)}</b>` : missed ? `<span class="muted">${esc(m.name)}</span>` : '<span class="blank">? ? ?</span>'}</span></div>`;
+      <span class="small" style="line-height:1.25"><span class="tiny muted">${speed ? `${m.state}, ` : ""}${label}, ${m.party}</span><br>${got ? `<b>${esc(m.name)}</b>` : missed ? `<span class="muted">${esc(m.name)}</span>` : '<span class="blank">? ? ?</span>'}</span></div>`;
   }
   $("guess").addEventListener("keydown", e => {
     if (e.key !== "Enter" || over) return;

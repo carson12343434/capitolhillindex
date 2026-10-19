@@ -98,9 +98,38 @@ def read_period(period: int, cand_ids: set[str]) -> dict[str, dict]:
     return out
 
 
+def find_missing_ids(members: list[dict], period: int) -> dict[str, list[str]]:
+    """Members with no FEC ID in the legislator file (new appointees, recent nominees): match the FEC
+    candidate summary by office, state and name ("GRAHAM, DARLINE")."""
+    want = {}
+    for m in members:
+        prefix = "S" if m["chamber"] == "Senate" else "H"
+        if not any(i.startswith(prefix) for i in m["fec"]):
+            want[(prefix, m["state"], m["last"].upper().split()[-1])] = m
+    if not want:
+        return {}
+    found = defaultdict(list)
+    for f in lines(fetch_zip("weball", period)):
+        if len(f) < 20 or not f[0]:
+            continue
+        last, _, first = f[1].partition(",")
+        key = (f[0][0], f[18], last.strip().split()[-1] if last.strip() else "")
+        m = want.get(key)
+        if m and first.strip().split()[:1] == [m["first"].upper().split()[0]]:
+            found[m["id"]].append(f[0])
+    for bid, ids in found.items():
+        log.info("FEC: matched %s to %s by name", bid, ", ".join(ids))
+    return dict(found)
+
+
 def main() -> None:
     today = date.today()
     members = load_members(today)
+    try:
+        for bid, ids in find_missing_ids(members, current_period(today)).items():
+            next(m for m in members if m["id"] == bid)["fec"] = ids
+    except Exception as e:
+        log.info("FEC name matching failed: %s", e)
     plan = {}
     need: dict[int, set[str]] = defaultdict(set)
     for m in members:
@@ -133,7 +162,7 @@ def main() -> None:
             if tot:
                 rec[label] = {k: round(v) for k, v in tot.items()} | {"years": f"{plist[0] - 1}-{plist[-1]}"}
         if rec:
-            result[mid] = rec
+            result[mid] = rec | {"ids": ids}
     if result:
         save_json(SOURCES / "fec.json", {"updated": now_iso(), "members": result})
     log.info("FEC: totals for %d members", len(result))

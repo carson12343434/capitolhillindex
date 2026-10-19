@@ -1,17 +1,99 @@
 {
   "_note": "Hand-checked facts for members the automated sources miss. Applied only when the automated value is missing.",
   "education": {
-    "S001220": {"source": "Official House biography", "list": [{"degree": "Bachelor's", "school": "Athens State University", "year": null}]},
-    "G000607": {"source": "Roll Call", "list": [{"degree": "Bachelor's", "school": "University of California, Berkeley", "year": null}, {"degree": "JD", "school": "University of California, Davis, School of Law", "year": null}]},
-    "B000825": {"source": "Biographical Directory of the United States Congress", "list": [{"degree": "GED", "school": "High school equivalency", "year": 2020}]},
-    "M001214": {"source": "Biographical Directory of the United States Congress", "list": [{"degree": "BA", "school": "Ball State University", "year": 1992}]},
-    "H001101": {"source": "Biographical Directory of the United States Congress", "list": [{"degree": "BS", "school": "United States Military Academy at West Point", "year": 2009}]},
-    "W000822": {"source": "Biographical Directory of the United States Congress", "list": [{"degree": "BA", "school": "Thomas Edison State College", "year": 1985}]},
-    "T000486": {"source": "Biographical Directory of the United States Congress", "list": [{"degree": null, "school": "New York University (attended, 2006 to 2007)", "year": null}]},
-    "S001224": {"source": "Biographical Directory of the United States Congress", "list": [{"degree": "BS", "school": "United States Military Academy at West Point", "year": 1975}, {"degree": "MA", "school": "University of Southern California", "year": 1981}]}
+    "S001220": {
+      "source": "Official House biography",
+      "list": [
+        {
+          "degree": "Bachelor's",
+          "school": "Athens State University",
+          "year": null
+        }
+      ]
+    },
+    "G000607": {
+      "source": "Roll Call",
+      "list": [
+        {
+          "degree": "Bachelor's",
+          "school": "University of California, Berkeley",
+          "year": null
+        },
+        {
+          "degree": "JD",
+          "school": "University of California, Davis, School of Law",
+          "year": null
+        }
+      ]
+    },
+    "B000825": {
+      "source": "Biographical Directory of the United States Congress",
+      "list": [
+        {
+          "degree": "GED",
+          "school": "High school equivalency",
+          "year": 2020
+        }
+      ]
+    },
+    "M001214": {
+      "source": "Biographical Directory of the United States Congress",
+      "list": [
+        {
+          "degree": "BA",
+          "school": "Ball State University",
+          "year": 1992
+        }
+      ]
+    },
+    "H001101": {
+      "source": "Biographical Directory of the United States Congress",
+      "list": [
+        {
+          "degree": "BS",
+          "school": "United States Military Academy at West Point",
+          "year": 2009
+        }
+      ]
+    },
+    "W000822": {
+      "source": "Biographical Directory of the United States Congress",
+      "list": [
+        {
+          "degree": "BA",
+          "school": "Thomas Edison State College",
+          "year": 1985
+        }
+      ]
+    },
+    "T000486": {
+      "source": "Biographical Directory of the United States Congress",
+      "list": [
+        {
+          "degree": null,
+          "school": "New York University (attended, 2006 to 2007)",
+          "year": null
+        }
+      ]
+    },
+    "S001224": {
+      "source": "Biographical Directory of the United States Congress",
+      "list": [
+        {
+          "degree": "BS",
+          "school": "United States Military Academy at West Point",
+          "year": 1975
+        },
+        {
+          "degree": "MA",
+          "school": "University of Southern California",
+          "year": 1981
+        }
+      ]
+    }
   },
   "notes": {
     "A000383": "Appointed in March 2026 to serve through the end of the year. He is not a candidate, so no campaign committee is on file with the FEC.",
-    "G000608": "Appointed in July 2026 to serve the rest of the late Sen. Lindsey Graham's term. She is not a candidate, so no campaign committee is on file with the FEC."
+    "G000608": "Appointed in July 2026 to serve the rest of the late Sen. Lindsey Graham's term, then won the Republican nomination for the seat in August. Her new campaign committee's totals will appear once the FEC publishes them."
   }
 }

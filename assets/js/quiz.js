@@ -76,7 +76,7 @@
       </div>
       <div class="grid2" style="align-items:start">
         <div class="panel stack" style="gap:10px"><h3>By topic</h3>
-          ${[["Economic issues", r.econ], ["Social issues", r.social]].map(([n, v]) => v == null ? "" : `<div><div class="row small" style="justify-content:space-between"><span>${n}</span><b>${v} / 100 · ${esc(CHI_QUIZ.label(v))}</b></div>
+          ${[["Economic issues", r.econ], ["Social issues", r.social]].map(([n, v]) => v == null ? "" : `<div><div class="row small" style="justify-content:space-between"><span>${n}</span><b>${v} of 100, ${esc(CHI_QUIZ.label(v))}</b></div>
             <div style="position:relative;height:8px;background:linear-gradient(90deg,var(--d),#d4d7db,var(--r));border-radius:4px;margin-top:6px"><span style="position:absolute;left:${v}%;top:-4px;width:4px;height:16px;background:var(--ink);transform:translateX(-50%)"></span></div></div>`).join("")}</div>
         <div class="panel stack small" style="gap:10px"><h3>What moved your score</h3>
           ${r.pullL.length ? `<div><b class="D">Most liberal answers</b><ul style="margin:4px 0 0;padding-left:18px">${r.pullL.map(c => `<li>${esc(c.short || c.text)}</li>`).join("")}</ul></div>` : ""}

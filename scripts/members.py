@@ -47,6 +47,7 @@ def main() -> None:
         rec["trades"] = t
         rec["gains"] = gains.get("members", {}).get(bid)
         rec["fec"] = fec.get("members", {}).get(bid)
+        fec_ids = (rec["fec"] or {}).pop("ids", None) if rec["fec"] else None
         rec["edu"] = edu.get("members", {}).get(bid)
         if not rec["edu"] and bid in over.get("education", {}):
             rec["edu"] = edu_record(over["education"][bid])
@@ -55,7 +56,7 @@ def main() -> None:
         if (credits.get(bid) or {}).get("credit"):
             rec["photoCredit"] = credits[bid]["credit"]
         prefix = "S" if m["chamber"] == "Senate" else "H"
-        rec["fecId"] = next((i for i in reversed(m["fec"]) if i.startswith(prefix)), None)
+        rec["fecId"] = next((i for i in reversed(m["fec"] or fec_ids or []) if i.startswith(prefix)), None)
         rec["upIn2026"] = m["chamber"] == "House" or m["termEnd"][:4] in ("2026", "2027")
         out.append(rec)
     payload = {

@@ -61,7 +61,7 @@
         <td class="small" style="white-space:normal;min-width:160px">${esc(v.q)}</td>
         <td class="small"><b style="color:var(--${passed(v) ? "ok" : "bad"})">${passed(v) ? "Passed" : "Failed"}</b></td>
         <td class="n">${v.yea}–${v.nay}</td>
-        <td>${miniBar(s)}<br><span class="tiny muted">D ${s.D.Y}–${s.D.N} · R ${s.R.Y}–${s.R.N}</span></td>
+        <td>${miniBar(s)}<br><span class="tiny muted">D ${s.D.Y}–${s.D.N}, R ${s.R.Y}–${s.R.N}</span></td>
         <td class="small">${v.sponsor ? `<span class="${v.sponsor.party}">${esc(v.sponsor.name.replace(/^(Rep\.|Sen\.)\s*/, ""))}</span>` : '<span class="blank">–</span>'}</td>
         ${pm ? `<td><b style="color:var(--${mv === "Y" ? "ok" : mv === "N" ? "bad" : "muted"})">${WORD[mv] || "–"}</b></td>` : ""}</tr>`;
     }).join("");
@@ -80,7 +80,7 @@
       `<li style="${m.state === mine ? "font-weight:700" : ""}"><span class="${m.party}">${esc(pretty(m.name))}</span> <span class="tiny muted">${m.party}-${m.state}${m.district && v.c === "H" && m.district !== "0" ? "-" + m.district : ""}</span></li>`).join("");
     const yours = mine ? mem.map((m, i) => ({ m, c: v.v[i] })).filter(x => x.m.state === mine && x.c !== " ") : [];
     $("drawer").innerHTML = `<button class="btn ghost close" id="close">Close</button>
-      <span class="kicker">${NAME[v.c]} roll call #${v.roll} · ${esc(day(v.date))}</span>
+      <span class="kicker">${NAME[v.c]} roll call ${v.roll}, ${esc(day(v.date))}</span>
       <h2 id="dname" style="margin:6px 0 6px">${esc(v.bill || "Recorded vote")}</h2>
       ${v.title ? `<p>${esc(v.title)}</p>` : ""}
       <p class="small"><b>${esc(v.q)}</b>: <b style="color:var(--${passed(v) ? "ok" : "bad"})">${esc(v.result)}</b>, ${v.yea}–${v.nay}</p>
