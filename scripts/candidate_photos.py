@@ -92,12 +92,23 @@ def search(name: str) -> list[str] | None:
 
 
 def entities(ids: list[str], props: str) -> dict:
-    out = {}
-    for i in range(0, len(ids), 50):
-        try:
-            out.update(wd({"action": "wbgetentities", "ids": "|".join(ids[i:i + 50]), "props": props, "languages": "en"}).get("entities", {}))
-        except Exception as e:
-            log.info("wbgetentities failed: %s", e)
+    """Fetch items in small batches, retrying a failed batch once after a pause."""
+    import time
+    out, failed = {}, 0
+    for i in range(0, len(ids), 20):
+        batch = ids[i:i + 20]
+        for attempt in range(2):
+            try:
+                out.update(wd({"action": "wbgetentities", "ids": "|".join(batch), "props": props, "languages": "en"}).get("entities", {}))
+                break
+            except Exception as e:
+                if attempt:
+                    failed += 1
+                    log.info("wbgetentities failed twice: %s", e)
+                time.sleep(10)
+        time.sleep(0.3)
+    if failed:
+        log.info("wikidata: %d item batches could not be fetched", failed)
     return out
 
 
@@ -158,7 +169,9 @@ def lookup(cands: list[dict], report: dict) -> dict[str, str]:
                     continue
                 pool.append((q, e))
         if not pool:
-            report[c["key"]] = "no Wikidata item with this name"
+            searched = [hits.get(v) for v in variants(c["name"])]
+            report[c["key"]] = ("no Wikidata item with this name" if any(searched) is False and all(h == [] for h in searched)
+                                else f"search hits {sum(len(h or []) for h in searched)}, none matched the name and a person record")
             continue
         ok, why, eligible = [], [], []
         for q, e in pool:
