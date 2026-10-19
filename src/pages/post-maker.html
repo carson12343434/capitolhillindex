@@ -1,16 +1,11 @@
 <main class="wrap">
   <h1>Post maker</h1>
-  <p class="lede">Instagram graphics built from today's forecast and member data. Pick a template, download the image or share it, then paste the caption.</p>
+  <p class="lede">Instagram posts built from today's forecast and member data. Pick a template, save the images, then paste the caption.</p>
 
   <div class="pm">
     <div class="pm-controls stack">
       <label class="fld" for="tpl">Template
-        <select id="tpl" class="input">
-          <option value="race">One race, head to head</option>
-          <option value="control">Senate or House control</option>
-          <option value="closest">Closest races</option>
-          <option value="traders">Most stock trades</option>
-        </select>
+        <select id="tpl" class="input"></select>
       </label>
       <label class="fld" for="office" id="f-office">Races
         <select id="office" class="input">
@@ -28,17 +23,24 @@
           <option value="house">House</option>
         </select>
       </label>
+      <label class="fld" for="size">Size
+        <select id="size" class="input">
+          <option value="34">3:4, 1080 by 1440 (posting from the Instagram app)</option>
+          <option value="45">4:5, 1080 by 1350 (scheduling tools)</option>
+        </select>
+      </label>
+      <p class="small" id="count" style="margin:0"></p>
       <div class="row">
-        <button class="btn" id="download" type="button">Download image</button>
-        <button class="btn ghost" id="share" type="button" hidden>Share</button>
+        <button class="btn" id="download" type="button">Download</button>
+        <button class="btn ghost" id="share" type="button" hidden>Save or share to phone</button>
       </div>
       <label class="fld" for="caption">Caption
         <textarea id="caption" class="input" rows="9"></textarea>
       </label>
       <div class="row"><button class="btn ghost" id="copy" type="button">Copy caption</button><span class="small muted" id="copied" aria-live="polite"></span></div>
-      <p class="small muted" style="margin:0">Images are 1080 by 1350, Instagram's tallest feed size. Photo credits that a license requires are added to the caption automatically.</p>
+      <p class="small muted" style="margin:0">Carousels download as one .zip on a computer. On a phone, "Save or share" opens the share sheet: choose Save Images, then pick them in order in Instagram. Photo credits that a license requires are added to the caption.</p>
     </div>
-    <div class="pm-preview"><canvas id="card" width="1080" height="1350" aria-label="Post preview"></canvas></div>
+    <div class="pm-preview" id="slides" aria-label="Slides"></div>
   </div>
 </main>
 <style>
@@ -46,8 +48,12 @@
   .fld { display: grid; gap: 4px; font-size: 13px; font-weight: 700; color: var(--ink2) }
   .fld .input { font-weight: 400; font-size: 15px; width: 100% }
   textarea.input { resize: vertical; line-height: 1.45 }
-  .pm-preview { background: var(--soft); padding: 18px; border-radius: 3px; display: grid; justify-items: center }
-  .pm-preview canvas { width: 100%; max-width: 540px; height: auto; box-shadow: 0 0 0 1px var(--line); background: #fff }
+  .pm-preview { background: var(--soft); padding: 18px; border-radius: 3px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; align-items: start }
+  .pm-preview figure { margin: 0; display: grid; gap: 6px }
+  .pm-preview canvas { width: 100%; height: auto; box-shadow: 0 0 0 1px var(--line); background: #fff }
+  .pm-preview figcaption { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 13px; font-weight: 600 }
+  .pm-preview figcaption .btn { padding: 4px 10px; font-size: 13px }
+  .pm-preview:has(figure:only-child) { grid-template-columns: minmax(0, 540px); justify-content: center }
   @media (max-width: 820px) { .pm { grid-template-columns: 1fr } .pm-preview { order: -1; padding: 10px } }
 </style>
 <script src="{{root}}data/polls.js"></script>
