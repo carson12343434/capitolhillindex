@@ -1,6 +1,7 @@
 (() => {
   const { STATES } = CHI;
-  const P = window.CHI_POLLS, PHOTOS = window.CHI_CANDPHOTOS || {}, S = window.CHI_SUMMARY || {};
+  const P = window.CHI_POLLS, PHOTOS = window.CHI_CANDPHOTOS || {}, S = window.CHI_SUMMARY || {}, HI = window.CHI_HIPHOTOS || {};
+  const MEMBERS = (window.CHI_MEMBERS && window.CHI_MEMBERS.members) || [], MAP = window.CHI_USMAP;
   const $ = id => document.getElementById(id);
   const W = 1080, PAD = 72, R = W - PAD;
   let H = 1440, ctx = null;
@@ -17,6 +18,9 @@
   const norm = n => (n || "").replace(/\(.*?\)/g, " ").toLowerCase().replace(/[^a-z\s'-]/g, " ").replace(/'/g, "").replace(/-/g, " ").trim().split(/\s+/).join(" ");
   const photoOf = (r, c) => c && c.name ? PHOTOS[`${r.state}|${norm(c.name)}`] || null : null;
   const photoSrc = (r, c) => { const p = photoOf(r, c); return p ? root + "data/" + p.src : null; };
+  // Larger photo for layouts where a headshot fills half the frame; falls back to the regular one.
+  const bigSrc = (r, c) => { if (!c || !c.name) return null; const h = HI[`${r.state}|${norm(c.name)}`] || (c.mid && HI["m:" + c.mid]); return h ? root + "data/" + h : photoSrc(r, c); };
+  const memberBig = m => HI["m:" + m.id] ? root + "data/" + HI["m:" + m.id] : root + "data/photos/m/" + m.id + ".webp";
   const ordinal = n => !n ? "" : n + (n % 100 >= 11 && n % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] || "th");
   const raceTitle = r => r.office === "HOUSE" ? `${STATES[r.state]} ${r.district && +r.district ? ordinal(+r.district) + " District" : "at-large district"}` : `${STATES[r.state]} ${r.office === "SEN" ? (r.special ? "Senate special" : "Senate") : "governor"}`;
   const placeName = r => r.office === "HOUSE" ? `${r.state}-${r.district}` : STATES[r.state];
@@ -134,7 +138,7 @@
     text(`Democrats ${pct(c.pD)} to win control`, PAD, FOOT() - 130, { w: 800, size: 48, fam: DISP, color: C.D });
     text(`Republicans ${pct(c.pR)}`, R, FOOT() - 130, { w: 800, size: 48, fam: DISP, color: C.R, align: "right" });
     const G = P.national.generic;
-    if (G) text(`Generic ballot: ${G.margin >= 0 ? "D" : "R"}+${Math.abs(G.margin).toFixed(1)}, from ${G.n} national polls`, PAD, FOOT() - 56, { w: 500, size: 32, color: C.ink2 });
+    if (G) text(`Generic ballot: ${G.margin >= 0 ? "D" : "R"}+${Math.abs(G.margin).toFixed(1)}, national polls through ${new Date(G.last + "T12:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}`, PAD, FOOT() - 56, { w: 500, size: 32, color: C.ink2, max: W - 2 * PAD });
   }
 
   async function slideClosest(off, n = 5) {
@@ -241,45 +245,213 @@
     list.forEach((t, i) => drawPhoto(imgs[i], PAD + i * (pw + gap), py, pw, ph, t.name));
   }
 
+
+  // ---------- broadcast-style slides: headshots fill the frame ----------
+  function header() {
+    rect(0, 0, W, H, "#ffffff");
+    return load(root + "assets/brand/logo-mark.png").then(seal => {
+      if (seal) ctx.drawImage(seal, PAD, 52, 60, 60);
+      text("Capitol Hill Index", PAD + 76, 100, { w: 800, size: 48, fam: DISP });
+      text(dateText, R, 96, { w: 600, size: 28, color: C.mute, align: "right" });
+    });
+  }
+  function footer() {
+    rect(PAD, H - 112, W - 2 * PAD, 3, C.ink);
+    text("capitolhillindex.com", PAD, H - 46, { w: 800, size: 44, fam: DISP });
+    text(`${days} ${days === 1 ? "day" : "days"} to Election Day`, R, H - 48, { w: 700, size: 32, color: C.ink2, align: "right" });
+  }
+  const title = (r, c) => isInc(r, c) ? (r.office === "SEN" ? "Sen. " : r.office === "GOV" ? "Gov. " : "Rep. ") : "";
+
+  async function slideMatchup(r) {
+    await header();
+    text(r.office === "SEN" ? (r.special ? "Senate special election" : "Senate race") : r.office === "GOV" ? "Governor's race" : "House race", PAD, 182, { w: 700, size: 32, color: C.mute });
+    text(r.office === "HOUSE" ? raceTitle(r) : STATES[r.state], PAD, 290, { w: 900, size: 124, fam: DISP, max: 700 });
+    ctx.font = font(700, 32, TEXT);
+    const cw = ctx.measureText(r.rating).width + 30;
+    rect(R - cw, 248, cw, 50, C[r.ratingSlug] || C.tossup);
+    text(r.rating, R - cw / 2, 284, { w: 700, size: 32, color: RATE_TEXT[r.ratingSlug] || "#222", align: "center" });
+    const top = 330, ph = Math.round((H - 1440) / 2) + 600, half = W / 2 - 3, by = top + ph, bh = 250;
+    const [imL, imR] = await Promise.all([load(bigSrc(r, r.left)), load(bigSrc(r, r.right))]);
+    drawPhoto(imL, 0, top, half, ph, r.left.name);
+    drawPhoto(imR, W - half, top, half, ph, r.right.name);
+    const sh = r.share || {};
+    const block = (c, x, align, v, ix) => {
+      rect(ix, by, half, bh, pc(c.party));
+      text(title(r, c) + c.name, x, by + 56, { w: 700, size: 40, color: "#fff", align, max: half - 60 });
+      text(partyName(c.party) + (isInc(r, c) ? ", incumbent" : ""), x, by + 94, { w: 500, size: 28, color: "rgba(255,255,255,.85)", align, max: half - 60 });
+      text(v != null ? v.toFixed(1) + "%" : "", x, by + 200, { w: 900, size: 120, fam: DISP, color: "#fff", align, max: half - 60 });
+      text("projected vote", x, by + 234, { w: 600, size: 26, color: "rgba(255,255,255,.85)", align });
+    };
+    block(r.left, 36, "left", sh.left, 0);
+    block(r.right, W - 36, "right", sh.right, W - half);
+    const wy = by + bh + 34, inner = W - 2 * PAD - 6, lw = Math.max(4, Math.round(inner * r.pLeft));
+    rect(PAD, wy, lw, 16, pc(r.left.party)); rect(PAD + lw + 6, wy, inner - lw, 16, pc(r.right.party));
+    text(`${pct(r.pLeft)} chance to win`, PAD, wy + 60, { w: 700, size: 32, color: pc(r.left.party) });
+    text(`${pct(1 - r.pLeft)} chance to win`, R, wy + 60, { w: 700, size: 32, color: pc(r.right.party), align: "right" });
+    footer();
+  }
+
+  async function slideMap(off) {
+    await header();
+    const races = P.races.filter(r => r.office === off);
+    const by = Object.fromEntries(races.map(r => [r.state, r]));
+    text(off === "SEN" ? "Senate map" : "Governor map", PAD, 262, { w: 900, size: 140, fam: DISP });
+    text(`Ratings for the ${races.length} ${off === "SEN" ? "Senate" : "governor"} races on the ballot`, PAD, 318, { w: 500, size: 32, color: C.ink2, max: W - 2 * PAD });
+    let legendY = 1000;
+    if (MAP) {
+      const box = { x: 36, y: 350, w: W - 72, h: Math.round((W - 72) * MAP.h / MAP.w) };
+      const sc = box.w / MAP.w;
+      ctx.save(); ctx.translate(box.x, box.y); ctx.scale(sc, sc);
+      for (const [st, g] of Object.entries(MAP.states)) {
+        const r = by[st], path = new Path2D(g.d);
+        ctx.fillStyle = r ? C[r.ratingSlug] || C.tossup : "#eceef1"; ctx.fill(path);
+        ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.2 / sc * 1.4; ctx.stroke(path);
+      }
+      ctx.restore();
+      const small = new Set(["RI", "DE", "CT", "NJ", "MD", "MA", "NH", "VT", "DC", "HI"]);
+      for (const [st, g] of Object.entries(MAP.states)) {
+        const r = by[st]; if (!r || small.has(st)) continue;
+        const dark = ["safe-d", "likely-d", "likely-r", "safe-r"].includes(r.ratingSlug);
+        text(st, box.x + g.c[0] * sc, box.y + g.c[1] * sc + 9, { w: 700, size: 24, color: dark ? "#fff" : C.ink, align: "center" });
+      }
+      legendY = box.y + box.h + 50;
+    }
+    const order = ["safe-d", "likely-d", "lean-d", "tossup", "lean-r", "likely-r", "safe-r"];
+    const names = { "safe-d": "Safe D", "likely-d": "Likely D", "lean-d": "Lean D", tossup: "Toss-up", "lean-r": "Lean R", "likely-r": "Likely R", "safe-r": "Safe R" };
+    const counts = (off === "SEN" ? P.senate : P.governors).ratings;
+    const cw = (W - 2 * PAD) / order.length;
+    order.forEach((k, i) => {
+      const x = PAD + i * cw;
+      rect(x + 4, legendY, cw - 8, 70, C[k]);
+      text(String(counts[k] || 0), x + cw / 2, legendY + 52, { w: 900, size: 46, fam: DISP, color: RATE_TEXT[k], align: "center" });
+      text(names[k], x + cw / 2, legendY + 108, { w: 600, size: 24, color: C.ink2, align: "center" });
+    });
+    const toss = races.filter(r => r.ratingSlug === "tossup").map(r => STATES[r.state]);
+    const line = off === "SEN"
+      ? `Projected Senate: Democrats ${Math.round(P.senate.dMean)}, Republicans ${100 - Math.round(P.senate.dMean)}`
+      : `Toss-ups: ${toss.length ? toss.join(", ") : "none"}`;
+    text(line, PAD, H - 160, { w: 800, size: 46, fam: DISP, max: W - 2 * PAD });
+    footer();
+  }
+
+  async function slideSpotlight(m) {
+    await header();
+    const t = m.trades || {};
+    const rank = MEMBERS.filter(x => x.trades && x.trades.term > (t.term || 0)).length + 1;
+    const im = await load(memberBig(m));
+    const pw = 470, ph = Math.round(pw * 1.223), top = 150;
+    drawPhoto(im, 0, top, pw, ph, m.name);
+    rect(0, top + ph, pw, 14, pc(m.party));
+    const x = pw + 44, mw = W - x - PAD;
+    text("Stock trades this term", x, top + 70, { w: 700, size: 32, color: C.mute });
+    text((t.term || 0).toLocaleString(), x, top + 280, { w: 900, size: 230, fam: DISP, max: mw });
+    text(rank === 1 ? "Most in Congress" : `${ordinal(rank)} most in Congress`, x, top + 362, { w: 700, size: 34, color: C.ink2, max: mw });
+    const role = `${partyName(m.party)} ${m.chamber === "Senate" ? "senator" : "representative"}, ${STATES[m.state]}`;
+    text(m.name, x, top + ph - 70, { w: 700, size: 42, max: mw });
+    text(role, x, top + ph - 24, { w: 500, size: 30, color: C.mute, max: mw });
+    const money = n => n >= 1e6 ? "$" + (n / 1e6).toFixed(1) + "M" : n >= 1e3 ? "$" + Math.round(n / 1e3) + "K" : "$" + n;
+    const rows = [
+      ["Trades since taking office", (t.total || 0).toLocaleString()],
+      ["Reported trading volume", t.volHigh ? `${money(t.volLow)} to ${money(t.volHigh)}` : "$0"],
+      ["Filed after the 45-day deadline", (t.late || 0).toLocaleString()],
+    ];
+    const last = (t.recent || [])[0];
+    if (last) rows.push(["Latest disclosed trade", `${new Date(last[0] + "T12:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}${last[1] ? ", " + last[1] : ""}`]);
+    let y = top + ph + 110;
+    for (const [label, val] of rows) {
+      rect(PAD, y - 62, W - 2 * PAD, 2, C.line);
+      text(label, PAD, y, { w: 600, size: 34, color: C.ink2 });
+      text(val, R, y + 6, { w: 900, size: 70, fam: DISP, align: "right", max: 520 });
+      y += 112;
+    }
+    footer();
+  }
+
   // ---------- templates: each returns a list of slides plus a caption ----------
   function credits(pairs) {
     const seen = new Set(), lines = [];
     for (const [r, c] of pairs) { const p = photoOf(r, c); if (p && p.credit && !seen.has(c.name)) { seen.add(c.name); lines.push(`${c.name}: ${p.credit.replace(/^Photo: /, "")}`); } }
     return lines.length ? `\n\nPhotos: ${lines.join("; ")}` : "";
   }
-  const METHOD = "We correct every poll for its pollster's lean and count party-funded polls at half weight.";
-  const LINK = "Full forecast for every race at capitolhillindex.com (link in bio).";
-  const until = `${days} ${days === 1 ? "day" : "days"} until Election Day`;
+  const LINK = "Every race is at capitolhillindex.com (link in bio).";
+  const NOTE = "Polls are adjusted for each pollster's lean, and polls paid for by a party or campaign count half.";
+  const named = (r, c) => `${title(r, c)}${c.name} (${c.party})`;
+  const tag = r => "#" + STATES[r.state].replace(/\s+/g, "") + (r.office === "SEN" ? "Senate" : r.office === "GOV" ? "Governor" : "");
+  function raceLine(r) {
+    const sh = r.share || {}, gap = Math.abs((sh.left || 0) - (sh.right || 0));
+    const lead = (sh.left || 0) >= (sh.right || 0) ? "left" : "right", trail = lead === "left" ? "right" : "left";
+    const where = r.office === "HOUSE" ? raceTitle(r) : `the ${raceTitle(r)} race`;
+    const first = gap < 0.05 ? `${raceTitle(r)} is dead even. ${named(r, r.left)} and ${named(r, r.right)} are both at ${sh.left.toFixed(1)}% in our projected vote.`
+      : gap < 1 ? `${raceTitle(r)} is about as close as it gets: ${named(r, r[lead])} ${sh[lead].toFixed(1)}%, ${named(r, r[trail])} ${sh[trail].toFixed(1)}%.`
+      : `${named(r, r[lead])} leads ${named(r, r[trail])} ${sh[lead].toFixed(1)}% to ${sh[trail].toFixed(1)}% in our projected vote for ${where}.`;
+    const pl = r.pLeft, odds = Math.abs(pl - 0.5) < 0.02 ? "Each side wins about half of our 20,000 simulations."
+      : `${(pl >= 0.5 ? r.left : r.right).name.split(" ").slice(-1)[0]} wins ${pct(Math.max(pl, 1 - pl))} of our 20,000 simulations.`;
+    const polls = r.polls ? `The polling average is ${r.polls.a}–${r.polls.b} across ${r.polls.n} poll${r.polls.n > 1 ? "s" : ""}.` : "There's no public polling yet, so this one leans on the state's partisan lean and the national environment.";
+    return `${first} ${odds}\n\n${polls}`;
+  }
   const TEMPLATES = {
-    forecast: {
-      label: "Forecast carousel",
-      build() {
-        const sen = closestList("SEN", 5), gov = closestList("GOV", 1);
-        const races = [...sen, ...gov];
-        return {
-          slides: [["Cover", slideCover], ["Senate", () => slideControl("senate")], ["House", () => slideControl("house")], ["Closest Senate races", () => slideClosest("SEN")],
-            ...races.map(r => [raceTitle(r), () => slideRace(r)]), ["How it works", slideMethod], ["End", slideEnd]],
-          caption: `${until}. Here's where the race for Congress stands as of ${dayMonth}.\n\n` +
-            `Senate: Democrats ${Math.round(P.senate.dMean)}, Republicans ${100 - Math.round(P.senate.dMean)} projected. Democrats win control in ${pct(P.senate.pD)} of our simulations, Republicans in ${pct(P.senate.pR)}.\n` +
-            `House: Democrats ${Math.round(P.house.dMean)}, Republicans ${435 - Math.round(P.house.dMean)} projected. Democrats win control in ${pct(P.house.pD)}, Republicans in ${pct(P.house.pR)}.\n\n` +
-            `Closest races: ${races.map(r => raceTitle(r)).join(", ")}. Swipe for each one.\n\n${METHOD} ${LINK}` +
-            credits(races.flatMap(r => [[r, r.left], [r, r.right]])) + `\n\n#Election2026 #Midterms #Senate #Polls #Congress`,
-          name: "forecast",
-        };
-      },
-    },
-    race: {
+    matchup: {
       label: "One race, head to head",
       build() {
         const r = P.races.find(x => x.id === $("race").value);
         if (!r) return { slides: [], caption: "" };
-        const sh = r.share || {}, lead = r.pLeft >= 0.5 ? r.left : r.right, lp = Math.max(r.pLeft, 1 - r.pLeft);
-        const odds = Math.abs(r.pLeft - 0.5) < 0.015 ? "Our forecast has it as a coin flip" : `Our forecast gives ${lead.name} a ${pct(lp)} chance to win`;
         return {
-          slides: [[raceTitle(r), () => slideRace(r)]],
-          caption: `${raceTitle(r)}: ${r.left.name} (${r.left.party}) ${sh.left?.toFixed(1)}%, ${r.right.name} (${r.right.party}) ${sh.right?.toFixed(1)}%. ${odds}, with ${until.toLowerCase()}.\n\n${METHOD} ${LINK}` +
-            credits([[r, r.left], [r, r.right]]) + `\n\n#Election2026 #Midterms #${STATES[r.state].replace(/\s+/g, "")} #Polls`,
+          slides: [[raceTitle(r), () => slideMatchup(r)]],
+          caption: `${raceLine(r)} ${days} days to go.\n\n${LINK}` + credits([[r, r.left], [r, r.right]]) + `\n\n${tag(r)} #Election2026 #Midterms`,
           name: r.id.toLowerCase(),
+        };
+      },
+    },
+    map: {
+      label: "Senate or governor map",
+      build() {
+        const off = $("office").value === "GOV" ? "GOV" : "SEN";
+        const races = P.races.filter(r => r.office === off);
+        const toss = races.filter(r => r.ratingSlug === "tossup").map(r => STATES[r.state]);
+        const fav = side => races.filter(r => r.ratingSlug.endsWith(side)).length;
+        const list = a => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
+        const lead = off === "SEN"
+          ? `The Senate map with ${days} days to go. Our forecast lands at Democrats ${Math.round(P.senate.dMean)}, Republicans ${100 - Math.round(P.senate.dMean)}, and Democrats win control in ${pct(P.senate.pD)} of simulations.`
+          : `The governor map with ${days} days to go. ${races.length} states elect a governor this year.`;
+        return {
+          slides: [[off === "SEN" ? "Senate map" : "Governor map", () => slideMap(off)]],
+          caption: `${lead}\n\n${toss.length ? `Toss-ups: ${list(toss)}.` : "No race is rated a toss-up right now."} Democrats are favored in ${fav("-d")} races and Republicans in ${fav("-r")}.\n\n${NOTE} ${LINK}\n\n#${off === "SEN" ? "Senate" : "Governor"} #Election2026 #Midterms #Polls`,
+          name: off === "SEN" ? "senate-map" : "governor-map",
+        };
+      },
+    },
+    spotlight: {
+      label: "Stock trader spotlight",
+      build() {
+        const m = MEMBERS.find(x => x.id === $("member").value);
+        if (!m) return { slides: [], caption: "" };
+        const t = m.trades || {}, rank = MEMBERS.filter(x => x.trades && x.trades.term > (t.term || 0)).length + 1;
+        const who = `${m.chamber === "Senate" ? "Sen." : "Rep."} ${m.name} (${m.party}-${m.state})`;
+        const money = n => n >= 1e6 ? "$" + (n / 1e6).toFixed(1) + " million" : "$" + Math.round(n / 1e3) + ",000";
+        return {
+          slides: [[m.name, () => slideSpotlight(m)]],
+          caption: `${who} has reported ${(t.term || 0).toLocaleString()} stock trades this term, ${rank === 1 ? "more than any other member of Congress" : `the ${ordinal(rank)} most in Congress`}.` +
+            (t.volHigh ? ` Disclosures give amounts as ranges, so the total comes to somewhere between ${money(t.volLow)} and ${money(t.volHigh)}.` : "") +
+            (t.late ? ` ${t.late.toLocaleString()} of them were reported after the STOCK Act's 45-day deadline.` : "") +
+            `\n\nEvery trade, with dates and amounts, is at capitolhillindex.com (link in bio).\n\n#STOCKAct #Congress #StockTrading`,
+          name: "spotlight-" + m.id.toLowerCase(),
+        };
+      },
+    },
+    forecast: {
+      label: "Forecast carousel",
+      build() {
+        const sen = closestList("SEN", 5), gov = closestList("GOV", 1), races = [...sen, ...gov];
+        const sd = Math.round(P.senate.dMean), hd = Math.round(P.house.dMean);
+        return {
+          slides: [["Cover", slideCover], ["Senate map", () => slideMap("SEN")], ["House", () => slideControl("house")], ["Closest Senate races", () => slideClosest("SEN")],
+            ...races.map(r => [raceTitle(r), () => slideMatchup(r)]), ["End", slideEnd]],
+          caption: `${days} days to go. Our forecast as of ${dayMonth}:\n\n` +
+            `Senate: Democrats ${sd}, Republicans ${100 - sd}. Democrats win control in ${pct(P.senate.pD)} of 20,000 simulations.\n` +
+            `House: Democrats ${hd}, Republicans ${435 - hd}. Democrats win control in ${pct(P.house.pD)}.\n\n` +
+            `The closest races right now: ${races.map(r => raceTitle(r)).join(", ")}.\n\n${NOTE} ${LINK}` +
+            credits(races.flatMap(r => [[r, r.left], [r, r.right]])) + `\n\n#Election2026 #Midterms #Senate #Polls`,
+          name: "forecast",
         };
       },
     },
@@ -289,21 +461,21 @@
         const which = $("chamber").value, c = P[which], total = which === "senate" ? 100 : 435, d = Math.round(c.dMean);
         return {
           slides: [[which === "senate" ? "Senate" : "House", () => slideControl(which)]],
-          caption: `${which === "senate" ? "Senate" : "House"} forecast, ${dayMonth}: Democrats ${d}, Republicans ${total - d} projected seats. Democrats win control in ${pct(c.pD)} of our 20,000 simulations, Republicans in ${pct(c.pR)}.\n\n${METHOD} ${LINK}\n\n#Election2026 #Midterms #${which === "senate" ? "Senate" : "House"} #Polls #Congress`,
+          caption: `Our ${which} forecast with ${days} days to go: Democrats ${d}, Republicans ${total - d}. Democrats win control in ${pct(c.pD)} of 20,000 simulations, Republicans in ${pct(c.pR)}.\n\n${NOTE} ${LINK}\n\n#${which === "senate" ? "Senate" : "House"} #Election2026 #Midterms #Polls`,
           name: which,
         };
       },
     },
     closest: {
-      label: "Closest races",
+      label: "Closest races list",
       build() {
         const off = $("office").value, list = closestList(off);
         const word = off === "SEN" ? "Senate" : off === "GOV" ? "governor" : "House";
         return {
           slides: [[`Closest ${word} races`, () => slideClosest(off)]],
-          caption: `The closest ${word} races as of ${dayMonth}, by projected vote:\n` +
+          caption: `The five closest ${word} races in our forecast, ${days} days out:\n\n` +
             list.map(r => `${placeName(r)}: ${r.left.name} ${r.share?.left?.toFixed(1)}%, ${r.right.name} ${r.share?.right?.toFixed(1)}%`).join("\n") +
-            `\n\n${METHOD} ${LINK}` + credits(list.flatMap(r => [[r, r.left], [r, r.right]])) + `\n\n#Election2026 #Midterms #${off === "GOV" ? "Governor" : word} #Polls`,
+            `\n\n${NOTE} ${LINK}` + credits(list.flatMap(r => [[r, r.left], [r, r.right]])) + `\n\n#${off === "GOV" ? "Governor" : word} #Election2026 #Midterms #Polls`,
           name: "closest-" + off.toLowerCase(),
         };
       },
@@ -314,9 +486,9 @@
         const list = (S.traders || []).slice(0, 5);
         return {
           slides: [["Cover", slideTradersCover], ["Top five", slideTraders], ["End", slideEnd]],
-          caption: `Which members of Congress trade the most stock? These five filed the most trades this term:\n` +
+          caption: `The five members of Congress with the most stock trades this term:\n\n` +
             list.map((t, i) => `${i + 1}. ${t.name} (${t.party}-${t.state}): ${t.term.toLocaleString()}`).join("\n") +
-            `\n\nThe STOCK Act requires members to disclose most trades over $1,000 within 45 days. Counts come from the reports they file with the House and Senate. Every member's trades, dates and amounts are at capitolhillindex.com (link in bio).\n\n#Congress #StockTrading #STOCKAct #Politics`,
+            `\n\nThe STOCK Act makes members report most trades over $1,000 within 45 days. These counts come straight from those House and Senate filings. Every member's trades are at capitolhillindex.com (link in bio).\n\n#STOCKAct #Congress #StockTrading`,
           name: "stock-trades",
         };
       },
@@ -324,7 +496,9 @@
   };
 
   // ---------- render ----------
-  const sel = { tpl: $("tpl"), office: $("office"), race: $("race"), chamber: $("chamber"), size: $("size") };
+  const sel = { tpl: $("tpl"), office: $("office"), race: $("race"), chamber: $("chamber"), size: $("size"), member: $("member") };
+  const topTraders = MEMBERS.filter(m => m.trades && m.trades.term).sort((a, b) => b.trades.term - a.trades.term).slice(0, 25);
+  sel.member.innerHTML = topTraders.map(m => `<option value="${m.id}">${CHI.esc(m.name)} (${m.party}-${m.state}), ${m.trades.term.toLocaleString()} trades</option>`).join("");
   sel.tpl.innerHTML = Object.entries(TEMPLATES).map(([k, t]) => `<option value="${k}">${t.label}</option>`).join("");
   function fillRaces() {
     const off = sel.office.value;
@@ -337,9 +511,10 @@
   async function render() {
     const t = sel.tpl.value;
     H = sel.size.value === "45" ? 1350 : 1440;
-    $("f-race").hidden = t !== "race";
-    $("f-office").hidden = !(t === "race" || t === "closest");
+    $("f-race").hidden = t !== "matchup";
+    $("f-office").hidden = !(t === "matchup" || t === "closest" || t === "map");
     $("f-chamber").hidden = t !== "control";
+    $("f-member").hidden = t !== "spotlight";
     const built = TEMPLATES[t].build();
     const strip = $("slides");
     strip.innerHTML = "";
@@ -364,7 +539,7 @@
   }
   const queue = () => { busy = busy.then(render).catch(e => console.error(e)); return busy; };
   sel.office.addEventListener("change", () => { fillRaces(); queue(); });
-  [sel.tpl, sel.race, sel.chamber, sel.size].forEach(s => s.addEventListener("change", queue));
+  [sel.tpl, sel.race, sel.chamber, sel.size, sel.member].forEach(s => s.addEventListener("change", queue));
 
   // ---------- export ----------
   const stamp = P.generated.slice(0, 10);

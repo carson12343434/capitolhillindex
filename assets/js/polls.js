@@ -51,8 +51,8 @@
   };
   $("topline").innerHTML = chamber("Senate", S, 100, 51) + chamber("House", H, 435, 218) + `<div>
       <p class="ch">Generic ballot</p>
-      ${G ? `<div class="big ${G.margin >= 0 ? "D" : "R"}">${G.margin >= 0 ? "D" : "R"}+${Math.abs(G.margin).toFixed(1)}</div><p class="note">Democrats ${G.a}%, Republicans ${G.b}%, from ${G.n} polls.</p>` : '<p class="note">No recent polls.</p>'}
-      ${A ? `<p style="margin:14px 0 0;font-weight:600">Trump approval ${A.a}%</p><p class="note" style="margin-top:2px">${A.b}% disapprove, from ${A.n} polls.</p>` : ""}</div>`;
+      ${G ? `<div class="big ${G.margin >= 0 ? "D" : "R"}">${G.margin >= 0 ? "D" : "R"}+${Math.abs(G.margin).toFixed(1)}</div><p class="note">Democrats ${G.a}%, Republicans ${G.b}%, from ${G.n} polls. Latest poll ended ${day(G.last)}.</p>` : '<p class="note">No recent polls.</p>'}
+      ${A ? `<p style="margin:14px 0 0;font-weight:600">Trump approval ${A.a}%</p><p class="note" style="margin-top:2px">${A.b}% disapprove, from ${A.n} polls. Latest poll ended ${day(A.last)}.</p>` : ""}</div>`;
 
   // ---------- chamber bars ----------
   function bar(title, c, total, need) {

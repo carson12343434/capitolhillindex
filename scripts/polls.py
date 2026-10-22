@@ -177,7 +177,10 @@ def fetch_polls() -> list[dict]:
 # ---------------------------------------------------------------- national
 def national_polls(raw: list[dict]) -> tuple[list[dict], list[dict]]:
     gen, appr = [], []
+    today = date.today()
     for p in raw:
+        if pdate(p.get("end_date")) and pdate(p["end_date"]) > today:
+            continue
         t = (p.get("poll_type") or "").lower()
         ans = {(a.get("choice") or "").lower(): a.get("pct") for a in p.get("answers") or []}
         if t == "generic-ballot":
@@ -351,7 +354,10 @@ def match_answers(answers: list[dict], race: dict) -> tuple[float, float, float 
 
 def race_polls(raw: list[dict], races: dict[str, dict]) -> dict[str, list[dict]]:
     out = defaultdict(list)
+    today = date.today()
     for p in raw:
+        if pdate(p.get("end_date")) and pdate(p["end_date"]) > today:
+            continue  # a poll can't have finished in the future; the feed occasionally has typos
         k = race_key(p)
         if not k:
             continue
