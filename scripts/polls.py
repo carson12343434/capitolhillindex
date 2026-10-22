@@ -147,7 +147,26 @@ def fetch_polls() -> list[dict]:
                     data.append(p)
                     added += 1
             log.info("  VoteHub %s: %d returned, %d new", t, len(extra), added)
+        # National polls change fastest; ask for just the last 30 days too, in case long requests are capped.
+        recent = (date.today() - timedelta(days=30)).isoformat()
+        for t in ("generic-ballot", "approval"):
+            try:
+                extra = pull({"poll_type": t, "from_date": recent})
+            except Exception as e:
+                log.info("  VoteHub %s (recent): %s", t, e)
+                continue
+            for p in extra:
+                k = p.get("id") or (p.get("pollster"), p.get("end_date"), p.get("subject"))
+                if k not in seen:
+                    seen.add(k)
+                    data.append(p)
         save_json(cache, data)
+        stats = defaultdict(lambda: {"count": 0, "latest": ""})
+        for p in data:
+            st = stats[(p.get("poll_type") or "unknown").lower()]
+            st["count"] += 1
+            st["latest"] = max(st["latest"], p.get("end_date") or "")
+        save_json(SOURCES / "poll_feed_stats.json", {"checked": now_iso(), "types": dict(stats)})
         log.info("VoteHub: %d polls", len(data))
         return data
     except Exception as e:
