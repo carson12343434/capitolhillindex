@@ -361,8 +361,8 @@
     let y = top + ph + 110;
     for (const [label, val] of rows) {
       rect(PAD, y - 62, W - 2 * PAD, 2, C.line);
-      text(label, PAD, y, { w: 600, size: 34, color: C.ink2 });
-      text(val, R, y + 6, { w: 900, size: 70, fam: DISP, align: "right", max: 520 });
+      const lw = text(label, PAD, y, { w: 600, size: 34, color: C.ink2 });
+      text(val, R, y + 6, { w: 900, size: 70, fam: DISP, align: "right", max: R - PAD - lw - 36 });
       y += 112;
     }
     footer();
