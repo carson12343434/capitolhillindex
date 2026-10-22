@@ -14,6 +14,7 @@
 
   const pc = p => p === "D" ? C.D : p === "R" ? C.R : C.I;
   const partyName = p => p === "D" ? "Democrat" : p === "R" ? "Republican" : p === "I" ? "Independent" : p || "";
+  const partyAdj = p => p === "D" ? "Democratic" : p === "R" ? "Republican" : p === "I" ? "Independent" : p || "";
   const pct = x => x > 0.99 ? ">99%" : x < 0.01 ? "<1%" : Math.round(x * 100) + "%";
   const norm = n => (n || "").replace(/\(.*?\)/g, " ").toLowerCase().replace(/[^a-z\s'-]/g, " ").replace(/'/g, "").replace(/-/g, " ").trim().split(/\s+/).join(" ");
   const photoOf = (r, c) => c && c.name ? PHOTOS[`${r.state}|${norm(c.name)}`] || null : null;
@@ -346,14 +347,14 @@
     text("Stock trades this term", x, top + 70, { w: 700, size: 32, color: C.mute });
     text((t.term || 0).toLocaleString(), x, top + 280, { w: 900, size: 230, fam: DISP, max: mw });
     text(rank === 1 ? "Most in Congress" : `${ordinal(rank)} most in Congress`, x, top + 362, { w: 700, size: 34, color: C.ink2, max: mw });
-    const role = `${partyName(m.party)} ${m.chamber === "Senate" ? "senator" : "representative"}, ${STATES[m.state]}`;
+    const role = `${partyAdj(m.party)} ${m.chamber === "Senate" ? "senator" : "representative"}, ${STATES[m.state]}`;
     text(m.name, x, top + ph - 70, { w: 700, size: 42, max: mw });
     text(role, x, top + ph - 24, { w: 500, size: 30, color: C.mute, max: mw });
     const money = n => n >= 1e6 ? "$" + (n / 1e6).toFixed(1) + "M" : n >= 1e3 ? "$" + Math.round(n / 1e3) + "K" : "$" + n;
     const rows = [
       ["Trades since taking office", (t.total || 0).toLocaleString()],
-      ["Reported trading volume", t.volHigh ? `${money(t.volLow)} to ${money(t.volHigh)}` : "$0"],
-      ["Filed after the 45-day deadline", (t.late || 0).toLocaleString()],
+      ["Volume since taking office", t.volHigh ? `${money(t.volLow)} to ${money(t.volHigh)}` : "$0"],
+      ["Filed late, since taking office", (t.late || 0).toLocaleString()],
     ];
     const last = (t.recent || [])[0];
     if (last) rows.push(["Latest disclosed trade", `${new Date(last[0] + "T12:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}${last[1] ? ", " + last[1] : ""}`]);
@@ -386,7 +387,13 @@
       : `${named(r, r[lead])} leads ${named(r, r[trail])} ${sh[lead].toFixed(1)}% to ${sh[trail].toFixed(1)}% in our projected vote for ${where}.`;
     const pl = r.pLeft, odds = Math.abs(pl - 0.5) < 0.02 ? "Each side wins about half of our 20,000 simulations."
       : `${(pl >= 0.5 ? r.left : r.right).name.split(" ").slice(-1)[0]} wins ${pct(Math.max(pl, 1 - pl))} of our 20,000 simulations.`;
-    const polls = r.polls ? `The polling average is ${r.polls.a}–${r.polls.b} across ${r.polls.n} poll${r.polls.n > 1 ? "s" : ""}.` : "There's no public polling yet, so this one leans on the state's partisan lean and the national environment.";
+    const last = c => c.name.split(" ").filter(w => !/^(jr|sr|ii|iii|iv)\.?$/i.test(w.replace(",", ""))).slice(-1)[0].replace(",", "");
+    let polls = "There's no public polling yet, so this one leans on the state's partisan lean and the national environment.";
+    if (r.polls) {
+      const pa = r.polls.a, pb = r.polls.b, pm = pa - pb, mm = (sh.left || 0) - (sh.right || 0);
+      polls = `In the polling average it's ${last(r.left)} ${pa.toFixed(1)}, ${last(r.right)} ${pb.toFixed(1)} across ${r.polls.n} poll${r.polls.n > 1 ? "s" : ""}.`;
+      if (Math.abs(pm - mm) >= 2) polls += ` ${STATES[r.state]}'s partisan lean pulls our projection toward ${pm > mm ? last(r.right) : last(r.left)}.`;
+    }
     return `${first} ${odds}\n\n${polls}`;
   }
   const TEMPLATES = {
@@ -431,8 +438,9 @@
         return {
           slides: [[m.name, () => slideSpotlight(m)]],
           caption: `${who} has reported ${(t.term || 0).toLocaleString()} stock trades this term, ${rank === 1 ? "more than any other member of Congress" : `the ${ordinal(rank)} most in Congress`}.` +
-            (t.volHigh ? ` Disclosures give amounts as ranges, so the total comes to somewhere between ${money(t.volLow)} and ${money(t.volHigh)}.` : "") +
-            (t.late ? ` ${t.late.toLocaleString()} of them were reported after the STOCK Act's 45-day deadline.` : "") +
+            (t.total > t.term ? ` ${m.gender === "F" ? "She" : "He"} has reported ${t.total.toLocaleString()} since first taking office in ${m.firstTookOffice.slice(0, 4)}.` : "") +
+            (t.volHigh ? ` Disclosures list amounts as ranges, so ${t.total > t.term ? "those" : "the"} trades add up to somewhere between ${money(t.volLow)} and ${money(t.volHigh)}.` : "") +
+            (t.late ? ` ${t.late.toLocaleString()} of them ${t.late === 1 ? "was" : "were"} reported after the STOCK Act's 45-day deadline.` : "") +
             `\n\nEvery trade, with dates and amounts, is at capitolhillindex.com (link in bio).\n\n#STOCKAct #Congress #StockTrading`,
           name: "spotlight-" + m.id.toLowerCase(),
         };
