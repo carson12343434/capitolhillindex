@@ -28,6 +28,8 @@ jobs:
         run: python scripts/photos.py
       - name: Candidate headshots
         run: python scripts/candidate_photos.py
+      - name: Large headshots for social posts
+        run: python scripts/hires_photos.py
       - name: Combine and build pages
         run: |
           python scripts/members.py
